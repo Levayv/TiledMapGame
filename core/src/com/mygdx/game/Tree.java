@@ -1,10 +1,11 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 public class Tree extends Something {
 
 
-    Tree(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Tree(TextureRegion texReg) {
+        super(texReg);
     }
-
 }

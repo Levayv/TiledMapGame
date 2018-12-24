@@ -1,41 +1,50 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Something extends shit{
 //    Sprite sprite;
-    Rectangle rectangle;
+    Rectangle border;
+
+    public Something(TextureRegion texReg) {
+        super(texReg);
+    }
+
 //    int x;
 //    int y;
 //    int width;
 //    int height;
 
-    Something(int x, int y , int width, int height  ){
-        rectangle = new Rectangle();
-        rectangle.x = x;
-        rectangle.y = y;
-        rectangle.width = width;
-        rectangle.height = height;
+    void setBorders(){
+        border = new Rectangle();
+        border.x      = texReg.getRegionX();
+        border.y      = texReg.getRegionY();
+        border.width  = texReg.getRegionWidth();
+        border.height = texReg.getRegionHeight();
+    }
+    void setBorders(int borderX, int borderY , int borderWidth, int borderHeight  ){
+        border = new Rectangle();
+        border.x = borderX;
+        border.y = borderY;
+        border.width = borderWidth;
+        border.height = borderHeight;
 
-        region.setRegionX(x);
-        region.setRegionY(y);
-        region.setRegionWidth(width);
-        region.setRegionHeight(height);
+//        texReg.setRegionX(x);
+//        texReg.setRegionY(y);
+//        texReg.setRegionWidth(width);
+//        texReg.setRegionHeight(height);
 
-//        System.out.println(rectangle.getX());
-//        System.out.println(rectangle.getY());
-//        System.out.println(rectangle.getWidth());
-//        System.out.println(rectangle.getHeight());
+//        System.out.println(border.getX());
+//        System.out.println(border.getY());
+//        System.out.println(border.getWidth());
+//        System.out.println(border.getHeight());
 
 //        this.x = x;
 //        this.y = y;
 //        this.width = width;
 //        this.height = height;
     }
-//    void setSprite(Sprite sprite){
-//        this.sprite = sprite;
-//    }
 
 
 }

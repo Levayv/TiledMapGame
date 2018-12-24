@@ -26,16 +26,16 @@ public class TreeActor extends Actor{
 //        return image;
 //    }
 
-//    TextureRegion region;
+//    TextureRegion texReg;
     Texture tex;
 
     public TreeActor() {
-//        region = new TextureRegion(new Texture(
+//        texReg = new TextureRegion(new Texture(
 //                Gdx.files.internal("tree.png")));
-//        region.setRegionX(0);
-//        region.setRegionY(0);
-//        setBounds(region.getRegionX(), region.getRegionY(),
-//                region.getRegionWidth(), region.getRegionWidth());
+//        texReg.setRegionX(0);
+//        texReg.setRegionY(0);
+//        setBounds(texReg.getRegionX(), texReg.getRegionY(),
+//                texReg.getRegionWidth(), texReg.getRegionWidth());
         tex = new Texture(Gdx.files.internal("tree.png"));
         setX(200);
         setY(200);
@@ -49,7 +49,7 @@ public class TreeActor extends Actor{
             System.out.println(Gdx.files.internal("tree H = " + getHeight()));
         }
 
-//        region.setSprite(tex);
+//        texReg.setSprite(tex);
 
     }
 

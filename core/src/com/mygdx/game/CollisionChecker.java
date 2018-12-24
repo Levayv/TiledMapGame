@@ -8,7 +8,7 @@ public class CollisionChecker {
     boolean downLockFinal;
     boolean leftLockFinal;
     boolean rightLockFinal;
-    private int count;
+    private int idOfNextAddedElement;
     private int max;
     private Rectangle[] rectangles;
     private Rectangle intersection;
@@ -18,7 +18,7 @@ public class CollisionChecker {
     }
 
     void populate(int chunkEntitiesCount) {
-        count = 0;
+        idOfNextAddedElement = 0;
         max = chunkEntitiesCount;
         rectangles = new Rectangle[max + 1];
         intersection = new Rectangle();
@@ -30,8 +30,8 @@ public class CollisionChecker {
 //        System.out.println(newRect.getY());
 //        System.out.println(newRect.getWidth());
 //        System.out.println(newRect.getHeight());
-        rectangles[count] = newRect;
-        count++;
+        rectangles[idOfNextAddedElement] = newRect;
+        idOfNextAddedElement++;
     }
 
     void calc(Player player) {
@@ -86,25 +86,25 @@ public class CollisionChecker {
                 // correct over collision border cases & limit speed
                 if (leftLock){
                     if (intersection.height >= 1){
-                        player.rectangle.x += intersection.width-1;
+                        player.border.x += intersection.width-1;
                         player.moveSpeedL = 50;
                     }
                 }
                 if (rightLock){
                     if (intersection.height >= 1){
-                        player.rectangle.x -= intersection.width-1;
+                        player.border.x -= intersection.width-1;
                         player.moveSpeedR = 50;
                     }
                 }
                 if (upLock){
                     if (intersection.height >= 1){
-                        player.rectangle.y -= intersection.height-1;
+                        player.border.y -= intersection.height-1;
                         player.moveSpeedU = 50;
                     }
                 }
                 if (downLock){
                     if (intersection.height >= 1){
-                        player.rectangle.y += intersection.height-1;
+                        player.border.y += intersection.height-1;
                         player.moveSpeedD = 50;
                     }
                 }
@@ -112,7 +112,14 @@ public class CollisionChecker {
                 rightLockFinal = rightLock || rightLockFinal ;
                 upLockFinal    = upLock    || upLockFinal    ;
                 downLockFinal  = downLock  || downLockFinal  ;
+
+
+
             }
         }
+        player.setleftLock  (leftLockFinal   ) ;
+        player.setrightLock (rightLockFinal  ) ;
+        player.setupLock    (upLockFinal     ) ;
+        player.setdownLock  (downLockFinal   ) ;
     }
 }

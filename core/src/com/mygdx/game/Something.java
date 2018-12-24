@@ -3,8 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Something {
-    Sprite sprite;
+public class Something extends shit{
+//    Sprite sprite;
     Rectangle rectangle;
 //    int x;
 //    int y;
@@ -17,6 +17,12 @@ public class Something {
         rectangle.y = y;
         rectangle.width = width;
         rectangle.height = height;
+
+        region.setRegionX(x);
+        region.setRegionY(y);
+        region.setRegionWidth(width);
+        region.setRegionHeight(height);
+
 //        System.out.println(rectangle.getX());
 //        System.out.println(rectangle.getY());
 //        System.out.println(rectangle.getWidth());
@@ -27,9 +33,9 @@ public class Something {
 //        this.width = width;
 //        this.height = height;
     }
-    void setSprite(Sprite sprite){
-        this.sprite = sprite;
-    }
+//    void setSprite(Sprite sprite){
+//        this.sprite = sprite;
+//    }
 
 
 }

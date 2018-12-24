@@ -97,18 +97,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         this.game = game;
         colCheck = new CollisionChecker(3);
 
-//        chunks = new Sprite[chunkSize][chunkSize];
-        chunks = new Chunk[chunkSize][chunkSize];
 
-        chunkTex = new Texture(Gdx.files.internal("dirt.tga"));
-        int chunkRes = 512;
-        for (int i = 0; i < chunkSize; i++) {
-            for (int j = 0; j < chunkSize; j++) {
-                chunks[i][j] = new Chunk(new TextureRegion(chunkTex));
-                chunks[i][j].sprite.setSize(chunkRes , chunkRes);
-                chunks[i][j].setPosition(i*chunkRes,j*chunkRes);
-            }
-        }
         player = new Player(
                 screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2,
@@ -141,17 +130,24 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         // loading images with atlas
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
-        player.sprite = atlas.createSprite("bucket");
-        tree1.sprite = atlas.createSprite("droplet");
-        tree2.sprite = atlas.createSprite("droplet");
-        tree3.sprite = atlas.createSprite("droplet");
+
+        player.region = atlas.createSprite("bucket");
+        tree1.region = atlas.createSprite("droplet");
+        tree2.region = atlas.createSprite("droplet");
+        tree3.region = atlas.createSprite("droplet");
         dropImage = atlas.createSprite("droplet");
 
-        // load the images for the droplet and the bucket, 64x64 pixels each
-        if (debuging) System.out.println(Gdx.files.internal("droplet.png"));
-//        dropImage = new Texture(Gdx.files.internal("droplet.png"));
-//        bucketImage = new Texture(Gdx.files.internal("bucket_64.png"));
-
+//        chunks = new Sprite[chunkSize][chunkSize];
+        chunks = new Chunk[chunkSize][chunkSize];
+        chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
+        int chunkRes = 512;
+        for (int i = 0; i < chunkSize; i++) {
+            for (int j = 0; j < chunkSize; j++) {
+                chunks[i][j] = new Chunk(new TextureRegion(chunkTex));
+                chunks[i][j].sprite.setSize(chunkRes , chunkRes);
+                chunks[i][j].setPosition(i*chunkRes,j*chunkRes);
+            }
+        }
         // load the drop sound effect and the rain background "music"
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
@@ -170,12 +166,19 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         shit tree2 = new shit();
         shit tree3 = new shit();
 //        myActor.setTouchable(Touchable.enabled);
-        stage.addActor(chunks[0][0]);
-        stage.addActor(chunks[0][1]);
-        stage.addActor(chunks[1][0]);
-        stage.addActor(chunks[0][1]);
+
+        //! move to chunk loader
+        for (int i = 0; i < chunkSize; i++) {
+            for (int j = 0; j < chunkSize; j++) {
+                stage.addActor(chunks[i][j]);
+            }
+        }
+
         stage.addActor(tree1);
         stage.addActor(tree2);
+        stage.addActor(tree3);
+
+        stage.addActor(player);
 
 
 
@@ -202,23 +205,23 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //        fuck[0] = t.getTexture();
 //        bucketImage = fuck[0];
     }
-    public class MyActor extends Actor {
-        TextureRegion region;
-
-        public MyActor () {
-            region = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
-            setBounds(region.getRegionX(), region.getRegionY(),
-                    region.getRegionWidth(), region.getRegionHeight());
-        }
-
-        @Override
-        public void draw (Batch batch, float parentAlpha) {
-            Color color = getColor();
-            batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-            batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
-                    getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-        }
-    }
+//    public class MyActor extends Actor {
+//        TextureRegion region;
+//
+//        public MyActor () {
+//            region = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
+//            setBounds(region.getRegionX(), region.getRegionY(),
+//                    region.getRegionWidth(), region.getRegionHeight());
+//        }
+//
+//        @Override
+//        public void draw (Batch batch, float parentAlpha) {
+//            Color color = getColor();
+//            batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+//            batch.draw(region, getX(), getY(), getOriginX(), getOriginY(),
+//                    getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+//        }
+//    }
 
     @Override
     public void render(float delta) {
@@ -312,7 +315,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
         if (Gdx.input.isKeyPressed(Keys.ANY_KEY))
-            colCheck.calc(player); //player.getCollider()
+            colCheck.calc(player);
+
         if (Gdx.input.isKeyPressed(Keys.A) && !colCheck.leftLockFinal) {
             player.rectangle.x -= player.moveSpeedL * delta;
         }
@@ -402,6 +406,19 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         }
         if (Gdx.input.isKeyJustPressed(Keys.F4)) {
             debuging = !debuging;
+            if (debuging){
+                Array<Actor> actors = stage.getActors();
+                System.out.println("Debug: Enabling borders for "+actors.size+"entities");
+                for (int i = 0; i < actors.size; i++) {
+                    actors.items[i].setDebug(true);
+                }
+            }else{
+                Array<Actor> actors = stage.getActors();
+                System.out.println("Debug: Disabling borders for "+actors.size+"entities");
+                for (int i = 0; i < actors.size; i++) {
+                    actors.items[i].setDebug(false);
+                }
+            }
         }
 
         // framerate to console
@@ -490,7 +507,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         dropSound.dispose();
 
         dropImage.getTexture().dispose();
-        player.sprite.getTexture().dispose();
+        player.region.getTexture().dispose();
+        tree1.region.getTexture().dispose();
+        tree2.region.getTexture().dispose();
+        tree3.region.getTexture().dispose();
         for (int i = 0; i < chunkSize; i++) {
             for (int j = 0; j < chunkSize; j++) {
                 chunks[i][j].sprite.getTexture().dispose();

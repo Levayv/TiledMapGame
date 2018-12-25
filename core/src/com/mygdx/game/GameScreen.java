@@ -9,12 +9,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -120,7 +122,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
         TextureRegion texRegTree = atlas.createSprite("droplet");
         dropImage = atlas.createSprite("droplet");
-
         chunks = new Chunk[chunkSize][chunkSize];
         chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
         int chunkRes = 512;
@@ -152,9 +153,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         tree1.setBorders();
         tree2.setBorders();
         tree3.setBorders();
-        tree1.setPosition(100,100);
+        tree1.setPosition(300,100);
         tree2.setPosition(100,200);
         tree3.setPosition(200,100);
+
+//        tree1.border.x = 100;
+//        tree1.border.y = 100;
+//        tree2.border.x = 100;
+//        tree2.border.y = 200;
+//        tree3.border.x = 200;
+//        tree3.border.y = 100;
 
         player = new Player(texRegPlayer);
         player.setBorders();
@@ -174,7 +182,14 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                 stage.addActor(chunks[i][j]);
             }
         }
+        Rectangle rec = player.getBorder();
+        rec.width += 10;
+        rec.height += 10;
 
+//        player.getBorder().x--;
+//        player.getBorder().y--;
+//        player.getBorder().width += 2;
+//        player.getBorder().height += 2;
         stage.addActor(tree1);
         stage.addActor(tree2);
         stage.addActor(tree3);
@@ -182,10 +197,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         stage.addActor(player);
 
         colCheck = new CollisionChecker(3);
-        colCheck.add(player.border);
-        colCheck.add(tree1.border);
-        colCheck.add(tree2.border);
-        colCheck.add(tree3.border);
+        colCheck.add(player.getBorder());
+        colCheck.add(tree1. getBorder());
+        colCheck.add(tree2. getBorder());
+        colCheck.add(tree3. getBorder());
 
 //        stage.getViewport().update(screen_width/2, screen_height/2, true)
 //        stage.getCamera().update();
@@ -256,8 +271,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 //        game.batch.setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
         if (debuging){
+            game.batch.begin();
             float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
             if (currCustomDelta < min ){
                 min = currCustomDelta;
@@ -271,14 +286,36 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                     stage.getCamera().position.x-screen_width/2,
                     stage.getCamera().position.y+screen_height/2-0);
             game.font.draw(game.batch, "Player Coordinates: "
-                            + (int) player.border.x + ":" + (int) player.border.y ,
+                            + (int) player.getX() + ":" + (int) player.getY() ,
                     stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-20);
             game.font.draw(game.batch, "Camera Coordinates: "
                             + (int) stage.getCamera().position.x + ":" + (int) stage.getCamera().position.y ,
                     stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-40);
-            
-        }
-        game.batch.end();
+            game.batch.end();
+
+            ShapeRenderer shape = new ShapeRenderer();
+            shape.setProjectionMatrix(stage.getCamera().combined);
+            shape.begin(ShapeRenderer.ShapeType.Line);
+            shape.setColor(Color.RED);
+            shape.rect(player.getBorderX(),
+                       player.getBorderY(),
+                       player.getBorderW(),
+                       player.getBorderH());
+            shape.rect( tree1.getBorderX(),
+                        tree1.getBorderY(),
+                        tree1.getBorderW(),
+                        tree1.getBorderH());
+            shape.rect( tree2.getBorderX(),
+                        tree2.getBorderY(),
+                        tree2.getBorderW(),
+                        tree2.getBorderH());
+            shape.rect( tree3.getBorderX(),
+                        tree3.getBorderY(),
+                        tree3.getBorderW(),
+                        tree3.getBorderH());
+            shape.end();
+        } // debugging if end
+
 
         
 //
@@ -363,12 +400,12 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         if (Gdx.input.isKeyPressed(Keys.UP)) {
             stage.getCamera().translate(0, 6, 0);
         }
-//        if (Gdx.input.isKeyPressed(Keys.E)) {
-//            camera.zoom += 0.12;
-//        }
-//        if (Gdx.input.isKeyPressed(Keys.Q)) {
-//            camera.zoom -= 0.12;
-//        }
+        if (Gdx.input.isKeyPressed(Keys.E)) {
+            ((OrthographicCamera)stage.getCamera()).zoom += 0.24;
+        }
+        if (Gdx.input.isKeyPressed(Keys.Q)) {
+            ((OrthographicCamera)stage.getCamera()).zoom -= 1*delta;
+        }
 
         // make sure the bucket stays within the screen bounds
 //        if (bucket.x < 0)
@@ -450,17 +487,17 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
     private void randomize() {
         Random r = new Random();
-        tree1.border.x = r.nextInt(100);
-        tree1.border.y = r.nextInt(100);
-        tree2.border.x = r.nextInt(200)+100;
-        tree2.border.y = r.nextInt(200)+100;
-        tree3.border.x = r.nextInt(300)+200;
-        tree3.border.y = r.nextInt(100);
+
+        tree1.setX(r.nextInt(100)     );
+        tree1.setY(r.nextInt(100)     );
+        tree2.setX(r.nextInt(200)+100 );
+        tree2.setY(r.nextInt(200)+100 );
+        tree3.setX(r.nextInt(300)+200 );
+        tree3.setY(r.nextInt(100)     );
     }
 
     private void saveGame() {
         int sum = 3;
-        int temp = (int)tree1.border.x;
 //        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
 //        if (!isLocAvailable) System.out.println("no space !!!");
 //        String locRoot = Gdx.files.getLocalStoragePath();

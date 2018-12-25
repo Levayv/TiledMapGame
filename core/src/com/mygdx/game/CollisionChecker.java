@@ -35,6 +35,7 @@ public class CollisionChecker {
     }
 
     void calc(Player player) {
+
         boolean upLock;
         boolean downLock;
         boolean leftLock;
@@ -83,28 +84,28 @@ public class CollisionChecker {
                     upLock = false;
                     downLock = false;
                 }
-                // correct over collision border cases & limit speed
+                // correct over border collision cases & limit speed
                 if (leftLock){
                     if (intersection.height >= 1){
-                        player.border.x += intersection.width-1;
+                        player.setX(player.getX()+intersection.width-1);
                         player.moveSpeedL = 50;
                     }
                 }
                 if (rightLock){
                     if (intersection.height >= 1){
-                        player.border.x -= intersection.width-1;
+                        player.setX(player.getX()-intersection.width+1);
                         player.moveSpeedR = 50;
                     }
                 }
                 if (upLock){
                     if (intersection.height >= 1){
-                        player.border.y -= intersection.height-1;
+                        player.setY(player.getY()-intersection.height+1);
                         player.moveSpeedU = 50;
                     }
                 }
                 if (downLock){
                     if (intersection.height >= 1){
-                        player.border.y += intersection.height-1;
+                        player.setY(player.getY()+intersection.height-1);
                         player.moveSpeedD = 50;
                     }
                 }

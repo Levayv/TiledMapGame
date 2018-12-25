@@ -5,10 +5,11 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Something extends shit{
 //    Sprite sprite;
-    Rectangle border;
+    private Rectangle border;
 
     public Something(TextureRegion texReg) {
         super(texReg);
+        border = new Rectangle();
     }
 
 //    int x;
@@ -17,19 +18,18 @@ public class Something extends shit{
 //    int height;
 
     void setBorders(){
-        border = new Rectangle();
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
         border.width  = texReg.getRegionWidth();
         border.height = texReg.getRegionHeight();
+        border.x = this.getX() + 0;
+        border.y = this.getY() + 0;
     }
     void setBorders(int borderX, int borderY , int borderWidth, int borderHeight  ){
-        border = new Rectangle();
         border.x = borderX;
         border.y = borderY;
         border.width = borderWidth;
         border.height = borderHeight;
-
 //        texReg.setRegionX(x);
 //        texReg.setRegionY(y);
 //        texReg.setRegionWidth(width);
@@ -45,6 +45,16 @@ public class Something extends shit{
 //        this.width = width;
 //        this.height = height;
     }
-
-
+    @Override
+    protected void positionChanged(){
+        if (border != null) {
+            border.x = this.getX() + 0;
+            border.y = this.getY() + 0;
+        }
+    }
+    float getBorderX(){ return border.x;}
+    float getBorderY(){ return border.y;}
+    float getBorderW(){ return border.width;}
+    float getBorderH(){ return border.height;}
+    Rectangle getBorder(){ return border;}
 }

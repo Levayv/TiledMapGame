@@ -60,17 +60,18 @@ class Player extends Something{
                 updateY = -moveSpeedD*delta;
             }
             moveBy(updateX, updateY);
+
             dirX = DirConst.NULL;
             dirY = DirConst.NULL;
             go = false;
             if (getDebug()){
-                if (!upLock    )
+                if (!leftLock    )
                     System.out.print("<");
-                if (!downLock  )
+                if (!rightLock  )
                     System.out.print(">");
-                if (!leftLock  )
+                if (!upLock  )
                     System.out.print("A");
-                if (!rightLock )
+                if (!downLock )
                     System.out.print("V");
                 System.out.println();
             }

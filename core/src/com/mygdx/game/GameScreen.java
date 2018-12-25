@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -77,9 +78,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
     Sprite[] playerSprites = new Sprite[4];
     Collider colCheck;
-    /**
-     * @ Texture chunkTex
-     */
     public Texture chunkTex;
 
     Stage stage;
@@ -93,6 +91,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     private float min = 999999; //temp
     private float max = 1; //temp
 
+    float animationTime;
+    Animation<TextureRegion> walkAnimation; // Must declare frame type (TextureRegion)
+    Texture walkSheet;
 
     public GameScreen(final MyGdxGame game) {
         this.game = game;
@@ -199,6 +200,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         colCheck.add(tree2. getBorder());
         colCheck.add(tree3. getBorder());
 
+        //animation
+        animationCreate();
+
 //        stage.getViewport().update(screen_width/2, screen_height/2, true)
 //        stage.getCamera().update();
 
@@ -221,6 +225,27 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //        TextureRegion t = new TextureRegion(root, 0,0, 64,128);
 //        fuck[0] = t.getTexture();
 //        bucketImage = fuck[0];
+    }
+    void animationCreate(){
+        int FRAME_COLS = 8, FRAME_ROWS = 4;
+        walkSheet = new Texture(Gdx.files.internal("animation/male_sprite_model.png"));
+        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
+                walkSheet.getWidth() / FRAME_COLS,
+                walkSheet.getHeight() / FRAME_ROWS);
+        TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                walkFrames[index++] = tmp[i][j];
+            }
+        }
+        walkAnimation = new Animation<TextureRegion>(0.025f, walkFrames);
+        animationTime = 0f;
+    }
+    void animationRender(){
+        TextureRegion currentFrame = walkAnimation.getKeyFrame(animationTime, true);
+        animationTime += Gdx.graphics.getDeltaTime();
+        game.batch.draw(currentFrame, 50, 50); // Draw current frame at (50, 50)
     }
 //    public class MyActor extends Actor {
 //        TextureRegion texReg;
@@ -288,6 +313,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             game.font.draw(game.batch, "Camera Coordinates: "
                             + (int) stage.getCamera().position.x + ":" + (int) stage.getCamera().position.y ,
                     stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-40);
+            animationRender();
             game.batch.end();
 
             ShapeRenderer shape = new ShapeRenderer();

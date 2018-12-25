@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 
-class Player extends Something{
+class Player extends AnimatedPlayableCharacter{
     private static int low      = 50;
     private static int medium   = 200;
     private static int high     = 600;

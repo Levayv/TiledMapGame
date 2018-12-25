@@ -91,10 +91,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     private float min = 999999; //temp
     private float max = 1; //temp
 
-    float animationTime;
-    Animation<TextureRegion> walkAnimation; // Must declare frame type (TextureRegion)
-    Texture walkSheet;
-
     public GameScreen(final MyGdxGame game) {
         this.game = game;
 
@@ -227,25 +223,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //        bucketImage = fuck[0];
     }
     void animationCreate(){
-        int FRAME_COLS = 8, FRAME_ROWS = 4;
-        walkSheet = new Texture(Gdx.files.internal("animation/male_sprite_model.png"));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-                walkSheet.getWidth() / FRAME_COLS,
-                walkSheet.getHeight() / FRAME_ROWS);
-        TextureRegion[] walkFrames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                walkFrames[index++] = tmp[i][j];
-            }
-        }
-        walkAnimation = new Animation<TextureRegion>(0.025f, walkFrames);
-        animationTime = 0f;
+        player.setAnimations();
     }
     void animationRender(){
-        TextureRegion currentFrame = walkAnimation.getKeyFrame(animationTime, true);
-        animationTime += Gdx.graphics.getDeltaTime();
-        game.batch.draw(currentFrame, 50, 50); // Draw current frame at (50, 50)
+
     }
 //    public class MyActor extends Actor {
 //        TextureRegion texReg;

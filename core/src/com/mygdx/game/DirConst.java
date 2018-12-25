@@ -4,5 +4,6 @@ public enum DirConst {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    NULL
 }

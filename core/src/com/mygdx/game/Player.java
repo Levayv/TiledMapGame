@@ -12,12 +12,15 @@ class Player extends Something{
     int moveSpeedR = medium;
     int moveSpeedU = medium;
     int moveSpeedD = medium;
-    private DirConst dir;
+    private DirConst dirX;
+    private DirConst dirY;
     private boolean upLock          ;
     private boolean downLock        ;
     private boolean leftLock        ;
     private boolean rightLock       ;
     private boolean go;
+    float updateX;
+    float updateY;
 
     public void setupLock (boolean upLock){
         this.upLock = upLock;
@@ -41,20 +44,24 @@ class Player extends Something{
 
     @Override
     public void act(float delta){
-        
         if (go){
-            if (dir == DirConst.UP    && !upLock    ){
-                moveBy(0 , moveSpeedU*delta);
+            updateX = 0;
+            updateY = 0;
+            if (dirX == DirConst.LEFT  && !leftLock  ){
+                updateX = -moveSpeedL*delta;
             }
-            if (dir == DirConst.DOWN  && !downLock  ){
-                moveBy(0 , -moveSpeedD*delta);
+            if (dirX == DirConst.RIGHT && !rightLock ){
+                updateX = moveSpeedR*delta;
             }
-            if (dir == DirConst.LEFT  && !leftLock  ){
-                moveBy(-moveSpeedL*delta , 0);
+            if (dirY == DirConst.UP    && !upLock    ){
+                updateY = moveSpeedU*delta;
             }
-            if (dir == DirConst.RIGHT && !rightLock ){
-                moveBy(moveSpeedR*delta , 0);
+            if (dirY == DirConst.DOWN  && !downLock  ){
+                updateY = -moveSpeedD*delta;
             }
+            moveBy(updateX, updateY);
+            dirX = DirConst.NULL;
+            dirY = DirConst.NULL;
             go = false;
             if (true){
                 if (!upLock    )
@@ -90,9 +97,13 @@ class Player extends Something{
         moveSpeedD = high;
     }
 
-    public void setDir(DirConst dir) {
-        this.dir = dir;
+    public void setDirX(DirConst dirX) {
+        this.dirX = dirX;
     }
+    public void setDirY(DirConst dirY) {
+        this.dirY = dirY;
+    }
+
 
 
 //    Sprite sprite;

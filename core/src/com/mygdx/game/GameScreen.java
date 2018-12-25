@@ -316,29 +316,26 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
 
-        if (Gdx.input.isKeyPressed(Keys.ANY_KEY))
-            colCheck.calc(player);
+        if (Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+            colCheck.calc(player); // Check colider
+        }
 
-        if (Gdx.input.isKeyPressed(Keys.A) && !colCheck.leftLockFinal) {
-            player.setDir(DirConst.LEFT);
+        if (Gdx.input.isKeyPressed(Keys.A)) {
+            player.setDirX(DirConst.LEFT);
             player.go();
 
-//            player.border.x -= player.moveSpeedL * delta;
         }
-        if (Gdx.input.isKeyPressed(Keys.D) && !colCheck.rightLockFinal) {
-            player.setDir(DirConst.RIGHT);
+        if (Gdx.input.isKeyPressed(Keys.D)) {
+            player.setDirX(DirConst.RIGHT);
             player.go();
-//            player.border.x += player.moveSpeedR * delta;
         }
-        if (Gdx.input.isKeyPressed(Keys.W) && !colCheck.upLockFinal) {
-            player.setDir(DirConst.UP);
+        if (Gdx.input.isKeyPressed(Keys.W)) {
+            player.setDirY(DirConst.UP);
             player.go();
-//            player.border.y += player.moveSpeedU * delta;
         }
-        if (Gdx.input.isKeyPressed(Keys.S) && !colCheck.downLockFinal) {
-            player.setDir(DirConst.DOWN);
+        if (Gdx.input.isKeyPressed(Keys.S)) {
+            player.setDirY(DirConst.DOWN);
             player.go();
-//            player.border.y -= player.moveSpeedD * delta;
         }
         // Camera moves
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {

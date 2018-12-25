@@ -182,10 +182,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                 stage.addActor(chunks[i][j]);
             }
         }
-        Rectangle rec = player.getBorder();
-        rec.width += 10;
-        rec.height += 10;
-
 //        player.getBorder().x--;
 //        player.getBorder().y--;
 //        player.getBorder().width += 2;

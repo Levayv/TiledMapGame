@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Something extends shit{
 //    Sprite sprite;
-    private Rectangle border;
+    private Rectangle border; // todo Change to dynamic object
 
     public Something(TextureRegion texReg) {
         super(texReg);

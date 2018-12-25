@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
-public class CollisionChecker {
+public class Collider {
     boolean upLockFinal;
     boolean downLockFinal;
     boolean leftLockFinal;
@@ -13,7 +13,7 @@ public class CollisionChecker {
     private Rectangle[] rectangles;
     private Rectangle intersection;
 
-    CollisionChecker(int firstChunkEntitiesCount) {
+    Collider(int firstChunkEntitiesCount) {
         populate(firstChunkEntitiesCount);
     }
 

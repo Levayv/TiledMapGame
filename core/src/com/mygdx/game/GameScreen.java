@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -77,8 +76,11 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //    Tree tree3;
 
     Sprite[] playerSprites = new Sprite[4];
-    CollisionChecker colCheck;
-    Texture chunkTex;
+    Collider colCheck;
+    /**
+     * @ Texture chunkTex
+     */
+    public Texture chunkTex;
 
     Stage stage;
     Actor actor;
@@ -94,7 +96,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
     public GameScreen(final MyGdxGame game) {
         this.game = game;
-
 
 //        tree1 = new Tree(
 //                100,
@@ -192,7 +193,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         stage.addActor(player);
 
-        colCheck = new CollisionChecker(3);
+        colCheck = new Collider(3);
         colCheck.add(player.getBorder());
         colCheck.add(tree1. getBorder());
         colCheck.add(tree2. getBorder());

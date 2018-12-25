@@ -17,7 +17,7 @@ public class CollisionChecker {
         populate(firstChunkEntitiesCount);
     }
 
-    void populate(int chunkEntitiesCount) {
+    void populate(int chunkEntitiesCount) { // public for further integrations
         idOfNextAddedElement = 0;
         max = chunkEntitiesCount;
         rectangles = new Rectangle[max + 1];

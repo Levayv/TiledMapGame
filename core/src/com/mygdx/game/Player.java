@@ -63,7 +63,7 @@ class Player extends Something{
             dirX = DirConst.NULL;
             dirY = DirConst.NULL;
             go = false;
-            if (true){
+            if (getDebug()){
                 if (!upLock    )
                     System.out.print("<");
                 if (!downLock  )

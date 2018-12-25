@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -84,6 +85,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     Something tree1;
     Something tree2;
     Something tree3;
+
+    private float min = 999999; //temp
+    private float max = 1; //temp
+
 
     public GameScreen(final MyGdxGame game) {
         this.game = game;
@@ -253,8 +258,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         game.batch.begin();
         if (debuging){
+            float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
+            if (currCustomDelta < min ){
+                min = currCustomDelta;
+            }
+            if (currCustomDelta > max){
+                max = currCustomDelta;
+            }
+
             game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
-                            "-"+( delta ),
+                            " Min/Max = "+min+"/"+max+" - "+currCustomDelta,
                     stage.getCamera().position.x-screen_width/2,
                     stage.getCamera().position.y+screen_height/2-0);
             game.font.draw(game.batch, "Player Coordinates: "
@@ -416,16 +429,18 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             debuging = !debuging;
             if (debuging){
                 Array<Actor> actors = stage.getActors();
-                System.out.println("Debug: Enabling borders for "+actors.size+"entities");
+                System.out.println("Debug: Enabling borders for ["+actors.size+"] entities");
                 for (int i = 0; i < actors.size; i++) {
                     actors.items[i].setDebug(true);
                 }
             }else{
                 Array<Actor> actors = stage.getActors();
-                System.out.println("Debug: Disabling borders for "+actors.size+"entities");
+                System.out.println("Debug: Disabling borders for ["+actors.size+"] entities");
                 for (int i = 0; i < actors.size; i++) {
                     actors.items[i].setDebug(false);
                 }
+                min = 999999;
+                max = 1;
             }
         }
 

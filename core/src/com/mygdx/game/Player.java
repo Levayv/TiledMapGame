@@ -1,8 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
-import javax.sound.midi.Sequence;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 
 class Player extends Something{
@@ -42,6 +41,7 @@ class Player extends Something{
 
     @Override
     public void act(float delta){
+        
         if (go){
             if (dir == DirConst.UP    && !upLock    ){
                 moveBy(0 , moveSpeedU*delta);
@@ -55,7 +55,6 @@ class Player extends Something{
             if (dir == DirConst.RIGHT && !rightLock ){
                 moveBy(moveSpeedR*delta , 0);
             }
-            Sequence sequence = new seX
             go = false;
             if (true){
                 if (!upLock    )

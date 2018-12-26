@@ -81,10 +81,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     public Texture chunkTex;
 
     Stage stage;
-    Actor actor;
 
     Player player;
-    Something tree1;
+    Tree tree1;
     Something tree2;
     Something tree3;
 
@@ -145,7 +144,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
         //actors!
-        tree1 = new Something(texRegTree);
+        tree1 = new Tree(texRegTree);
         tree2 = new Something(texRegTree);
         tree3 = new Something(texRegTree);
         tree1.setBorders();
@@ -154,6 +153,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         tree1.setPosition(300,100);
         tree2.setPosition(100,200);
         tree3.setPosition(200,100);
+        tree1.setName("tree 1");
+        tree2.setName("tree 2");
+        tree3.setName("tree 3");
 
 //        tree1.border.x = 100;
 //        tree1.border.y = 100;
@@ -254,7 +256,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     }
 
     void shittyMechanics(float delta){
-
     }
     void shittyRenderer(float delta){
         // clear the screen with a dark blue color.
@@ -294,7 +295,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             game.font.draw(game.batch, "Camera Coordinates: "
                             + (int) stage.getCamera().position.x + ":" + (int) stage.getCamera().position.y ,
                     stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-40);
-            animationRender();
+//            animationRender();
             game.batch.end();
 
             ShapeRenderer shape = new ShapeRenderer();
@@ -336,10 +337,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     void shittyControls(float delta){
         float buffer;
         // process user input ------------------------------------------
-        if (Gdx.input.isTouched()) {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-//            camera.unproject(touchPos);
+        if (Gdx.input.justTouched()) {
+            Vector2 screenPos = new Vector2();
+            screenPos.set(Gdx.input.getX(), Gdx.input.getY());
+            Vector2 stagePos = stage.screenToStageCoordinates(screenPos);
+            Actor hitActor = stage.hit(stagePos.x,stagePos.y,false);
+            if (hitActor!=null){
+                System.out.println("Hitted: "+hitActor.getName());
+                hitActor.setDebug(true);
+            }
+
 
         }
 

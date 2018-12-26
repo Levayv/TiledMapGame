@@ -32,6 +32,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     final MyGdxGame game;
 
     private boolean debuging = false;
+    private boolean colliding = true;
     private Sound dropSound;
     private Music rainMusic;
 
@@ -128,20 +129,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         player.setBorders();
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2);
-//        player = new Player(
-//                screen_width / 2 - object_width / 2,
-//                screen_height/ 2 - object_height / 2,
-//                object_width,
-//                object_height
-//        );
 
-
-        //! move to chunk loader
-
-
-//        stage.addActor(tree1);
-//        stage.addActor(tree2);
-//        stage.addActor(tree3);
         stage.addActor(player);
 
         world.chunks[0][0].addActor(tree1);
@@ -157,6 +145,24 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         //animation
         animationCreate();
+        System.out.println("Testing LINE START");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                world.chunks[i][j].setName("CHUNK" + i + "" +j);
+                System.out.println(
+                world.chunks[i][j].getName() +
+                        " " +
+                        world.chunks[i][j].getZIndex()
+                );
+            }
+        }
+        System.out.println(tree1.getName() + " " + tree1.getZIndex());
+        System.out.println(tree2.getName() + " " + tree1.getZIndex());
+        System.out.println(tree3.getName() + " " + tree1.getZIndex());
+        System.out.println(player.getName() + " " + tree1.getZIndex());
+
+
+        System.out.println("Testing LINE END");
     }
     void animationCreate(){
         player.setAnimations();
@@ -235,19 +241,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                         tree3.getBorderH());
             shape.end();
         } // debugging if end
-
-
-        
-//
-//        game.batch.draw(tree1.sprite, tree1.border.x, tree1.border.y, tree1.border.width, tree1.border.height);
-//        game.batch.draw(tree2.sprite, tree2.border.x, tree2.border.y, tree2.border.width, tree2.border.height);
-//        game.batch.draw(tree3.sprite, tree3.border.x, tree3.border.y, tree3.border.width, tree3.border.height);
-//        game.batch.draw(player.sprite, player.border.x, player.border.y, player.border.width, player.border.height);
-//
-//
-//
-
-
     }
     void shittyControls(float delta){
         float buffer;
@@ -293,7 +286,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
         if (Gdx.input.isKeyPressed(Keys.ANY_KEY)){
-            colCheck.calc(player); // Check colider
+            if (colliding)
+                colCheck.calc(player); // Check colider
         }
 
         if (Gdx.input.isKeyPressed(Keys.A)) {
@@ -382,26 +376,30 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         }
         if (Gdx.input.isKeyJustPressed(Keys.F1)) {
             randomize();
-
         }
         if (Gdx.input.isKeyJustPressed(Keys.F2)) {
             game.setScreen(new MainMenuScreen(game));
             dispose();
         }
+        if (Gdx.input.isKeyJustPressed(Keys.F3)) {
+            colliding = !colliding;
+        }
         if (Gdx.input.isKeyJustPressed(Keys.F4)) {
             debuging = !debuging;
             if (debuging){
+                stage.setDebugAll(true);
                 Array<Actor> actors = stage.getActors();
                 System.out.println("Debug: Enabling borders for ["+actors.size+"] entities");
-                for (int i = 0; i < actors.size; i++) {
-                    actors.items[i].setDebug(true);
-                }
+//                for (int i = 0; i < actors.size; i++) {
+//                    actors.items[i].setDebug(true);
+//                }
             }else{
+                stage.setDebugAll(false);
                 Array<Actor> actors = stage.getActors();
                 System.out.println("Debug: Disabling borders for ["+actors.size+"] entities");
-                for (int i = 0; i < actors.size; i++) {
-                    actors.items[i].setDebug(false);
-                }
+//                for (int i = 0; i < actors.size; i++) {
+//                    actors.items[i].setDebug(false);
+//                }
                 minDeltaDebug = 999999;
                 maxDeltaDebug = 1;
             }

@@ -125,8 +125,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         for (int i = 0; i < chunkSize; i++) {
             for (int j = 0; j < chunkSize; j++) {
                 chunks[i][j] = new Chunk(new TextureRegion(chunkTex));
-                chunks[i][j].texReg.setRegionWidth(chunkRes);
-                chunks[i][j].texReg.setRegionHeight(chunkRes);
+                chunks[i][j].setRootWidth(chunkRes);
+                chunks[i][j].setRootHeight(chunkRes);
+//                chunks[i][j].texReg.setRegionWidth(chunkRes);
+//                chunks[i][j].texReg.setRegionHeight(chunkRes);
                 chunks[i][j].setPosition(i*chunkRes,j*chunkRes);
             }
         }
@@ -182,15 +184,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                 stage.addActor(chunks[i][j]);
             }
         }
-//        player.getBorder().x--;
-//        player.getBorder().y--;
-//        player.getBorder().width += 2;
-//        player.getBorder().height += 2;
-        stage.addActor(tree1);
-        stage.addActor(tree2);
-        stage.addActor(tree3);
 
+//        stage.addActor(tree1);
+//        stage.addActor(tree2);
+//        stage.addActor(tree3);
         stage.addActor(player);
+
+        chunks[0][0].addActor(tree1);        chunks[0][0].addActor(tree1);
+        chunks[0][0].addActor(tree2);
+        chunks[0][0].addActor(tree3);
+
 
         colCheck = new Collider(3);
         colCheck.add(player.getBorder());
@@ -200,53 +203,11 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         //animation
         animationCreate();
-
-//        stage.getViewport().update(screen_width/2, screen_height/2, true)
-//        stage.getCamera().update();
-
-
-//        treeActor1.texReg.setRegionX(100);
-//        treeActor1.texReg.setRegionY(100);
-//        stage = new Stage(new ScreenViewport());
-
-//        treeActor1 = new TreeActor(new Vector2(100,100));
-//        treeActor2 = new TreeActor(new Vector2(234,232));
-//        treeActor3 = new TreeActor(new Vector2(342,232));
-
-//        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("DoorSprite.png"));
-//        bucketImage = dropImage;
-
-//        Texture root= new Texture(Gdx.files.internal("DoorSprite.png"));
-//        Texture[] fuck = new Texture[4];
-//        for (int i = 0; i < 4; i++) {
-//        }
-//        TextureRegion t = new TextureRegion(root, 0,0, 64,128);
-//        fuck[0] = t.getTexture();
-//        bucketImage = fuck[0];
     }
     void animationCreate(){
         player.setAnimations();
     }
-    void animationRender(){
 
-    }
-//    public class MyActor extends Actor {
-//        TextureRegion texReg;
-//
-//        public MyActor () {
-//            texReg = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
-//            setBounds(texReg.getRegionX(), texReg.getRegionY(),
-//                    texReg.getRegionWidth(), texReg.getRegionHeight());
-//        }
-//
-//        @Override
-//        public void draw (Batch batch, float parentAlpha) {
-//            Color color = getColor();
-//            batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-//            batch.draw(texReg, getX(), getY(), getOriginX(), getOriginY(),
-//                    getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
-//        }
-//    }
 
     @Override
     public void render(float delta) {
@@ -582,11 +543,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         tree1.texReg.getTexture().dispose();
         tree2.texReg.getTexture().dispose();
         tree3.texReg.getTexture().dispose();
-        for (int i = 0; i < chunkSize; i++) {
-            for (int j = 0; j < chunkSize; j++) {
-                chunks[i][j].texReg.getTexture().dispose();
-            }
-        }
+        // todo dispose chunk images
 
     }
 

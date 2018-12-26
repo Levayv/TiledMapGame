@@ -20,6 +20,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -31,54 +32,31 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     final MyGdxGame game;
 
     private boolean debuging = false;
-
-//    private Actor actor;
-//    private Stage stage;
-
-
     private Sound dropSound;
     private Music rainMusic;
-    //    private OrthographicCamera camera;
-    //    private Rectangle bucket;
-    private Array<Rectangle> raindrops;
-    private long lastDropTime;
-    private int dropsGathered;
 
-    private int world_width= 1600;
-    private int world_height = 960;
-    //    private int world_width  = 1536;
-//    private int world_height = 1536;
+    private Array<Rectangle> raindrops;
+
     private int screen_width = 800;
     private int screen_height = 480;
     private int object_width = 64;
     private int object_height = 64;
 
-//    private Viewport viewport;
-
     private float rotationSpeed = 0.5f;
-//    private int moveSpeed = 200;
 
-    //    private Sprite mapSprite;
-//    private Sprite[][] chunks;
-    private Chunk[][] chunks;
-    private int chunkSize = 3;
-    //    private Texture dropImage;
-//    private Texture bucketImage;
+//    private Chunk[][] chunks;
+//    private int chunkSize = 3;
+
     private Sprite dropImage;
-    //    private Sprite bucketImage;
+
     private Texture treeSprite;
     TextureAtlas atlas;
 
-
-//    Tree tree1;
-//    Tree tree2;
-//    Tree tree3;
-
-    Sprite[] playerSprites = new Sprite[4];
     Collider colCheck;
     public Texture chunkTex;
 
     Stage stage;
+    World world;
 
     Player player;
     Tree tree1;
@@ -96,7 +74,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     public GameScreen(final MyGdxGame game) {
         this.game = game;
         saveLoadJson.setOutputType(JsonWriter.OutputType.json);
-        //        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+//        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
 //        if (!isLocAvailable) System.out.println("no space !!!");
 //        String locRoot = Gdx.files.getLocalStoragePath();
 //        System.out.println(locRoot);
@@ -106,20 +84,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
         TextureRegion texRegTree = atlas.createSprite("droplet");
         dropImage = atlas.createSprite("droplet");
-        chunks = new Chunk[chunkSize][chunkSize];
         chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
-        int chunkRes = 512;
-        for (int i = 0; i < chunkSize; i++) {
-            for (int j = 0; j < chunkSize; j++) {
-                chunks[i][j] = new Chunk();
-                chunks[i][j].setRootTexReg(new TextureRegion(chunkTex));
-                chunks[i][j].setRootWidth(chunkRes);
-                chunks[i][j].setRootHeight(chunkRes);
-//                chunks[i][j].texReg.setRegionWidth(chunkRes);
-//                chunks[i][j].texReg.setRegionHeight(chunkRes);
-                chunks[i][j].setPosition(i*chunkRes,j*chunkRes);
-            }
-        }
+
+
         // load sound & music
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
@@ -131,6 +98,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         ScreenViewport viewport1 = new ScreenViewport(camera);
         stage = new Stage(viewport1, game.batch);
         Gdx.input.setInputProcessor(stage);
+
+        // World init
+        world = new World(stage,chunkTex);
 
 
         //actors!
@@ -167,20 +137,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
         //! move to chunk loader
-        for (int i = 0; i < chunkSize; i++) {
-            for (int j = 0; j < chunkSize; j++) {
-                stage.addActor(chunks[i][j]);
-            }
-        }
+
 
 //        stage.addActor(tree1);
 //        stage.addActor(tree2);
 //        stage.addActor(tree3);
         stage.addActor(player);
 
-        chunks[0][0].addActor(tree1);        chunks[0][0].addActor(tree1);
-        chunks[0][0].addActor(tree2);
-        chunks[0][0].addActor(tree3);
+        world.chunks[0][0].addActor(tree1);
+        world.chunks[0][0].addActor(tree2);
+        world.chunks[0][0].addActor(tree3);
 
 
         colCheck = new Collider(3);
@@ -458,7 +424,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
     private void saveGame() {
         // parse world object to data
-        saveLoadData.getChunksToSave(chunks[0][0]);
+        saveLoadData.getChunksToSave(world.chunks[0][0]);
         // find file to save
         saveLoadFile = Gdx.files.local("saves/save1.txt");
         // save json to file, after parsing data to json
@@ -471,6 +437,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         private int testInt;
         private float testFloat;
         private String testString;
+        private Chunk chunk;
         void getChunksToSave(Chunk chunk){
             this.testInt = chunk.testInt         ;
             this.testFloat = chunk.testfloat       ;
@@ -488,7 +455,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // load file to json , then json to data
         saveLoadData = saveLoadJson.fromJson(SaveLoadData.class, saveLoadFile);
         // parse data to world object
-        saveLoadData.setChunksToLoad(chunks[0][0]);
+        saveLoadData.setChunksToLoad(world.chunks[0][0]);
         // notify load success
         System.out.println("Load Successful");
     }

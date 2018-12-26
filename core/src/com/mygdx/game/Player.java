@@ -95,6 +95,7 @@ class Player extends AnimatedPlayableCharacter{
             dirY = DirConst.NULL;
             go = false;
             if (getDebug()){
+                System.out.print("Moves available");
                 if (!leftLock    )
                     System.out.print("<");
                 if (!rightLock  )

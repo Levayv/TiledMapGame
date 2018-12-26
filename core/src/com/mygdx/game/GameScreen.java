@@ -146,14 +146,19 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         //animation
         animationCreate();
+
+//        testing();
+    }
+
+    private void testing() {
         System.out.println("Testing LINE START");
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 world.chunks[i][j].setName("CHUNK" + i + "" +j);
                 System.out.println(
-                world.chunks[i][j].getName() +
-                        " " +
-                        world.chunks[i][j].getZIndex()
+                        world.chunks[i][j].getName() +
+                                " " +
+                                world.chunks[i][j].getZIndex()
                 );
             }
         }
@@ -161,10 +166,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         System.out.println(tree2.getName() + " " + tree1.getZIndex());
         System.out.println(tree3.getName() + " " + tree1.getZIndex());
         System.out.println(player.getName() + " " + tree1.getZIndex());
-
-
         System.out.println("Testing LINE END");
     }
+
     void animationCreate(){
         player.setAnimations();
     }

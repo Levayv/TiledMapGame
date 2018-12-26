@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.height = 480;
 		config.foregroundFPS = 60;
 
+		// Test
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

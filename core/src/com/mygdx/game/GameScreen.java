@@ -60,7 +60,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     World world;
 
     Player player;
-    Tree tree1;
+    Something tree1;
     Something tree2;
     Something tree3;
 
@@ -83,7 +83,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // loading images with atlas
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
-        TextureRegion texRegTree = atlas.createSprite("droplet");
+//        TextureRegion texRegTree = atlas.createSprite("droplet");
+        TextureRegion texRegTree = new TextureRegion(new Texture("Tree.png"));
         dropImage = atlas.createSprite("droplet");
         chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
 
@@ -105,7 +106,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
         //actors!
-        tree1 = new Tree(texRegTree);
+        tree1 = new Something(texRegTree);
         tree2 = new Something(texRegTree);
         tree3 = new Something(texRegTree);
         tree1.setBorders();

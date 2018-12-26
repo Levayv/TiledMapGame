@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
 
 class Player extends AnimatedPlayableCharacter{
@@ -14,13 +13,16 @@ class Player extends AnimatedPlayableCharacter{
     int moveSpeedD = medium;
     private DirConst dirX;
     private DirConst dirY;
+    private DirConst dirLast;
+    private byte dirNumber;
+
     private boolean upLock          ;
     private boolean downLock        ;
     private boolean leftLock        ;
     private boolean rightLock       ;
     private boolean go;
-    float updateX;
-    float updateY;
+    private float updateX;
+    private float updateY;
 
     public void setupLock (boolean upLock){
         this.upLock = upLock;
@@ -40,6 +42,9 @@ class Player extends AnimatedPlayableCharacter{
 
     public Player(TextureRegion texReg) {
         super(texReg);
+        dirLast = DirConst.NULL;
+        dirX = DirConst.NULL;
+        dirY = DirConst.NULL;
     }
 
     @Override
@@ -60,6 +65,11 @@ class Player extends AnimatedPlayableCharacter{
                 updateY = -moveSpeedD*delta;
             }
             moveBy(updateX, updateY);
+            if (dirY != DirConst.NULL)
+                dirLast = dirY;
+            else
+                dirLast = dirX;
+            getDirfromDir();
 
             dirX = DirConst.NULL;
             dirY = DirConst.NULL;
@@ -76,6 +86,19 @@ class Player extends AnimatedPlayableCharacter{
                 System.out.println();
             }
         }
+    }
+
+    private void getDirfromDir() {
+
+        switch (dirLast){
+            case UP:    dirNumber = 0; break;
+            case DOWN:  dirNumber = 2; break;
+            case LEFT:  dirNumber = 3; break;
+            case RIGHT: dirNumber = 1; break;
+        }
+        texReg = waitFrame[dirNumber];
+//        texReg = new TextureRegion(new Texture(Gdx.files.internal("bucket_64.png")));
+        System.out.println(dirNumber);
     }
 
 
@@ -104,16 +127,4 @@ class Player extends AnimatedPlayableCharacter{
     public void setDirY(DirConst dirY) {
         this.dirY = dirY;
     }
-
-
-
-//    Sprite sprite;
-//    Rectangle border;
-//    int x;
-//    int y;
-//    int width;
-//    int height;
-
-
-
 }

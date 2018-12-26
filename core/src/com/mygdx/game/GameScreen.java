@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +19,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -87,32 +85,21 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     Something tree2;
     Something tree3;
 
-    private float min = 999999; //temp
-    private float max = 1; //temp
+    // Save Load
+    private FileHandle saveLoadFile;
+    private SaveLoadData saveLoadData = new SaveLoadData();;
+    private Json saveLoadJson = new Json();;
+
+    private float minDeltaDebug = 999999; //temp
+    private float maxDeltaDebug = 1; //temp
 
     public GameScreen(final MyGdxGame game) {
         this.game = game;
-
-//        tree1 = new Tree(
-//                100,
-//                100,
-//                object_width,
-//                object_height
-//        );
-//        tree2 = new Tree(
-//                100,
-//                200,
-//                object_width,
-//                object_height
-//        );
-//        tree3 = new Tree(
-//                200,
-//                100,
-//                object_width,
-//                object_height
-//        );
-
-
+        saveLoadJson.setOutputType(JsonWriter.OutputType.json);
+        //        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
+//        if (!isLocAvailable) System.out.println("no space !!!");
+//        String locRoot = Gdx.files.getLocalStoragePath();
+//        System.out.println(locRoot);
 
         // loading images with atlas
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
@@ -124,7 +111,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         int chunkRes = 512;
         for (int i = 0; i < chunkSize; i++) {
             for (int j = 0; j < chunkSize; j++) {
-                chunks[i][j] = new Chunk(new TextureRegion(chunkTex));
+                chunks[i][j] = new Chunk();
+                chunks[i][j].setRootTexReg(new TextureRegion(chunkTex));
                 chunks[i][j].setRootWidth(chunkRes);
                 chunks[i][j].setRootHeight(chunkRes);
 //                chunks[i][j].texReg.setRegionWidth(chunkRes);
@@ -239,15 +227,15 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         if (debuging){
             game.batch.begin();
             float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
-            if (currCustomDelta < min ){
-                min = currCustomDelta;
+            if (currCustomDelta < minDeltaDebug){
+                minDeltaDebug = currCustomDelta;
             }
-            if (currCustomDelta > max){
-                max = currCustomDelta;
+            if (currCustomDelta > maxDeltaDebug){
+                maxDeltaDebug = currCustomDelta;
             }
 
             game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
-                            " Min/Max = "+min+"/"+max+" - "+currCustomDelta,
+                            " Min/Max = "+ minDeltaDebug +"/"+ maxDeltaDebug +" - "+currCustomDelta,
                     stage.getCamera().position.x-screen_width/2,
                     stage.getCamera().position.y+screen_height/2-0);
             game.font.draw(game.batch, "Player Coordinates: "
@@ -448,8 +436,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                 for (int i = 0; i < actors.size; i++) {
                     actors.items[i].setDebug(false);
                 }
-                min = 999999;
-                max = 1;
+                minDeltaDebug = 999999;
+                maxDeltaDebug = 1;
             }
         }
 
@@ -469,38 +457,40 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     }
 
     private void saveGame() {
-        int sum = 3;
-//        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
-//        if (!isLocAvailable) System.out.println("no space !!!");
-//        String locRoot = Gdx.files.getLocalStoragePath();
-//        System.out.println(locRoot);
-
-        Fuck fuck = new Fuck();
-        Json json = new Json();
-        json.setOutputType(JsonWriter.OutputType.json);
-//        json.toJson(fuck);
-        fuck.cup = 111;
-
-        FileHandle file1 = Gdx.files.local("saves/save1.txt");
-        file1.writeString(json.prettyPrint(fuck),false);
-    }
-    static class Fuck{
-        String cunt = "pussy";
-        int cup = 4;
-        float qaq = 14.4f;
+        // parse world object to data
+        saveLoadData.getChunksToSave(chunks[0][0]);
+        // find file to save
+        saveLoadFile = Gdx.files.local("saves/save1.txt");
+        // save json to file, after parsing data to json
+        saveLoadFile.writeString(saveLoadJson.prettyPrint(saveLoadData),false);
+        // notify save success
+        System.out.println("Save Successful");
     }
 
+    private static class SaveLoadData{
+        private int testInt;
+        private float testFloat;
+        private String testString;
+        void getChunksToSave(Chunk chunk){
+            this.testInt = chunk.testInt         ;
+            this.testFloat = chunk.testfloat       ;
+            this.testString = chunk.testString      ;
+        }
+        void setChunksToLoad(Chunk chunk){
+            chunk.testInt = this.testInt    ;
+            chunk.testfloat = this.testFloat;
+            chunk.testString = this.testString ;
+        }
+    }
     private void loadGame() {
-        FileHandle file2 = Gdx.files.local("saves/save1.txt");
-        Json json = new Json();
-        Fuck fuck;
-//        fuck = new Fuck();
-        fuck = json.fromJson(Fuck.class, file2);
-
-        System.out.println(fuck.cup);
-        fuck.cup = 112;
-        System.out.println(fuck.cup);
-
+        // find file to load
+        saveLoadFile = Gdx.files.local("saves/save1.txt");
+        // load file to json , then json to data
+        saveLoadData = saveLoadJson.fromJson(SaveLoadData.class, saveLoadFile);
+        // parse data to world object
+        saveLoadData.setChunksToLoad(chunks[0][0]);
+        // notify load success
+        System.out.println("Load Successful");
     }
 
     @Override
@@ -594,4 +584,4 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 }
 
-//stage.act( Math.min( Gdx.graphics.getDeltaTime(), 1/30 ) );
+//stage.act( Math.minDeltaDebug( Gdx.graphics.getDeltaTime(), 1/30 ) );

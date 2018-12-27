@@ -104,12 +104,12 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         //actors!
         player = new Player(texRegPlayer);
 //        player.setBorders();
-        player.setBorders();
+//        player.setBorders(10,10,20,20);
+        player.setBorders(20,0,20,20);
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2);
         player.setName("player");
         player.entity = Entity.Player;
-        stage.addActor(player);
 
         // World init
         WorldTexRegHandle buffer = new WorldTexRegHandle(100);
@@ -120,7 +120,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         buffer.addTexReg(Entity.Tower,  texRegTower     );
 
         world = new World(stage , buffer, new TextureRegion(texRegLever));
-
+        world.worldGroup.addActor(player);
 
         //Map init
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
@@ -245,20 +245,19 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                         world.tree3.getBorderY(),
                         world.tree3.getBorderW(),
                         world.tree3.getBorderH());
-            shape.setColor(Color.YELLOW); // Texture Yellow
-            shape.rect( world.tree1.texReg.getRegionX(),
-                        world.tree1.texReg.getRegionY(),
-                        world.tree1.texReg.getRegionWidth(),
-                        world.tree1.texReg.getRegionHeight());
-            shape.rect( world.tree2.texReg.getRegionX(),
-                        world.tree2.texReg.getRegionY(),
-                        world.tree2.texReg.getRegionWidth(),
-                        world.tree2.texReg.getRegionHeight());
-            shape.rect( world.tree3.texReg.getRegionX(),
-                        world.tree3.texReg.getRegionY(),
-                        world.tree3.texReg.getRegionWidth(),
-                        world.tree3.texReg.getRegionHeight());
-            shape.setColor(Color.GREEN);    // Range Yellow
+//            shape.rect( world.tree1.texReg.getRegionX(),
+//                        world.tree1.texReg.getRegionY(),
+//                        world.tree1.texReg.getRegionWidth(),
+//                        world.tree1.texReg.getRegionHeight());
+//            shape.rect( world.tree2.texReg.getRegionX(),
+//                        world.tree2.texReg.getRegionY(),
+//                        world.tree2.texReg.getRegionWidth(),
+//                        world.tree2.texReg.getRegionHeight());
+//            shape.rect( world.tree3.texReg.getRegionX(),
+//                        world.tree3.texReg.getRegionY(),
+//                        world.tree3.texReg.getRegionWidth(),
+//                        world.tree3.texReg.getRegionHeight());
+            shape.setColor(Color.YELLOW);    // Range Yellow
             shape.circle(player.getRange().x,
                          player.getRange().y,
                          player.getRange().radius);

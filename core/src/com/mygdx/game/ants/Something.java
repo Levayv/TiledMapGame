@@ -33,25 +33,28 @@ public class Something extends shit{
         border.y      = texReg.getRegionY();
         border.width  = texReg.getRegionWidth();
         border.height = texReg.getRegionHeight();
-        border.x = this.getX() + 0;
-        border.y = this.getY() + 0;
+//        border.x = this.getX() + 0;
+//        border.y = this.getY() + 0;
 //        range.set(border.getCenter(new Vector2()),new Vector2(border.x*2,border.y*2)  );
         range.setPosition(border.getCenter(new Vector2()));
         range.setRadius(border.x*2);
 
     }
-    void setBorders(int borderX, int borderY , int borderWidth, int borderHeight  ){
-        border.x = borderX;
-        border.y = borderY;
-        border.width = borderWidth;
-        border.height = borderHeight;
+    public void setBorders(int borderXdelta, int borderYdelta , int borderWdelta, int borderHdelta  ){
+        this.borderXdelta = borderXdelta;
+        this.borderYdelta = borderYdelta;
+        border.x = texReg.getRegionX() + this.borderXdelta;
+        border.y = texReg.getRegionY() + this.borderYdelta;
+        border.width  = texReg.getRegionWidth()  - borderWdelta*2;
+        border.height = texReg.getRegionHeight() - borderHdelta*2;
+        range.setPosition(border.getCenter(new Vector2()));
+        range.setRadius(border.x*2);
     }
     @Override
     protected void positionChanged(){
         if (range != null && border != null) {
-            border.x = this.getX() + 0;
-            border.y = this.getY() + 0;
-//            range.setPosition(this.getX(),this.getY());
+            border.x = this.getX() + this.borderXdelta;
+            border.y = this.getY() + this.borderYdelta;
             range.setPosition(border.getCenter(buffVect2));
         }
     }

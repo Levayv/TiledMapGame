@@ -22,7 +22,7 @@ class World {
     private  WorldTexRegHandle texRegHandle;
 
     private Pos lastPos;
-
+    public Group worldGroup;
 
     Something tree1;
     Something tree2;
@@ -40,7 +40,7 @@ class World {
     private int slimeCount = 3;
 
     World(Stage stage, WorldTexRegHandle buffer,TextureRegion texRegLever){
-        Group worldGroup = new Group();
+        worldGroup = new Group();
         stage.addActor(worldGroup);
 
         TextureRegion texRegTree;

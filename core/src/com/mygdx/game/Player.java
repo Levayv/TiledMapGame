@@ -101,7 +101,7 @@ class Player extends AnimatedPlayableCharacter {
             dirY = DirConst.NULL;
             go = false;
             if (getDebug()){
-                System.out.print("Moves available");
+                System.out.print("Moves ");
                 if (!leftLock    )
                     System.out.print("<");
                 if (!rightLock  )
@@ -202,10 +202,6 @@ class Player extends AnimatedPlayableCharacter {
             case LEFT:  dirNumber = 3; break;
             case RIGHT: dirNumber = 1; break;
         }
-
-//        texReg = new TextureRegion(new Texture(Gdx.files.internal("bucket_64.png")));
-        if (getDebug())
-            System.out.println(dirNumber);
     }
 
     void speedLow(){

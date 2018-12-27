@@ -1,11 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.ants;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.game.enums.Entity;
 
 public class Something extends shit{
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object
+    public Entity entity;
 
     public Something(TextureRegion texReg) {
         super(texReg);
@@ -17,7 +20,7 @@ public class Something extends shit{
 //    int width;
 //    int height;
 
-    void setBorders(){
+    public void setBorders(){
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
         border.width  = texReg.getRegionWidth();
@@ -52,9 +55,23 @@ public class Something extends shit{
             border.y = this.getY() + 0;
         }
     }
-    float getBorderX(){ return border.x;}
-    float getBorderY(){ return border.y;}
-    float getBorderW(){ return border.width;}
-    float getBorderH(){ return border.height;}
-    Rectangle getBorder(){ return border;}
+    public float getBorderX(){ return border.x;}
+    public float getBorderY(){ return border.y;}
+    public float getBorderW(){ return border.width;}
+    public float getBorderH(){ return border.height;}
+    public Rectangle getBorder(){ return border;}
+
+    //        Actor a = super.hit(x,y,touchable);
+//    @Override
+    //    public Actor hit(float x, float y, boolean touchable){
+//        System.out.println("!");
+////        Something s = (Something) a;
+//        return a;
+//    }
+//    @Override
+//    public Actor hit(float x, float y, boolean touchable){
+//        System.out.println("!");
+//        return null;
+//    }
+
 }

@@ -1,38 +1,29 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.ants.AnimatedNPC;
+import com.mygdx.game.ants.AnimatedSomething;
+import com.mygdx.game.ants.Something;
 import com.mygdx.game.enums.Entity;
 
-import java.util.Properties;
-
 class World {
-    // World's knowledge about chunks
-//    private int chunkSize = 3;
-//    private int chunkRes = 512;
-//    Chunk[][] chunks;
-    Group group = new Group();
-    private short tileSize = 32;
-    TiledMap map;
+    // World's knowledge about grid
+    private int tileSize;
+    private TiledMap map;
+    private  int mapWidth;
+    private  int mapHeight;
+    private Grid grid;
+    private  WorldTexRegHandle texRegHandle;
+
+    private Pos lastPos;
+
+
     Something tree1;
     Something tree2;
     Something tree3;
@@ -43,35 +34,75 @@ class World {
     AnimatedNPC[] slime2;
     AnimatedNPC[] slime3;
     private int slimeCount = 3;
-    private Pos lastPos;
 
-    World(Stage stage, TextureRegion texRegTree, TextureRegion texRegLever){
-        stage.addActor(group);
+    World(Stage stage, WorldTexRegHandle buffer,TextureRegion texRegLever){
+        Group worldGroup = new Group();
+        stage.addActor(worldGroup);
 
+        TextureRegion texRegTree;
+
+        // Texture Handler
+        texRegHandle = buffer;
+
+
+        // load map , get props
         map = new TmxMapLoader().load("maps/32/level0.tmx");
+        MapProperties prop = map.getProperties();
+        mapWidth = prop.get("width", Integer.class);
+        mapHeight = prop.get("height", Integer.class);
+        tileSize = prop.get("tilewidth", Integer.class);
+        // Grid init
+        grid = new Grid(mapWidth , mapHeight);
 
-        tree1 = new Something(texRegTree);
-        tree2 = new Something(texRegTree);
-        tree3 = new Something(texRegTree);
-        lever = new Something(texRegLever);
-        door1 = new AnimatedSomething(texRegTree, "door1" , 18);
-        door2 = new AnimatedSomething(texRegTree, "Explosion" , 12);
+        // temp grid manipulations
+//        grid.addObject();
+
+
+        //------------------------------------------
+        System.out.println("1");
+        System.out.println("2" + texRegHandle.toString());
+        System.out.println("3" + texRegHandle.texRegsSize);
+        System.out.println("4" + texRegHandle.getTexRegByID(Entity.Tree));
+
+        tree1  = new Something(texRegHandle.getTexRegByID(Entity.Tree));
+        tree2  = new Something(texRegHandle.getTexRegByID(Entity.Stone));
+        tree3  = new Something(texRegHandle.getTexRegByID(Entity.Ore));
+        lever  = new Something(texRegLever);
+        door1  = new AnimatedSomething(texRegLever, "door1" , 18);
+        door2  = new AnimatedSomething(texRegLever, "Explosion" , 12);
         slime1 = new AnimatedNPC[slimeCount];
         slime2 = new AnimatedNPC[slimeCount];
         slime3 = new AnimatedNPC[slimeCount];
+
+        tree1  .entity = Entity.Tree;
+        tree2  .entity = Entity.Stone;
+        tree3  .entity = Entity.Ore;
+        lever  .entity = Entity.None;
+        door1  .entity = Entity.None;
+        door2  .entity = Entity.None;
+
+
+        worldGroup.addActor(tree1);
+        worldGroup.addActor(tree2);
+        worldGroup.addActor(tree3);
+        worldGroup.addActor(lever);
+        worldGroup.addActor(door1);
+        worldGroup.addActor(door2);
+
+
         for (int i = 0; i < slimeCount; i++) {
-            slime1[i] = new AnimatedNPC(texRegTree, "slime-blue" , 4);
-            slime2[i] = new AnimatedNPC(texRegTree, "slime-green" , 4);
-            slime3[i] = new AnimatedNPC(texRegTree, "slime-orange" , 4);
+            slime1[i] = new AnimatedNPC(texRegLever, "slime-blue" , 4);
+            slime2[i] = new AnimatedNPC(texRegLever, "slime-green" , 4);
+            slime3[i] = new AnimatedNPC(texRegLever, "slime-orange" , 4);
             slime1[i].setBorders();
             slime2[i].setBorders();
             slime3[i].setBorders();
             slime1[i].setPosition(i*tileSize,1*tileSize);
             slime2[i].setPosition(i*tileSize,6*tileSize);
             slime3[i].setPosition(i*tileSize,9*tileSize);
-            group.addActor(slime1[i]);
-            group.addActor(slime2[i]);
-            group.addActor(slime3[i]);
+            worldGroup.addActor(slime1[i]);
+            worldGroup.addActor(slime2[i]);
+            worldGroup.addActor(slime3[i]);
         }
 
 
@@ -107,9 +138,9 @@ class World {
 //        stage.addActor(tree1);
 //        stage.addActor(tree2);
 //        stage.addActor(tree3);
-        stage.addActor(lever);
-        stage.addActor(door1);
-        stage.addActor(door2);
+//        stage.addActor(lever);
+//        stage.addActor(door1);
+//        stage.addActor(door2);
 
 //        MapLayers layers = map.getLayers();
 //        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("background0");
@@ -138,6 +169,10 @@ class World {
     private void setPosition(Actor actor , Pos pos){
         actor.setPosition(pos.x*tileSize , pos.y*tileSize);
     }
+    TiledMap getMap(){
+        return map;
+    }
+
 
     //        chunks = new Chunk[chunkSize][chunkSize];
 //        for (int i = 0; i < chunkSize; i++) {
@@ -176,4 +211,5 @@ class World {
 //        float opacity = object.getOpacity();
 //        boolean isVisible = object.isVisible();
 //        Color color = object.getColor();
+
 }

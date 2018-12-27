@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.ants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

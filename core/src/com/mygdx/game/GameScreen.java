@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -26,7 +25,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.ants.Something;
 import com.mygdx.game.enums.DirConst;
+import com.mygdx.game.enums.Entity;
 
 
 public class GameScreen implements Screen , GestureDetector.GestureListener {
@@ -45,7 +46,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //    private Chunk[][] chunks;
 //    private int chunkSize = 3;
 
-    private Sprite dropImage;
 
     TextureAtlas atlas;
 
@@ -79,12 +79,12 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // loading images with atlas
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
-        TextureRegion texRegTree = atlas.createSprite("droplet");
-//        TextureRegion texRegTree = new TextureRegion(new Texture("Tree.png"));
-        dropImage = atlas.createSprite("droplet");
-//        Texture chunkTex;
-//        chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
-        Texture leverTex = new Texture(Gdx.files.internal("lever.png"));
+        TextureRegion texRegDrop = atlas.createSprite("droplet");
+//      // loading temp images with Texture
+        TextureRegion texRegTree = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
+        TextureRegion texRegStone = new TextureRegion(new Texture(Gdx.files.internal("stone.png")));
+        TextureRegion texRegOre = new TextureRegion(new Texture(Gdx.files.internal("ore.png")));
+        TextureRegion texRegLever = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
 
 
         // load sound & music
@@ -105,15 +105,22 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         player.setBorders();
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2);
+        player.setName("player");
+        player.entity = Entity.Player;
         stage.addActor(player);
 
         // World init
-        world = new World(stage , texRegTree, new TextureRegion(leverTex));
+        WorldTexRegHandle buffer = new WorldTexRegHandle(100);
 
+        buffer.addTexReg(Entity.Tree,   texRegTree);
+        buffer.addTexReg(Entity.Stone,  texRegStone);
+        buffer.addTexReg(Entity.Ore,    texRegOre);
+
+        world = new World(stage , buffer, new TextureRegion(texRegLever));
 
 
         //Map init
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.map);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
 
 //        tree1.border.x = 100;
 //        tree1.border.y = 100;
@@ -139,6 +146,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         testing();
     }
+
+
 
     private void testing() {
         System.out.println("Testing LINE START");
@@ -243,10 +252,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             Vector2 screenPos = new Vector2();
             screenPos.set(Gdx.input.getX(), Gdx.input.getY());
             Vector2 stagePos = stage.screenToStageCoordinates(screenPos);
-            Actor hitActor = stage.hit(stagePos.x,stagePos.y,false);
-            if (hitActor!=null){
-                System.out.println("Hitted: "+hitActor.getName());
-                hitActor.setDebug(true);
+            Something hitSomething = (Something) stage.hit(stagePos.x,stagePos.y,false);
+            if (hitSomething!=null){
+                System.out.print("Hit: ActorName=");
+                System.out.print(hitSomething.getName());
+                System.out.print(" EntityID=");
+                System.out.print(hitSomething.entity.GetID());
+                System.out.print(" EntityName=");
+                System.out.print(hitSomething.entity);
+                System.out.println();
+                hitSomething.setDebug(true);
             }
 
 
@@ -487,7 +502,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         rainMusic.dispose();
         dropSound.dispose();
 
-        dropImage.getTexture().dispose();
         player.texReg.getTexture().dispose();
         world.tree1.texReg.getTexture().dispose();
         world.tree2.texReg.getTexture().dispose();

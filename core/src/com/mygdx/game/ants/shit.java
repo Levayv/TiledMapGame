@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.ants;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class shit extends Actor {
-    TextureRegion texReg;
+    public TextureRegion texReg;
 
     public shit (TextureRegion texReg) {
 //        texReg = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));

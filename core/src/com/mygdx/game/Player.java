@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.ants.AnimatedPlayableCharacter;
 import com.mygdx.game.enums.DirConst;
 
 
-class Player extends AnimatedPlayableCharacter{
+class Player extends AnimatedPlayableCharacter {
     private static int low      = 50;
     private static int medium   = 200;
     private static int high     = 600;

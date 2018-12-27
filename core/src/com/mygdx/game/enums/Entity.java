@@ -2,9 +2,11 @@ package com.mygdx.game.enums;
 
 public enum Entity {
     None(0),
-    Wood(1),
-    Stone(2),
-    Ore(3);
+    Player(1),
+    NPC(2),
+    Tree(11),
+    Stone(12),
+    Ore(13);
 
     int id;
     private Entity(int i){id = i;}

@@ -1,10 +1,5 @@
-package com.mygdx.game;
+package com.mygdx.game.ants;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AnimatedPlayableCharacter extends AnimatedNPC {

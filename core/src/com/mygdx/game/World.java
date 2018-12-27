@@ -4,15 +4,26 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapImageLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.enums.Entity;
+
+import java.util.Properties;
 
 class World {
     // World's knowledge about chunks
@@ -31,14 +42,13 @@ class World {
     AnimatedNPC[] slime1;
     AnimatedNPC[] slime2;
     AnimatedNPC[] slime3;
-    private int slimeCount = 1000;
-
+    private int slimeCount = 3;
+    private Pos lastPos;
 
     World(Stage stage, TextureRegion texRegTree, TextureRegion texRegLever){
         stage.addActor(group);
 
         map = new TmxMapLoader().load("maps/32/level0.tmx");
-
 
         tree1 = new Something(texRegTree);
         tree2 = new Something(texRegTree);
@@ -97,17 +107,38 @@ class World {
 //        stage.addActor(tree1);
 //        stage.addActor(tree2);
 //        stage.addActor(tree3);
-//        stage.addActor(lever);
-//        stage.addActor(door1);
-//        stage.addActor(door2);
+        stage.addActor(lever);
+        stage.addActor(door1);
+        stage.addActor(door2);
+
+//        MapLayers layers = map.getLayers();
+//        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("background0");
+//        MapLayer layer = layers.get("background0");
+//        MapLayer layer = map.getLayers().get(2);
+//        TiledMapTileLayer.Cell cell = layer.getCell(0,0);
+//        TiledMapTile tile = cell.getTile();
+//        tile.getProperties();
+//        MapProperties prop = tile.getProperties();
+
+//        System.out.println(tile.getId());
+//        tile.setId(40);
+//        System.out.println(tile.getId());
 
 
+//        if (prop.containsKey("typeZ")){
+//             ignored , i got 2 objects both with property
+//             type 1 and type 2
+//            int i = prop.get("typeZ", Integer.class);
+//            System.out.println(i);
+//            entity = Entity.GetValue(i);
+//            System.out.println(entity);
+            // goal is to store tile object types in Entity enum
+        }
 
-
-
-
-
+    private void setPosition(Actor actor , Pos pos){
+        actor.setPosition(pos.x*tileSize , pos.y*tileSize);
     }
+
     //        chunks = new Chunk[chunkSize][chunkSize];
 //        for (int i = 0; i < chunkSize; i++) {
 //            for (int j = 0; j < chunkSize; j++) {
@@ -130,7 +161,9 @@ class World {
 //        tempS = map.getProperties().get("custom-property", String.class);
 //        System.out.println(tempS);
 
-//        MapLayer layer0 = map.getLayers().get(0);
+
+
+
 //        MapLayer layer1 = map.getLayers().get(1);
 //        MapLayer layer2 = map.getLayers().get(2);
 //        MapLayer layer3 = map.getLayers().get(3);

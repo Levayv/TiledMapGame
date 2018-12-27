@@ -19,7 +19,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,6 +26,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.enums.DirConst;
 
 
 public class GameScreen implements Screen , GestureDetector.GestureListener {
@@ -315,7 +315,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             stage.getCamera().translate(0, 6, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.E)) {
-            ((OrthographicCamera)stage.getCamera()).zoom += 0.24;
+            ((OrthographicCamera)stage.getCamera()).zoom += 1*delta;
         }
         if (Gdx.input.isKeyPressed(Keys.Q)) {
             ((OrthographicCamera)stage.getCamera()).zoom -= 1*delta;

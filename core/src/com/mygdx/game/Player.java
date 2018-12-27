@@ -44,6 +44,16 @@ class Player extends AnimatedPlayableCharacter{
     private float frameDur = 0.025f;
     float animationTime = 0f;
 
+    public Player(TextureRegion texReg, String file, int rows) {
+        super(texReg, file, rows);
+    }
+    public Player(TextureRegion texReg) {
+        super(texReg , "Explosion", 111);
+        dirLast = DirConst.NULL;
+        dirX = DirConst.NULL;
+        dirY = DirConst.NULL;
+    }
+
     public void setupLock (boolean upLock){
         this.upLock = upLock;
     }
@@ -60,12 +70,7 @@ class Player extends AnimatedPlayableCharacter{
         go = true;
     }
 
-    public Player(TextureRegion texReg) {
-        super(texReg);
-        dirLast = DirConst.NULL;
-        dirX = DirConst.NULL;
-        dirY = DirConst.NULL;
-    }
+
 
     @Override
     public void act(float delta){

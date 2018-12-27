@@ -175,6 +175,11 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     }
     void shittyRenderer(float delta){
         // clear the screen with a dark blue color.
+//        world.group.setCullingArea(new Rectangle(
+//                stage.getCamera().position.x - stage.getCamera().viewportWidth /2 ,
+//                stage.getCamera().position.y - stage.getCamera().viewportHeight/2,
+//                stage.getCamera().viewportWidth ,
+//                stage.getCamera().viewportHeight));
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        stage.getCamera().update(); //? why

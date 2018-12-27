@@ -8,12 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class AnimatedPlayableCharacter extends AnimatedNPC {
-    public AnimatedPlayableCharacter(TextureRegion texReg) {
-        super(texReg);
-    }   //todo fix this shit , you got no direction or last frame for animations
 
 
-
-
-
+    public AnimatedPlayableCharacter(TextureRegion texReg, String file, int rows) {
+        super(texReg, file, rows);
+    }
 }

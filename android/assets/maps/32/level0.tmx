@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map SYSTEM "http://mapeditor.org/dtd/1.0/map.dtd">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="22">
+ <tileset firstgid="1" source="ground_tiles.tsx"/>
+ <tileset firstgid="442" source="object_layer.tsx"/>
+ <tileset firstgid="526" source="magecity.tsx"/>
+ <tileset firstgid="886" name="Cliff_tileset" tilewidth="32" tileheight="32" tilecount="240" columns="15">
+  <image source="Cliff_tileset.png" width="503" height="518"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt1TsSwUAcx/FNGtwBjTYeSXqvAj0zjoA7YEajx3AEDAXugDvgMn4ZKTKZROafZLMptvjMzhY7330UqzHGNCkW5RBkX/ZlX/ZlX4wFUVr7baK09fsKYwMl+X4JRuiOYaL85kN79MKjP0VvBnNB/RV6a9gI6u/RO8DR0d/CzmMfPPpuVv8E5wT6S6K4+y24wBVu9vwfHv07PODp06yojFU91NR4+i94w0dQn4LH/VP7Os5tOJiq/76CZCALOUcj6A+w3qMODWi63oEqDwUoEs5v9TvQhV7Evg4GmCHXR/UFdZ3koA==
+  </data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztljlOw0AUhieTSCxNQEAmCKiALj6Ecw3gDhF3YGtYOujgKGwVUCUCRJAi0bEVdCwNn+UpBsdxCNEMCM0vfZrnkfW+8XNhC+Hj4+PztxJqKh34734zJ3khTuEMzuEi79Zfx9eAG2jCrWO/z9e8Mv83eIePX3gXAwUhBmEIhgvu/SWcCsow6cC/KYXYku37LxZnv45vI8XpKtu4dzr4y3p/1OL5dum916X/iEX/Pr0PUvpPsDcG4zKuXWcG5xRMy7juN1WjPoQjOO6/7bcTGPUlXMG1vm7m+Nbk4nqOZ523MO/IH+r6EZ7gWV/f437Q/gruwII/NKh2uddGon+ZwGABFjNY6qG3Yl5FA5VCMjW4Y+azrA291vXaYl3uwV+U7ajEWZJZgdUM1n7w/CpjBjaTdCfPENWfUSg1vQ==
+  </data>
+ </layer>
+</map>

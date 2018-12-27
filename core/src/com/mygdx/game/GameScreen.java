@@ -17,10 +17,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
@@ -36,33 +37,28 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     private Sound dropSound;
     private Music rainMusic;
 
-    private Array<Rectangle> raindrops;
-
     private int screen_width = 800;
     private int screen_height = 480;
     private int object_width = 64;
     private int object_height = 64;
-
-    private float rotationSpeed = 0.5f;
 
 //    private Chunk[][] chunks;
 //    private int chunkSize = 3;
 
     private Sprite dropImage;
 
-    private Texture treeSprite;
     TextureAtlas atlas;
 
     Collider colCheck;
-    public Texture chunkTex;
 
     Stage stage;
     World world;
 
     Player player;
-    Something tree1;
-    Something tree2;
-    Something tree3;
+
+
+    TiledMapRenderer tiledMapRenderer;
+
 
     // Save Load
     private FileHandle saveLoadFile;
@@ -83,16 +79,19 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // loading images with atlas
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
-//        TextureRegion texRegTree = atlas.createSprite("droplet");
-        TextureRegion texRegTree = new TextureRegion(new Texture("Tree.png"));
+        TextureRegion texRegTree = atlas.createSprite("droplet");
+//        TextureRegion texRegTree = new TextureRegion(new Texture("Tree.png"));
         dropImage = atlas.createSprite("droplet");
-        chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
+//        Texture chunkTex;
+//        chunkTex = new Texture(Gdx.files.internal("dirt512.png"));
+        Texture leverTex = new Texture(Gdx.files.internal("lever.png"));
 
 
         // load sound & music
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
         rainMusic.setLooping(true);
+
 
         //stage!
         OrthographicCamera camera = new OrthographicCamera();
@@ -101,23 +100,20 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         stage = new Stage(viewport1, game.batch);
         Gdx.input.setInputProcessor(stage);
 
-        // World init
-        world = new World(stage,chunkTex);
-
-
         //actors!
-        tree1 = new Something(texRegTree);
-        tree2 = new Something(texRegTree);
-        tree3 = new Something(texRegTree);
-        tree1.setBorders();
-        tree2.setBorders();
-        tree3.setBorders();
-        tree1.setPosition(300,100);
-        tree2.setPosition(100,200);
-        tree3.setPosition(200,100);
-        tree1.setName("tree 1");
-        tree2.setName("tree 2");
-        tree3.setName("tree 3");
+        player = new Player(texRegPlayer);
+        player.setBorders();
+        player.setPosition(screen_width / 2 - object_width / 2,
+                screen_height/ 2 - object_height / 2);
+        stage.addActor(player);
+
+        // World init
+        world = new World(stage , texRegTree, new TextureRegion(leverTex));
+
+
+
+        //Map init
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.map);
 
 //        tree1.border.x = 100;
 //        tree1.border.y = 100;
@@ -126,46 +122,40 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 //        tree3.border.x = 200;
 //        tree3.border.y = 100;
 
-        player = new Player(texRegPlayer);
-        player.setBorders();
-        player.setPosition(screen_width / 2 - object_width / 2,
-                screen_height/ 2 - object_height / 2);
 
-        stage.addActor(player);
 
-        world.chunks[0][0].addActor(tree1);
-        world.chunks[0][0].addActor(tree2);
-        world.chunks[0][0].addActor(tree3);
-
+//        world.chunks[0][0].addActor(tree1);
+//        world.chunks[0][0].addActor(tree2);
+//        world.chunks[0][0].addActor(tree3);
 
         colCheck = new Collider(3);
         colCheck.add(player.getBorder());
-        colCheck.add(tree1. getBorder());
-        colCheck.add(tree2. getBorder());
-        colCheck.add(tree3. getBorder());
+        colCheck.add(world.tree1. getBorder());
+        colCheck.add(world.tree2. getBorder());
+        colCheck.add(world.tree3. getBorder());
 
         //animation
         animationCreate();
 
-//        testing();
+        testing();
     }
 
     private void testing() {
         System.out.println("Testing LINE START");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                world.chunks[i][j].setName("CHUNK" + i + "" +j);
-                System.out.println(
-                        world.chunks[i][j].getName() +
-                                " " +
-                                world.chunks[i][j].getZIndex()
-                );
-            }
-        }
-        System.out.println(tree1.getName() + " " + tree1.getZIndex());
-        System.out.println(tree2.getName() + " " + tree1.getZIndex());
-        System.out.println(tree3.getName() + " " + tree1.getZIndex());
-        System.out.println(player.getName() + " " + tree1.getZIndex());
+//        for (int i = 0; i < 3; i++) {
+//            for (int j = 0; j < 3; j++) {
+//                world.chunks[i][j].setName("CHUNK" + i + "" +j);
+//                System.out.println(
+//                        world.chunks[i][j].getName() +
+//                                " " +
+//                                world.chunks[i][j].getZIndex()
+//                );
+//            }
+//        }
+//        System.out.println(tree1.getName() + " " + tree1.getZIndex());
+//        System.out.println(tree2.getName() + " " + tree1.getZIndex());
+//        System.out.println(tree3.getName() + " " + tree1.getZIndex());
+//        System.out.println(player.getName() + " " + tree1.getZIndex());
         System.out.println("Testing LINE END");
     }
 
@@ -187,21 +177,15 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // clear the screen with a dark blue color.
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        stage.getCamera().update(); //? why
+        tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
+        tiledMapRenderer.render();
+
         stage.act(delta);
         stage.draw();
-        // tell the camera to update its matrices.
-//        camera.update();
-
-        // tell the SpriteBatch to render in the
-        // coordinate system specified by the camera.
-
-
-        // begin a new batch and draw ------------------------------------
-
-
-//        game.batch.setProjectionMatrix(camera.combined);
 
         if (debuging){
+//        game.batch.setProjectionMatrix(camera.combined); //? why ?
             game.batch.begin();
             float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
             if (currCustomDelta < minDeltaDebug){
@@ -232,18 +216,18 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                        player.getBorderY(),
                        player.getBorderW(),
                        player.getBorderH());
-            shape.rect( tree1.getBorderX(),
-                        tree1.getBorderY(),
-                        tree1.getBorderW(),
-                        tree1.getBorderH());
-            shape.rect( tree2.getBorderX(),
-                        tree2.getBorderY(),
-                        tree2.getBorderW(),
-                        tree2.getBorderH());
-            shape.rect( tree3.getBorderX(),
-                        tree3.getBorderY(),
-                        tree3.getBorderW(),
-                        tree3.getBorderH());
+            shape.rect( world.tree1.getBorderX(),
+                        world.tree1.getBorderY(),
+                        world.tree1.getBorderW(),
+                        world.tree1.getBorderH());
+            shape.rect( world.tree2.getBorderX(),
+                        world.tree2.getBorderY(),
+                        world.tree2.getBorderW(),
+                        world.tree2.getBorderH());
+            shape.rect( world.tree3.getBorderX(),
+                        world.tree3.getBorderY(),
+                        world.tree3.getBorderW(),
+                        world.tree3.getBorderH());
             shape.end();
         } // debugging if end
     }
@@ -417,17 +401,17 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     private void randomize() {
         Random r = new Random();
 
-        tree1.setX(r.nextInt(100)     );
-        tree1.setY(r.nextInt(100)     );
-        tree2.setX(r.nextInt(200)+100 );
-        tree2.setY(r.nextInt(200)+100 );
-        tree3.setX(r.nextInt(300)+200 );
-        tree3.setY(r.nextInt(100)     );
+        world.tree1.setX(r.nextInt(100)     );
+        world.tree1.setY(r.nextInt(100)     );
+        world.tree2.setX(r.nextInt(200)+100 );
+        world.tree2.setY(r.nextInt(200)+100 );
+        world.tree3.setX(r.nextInt(300)+200 );
+        world.tree3.setY(r.nextInt(100)     );
     }
 
     private void saveGame() {
         // parse world object to data
-        saveLoadData.getChunksToSave(world.chunks[0][0]);
+//        saveLoadData.getChunksToSave(world.chunks[0][0]);
         // find file to save
         saveLoadFile = Gdx.files.local("saves/save1.txt");
         // save json to file, after parsing data to json
@@ -458,7 +442,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // load file to json , then json to data
         saveLoadData = saveLoadJson.fromJson(SaveLoadData.class, saveLoadFile);
         // parse data to world object
-        saveLoadData.setChunksToLoad(world.chunks[0][0]);
+//        saveLoadData.setChunksToLoad(world.chunks[0][0]);
         // notify load success
         System.out.println("Load Successful");
     }
@@ -500,9 +484,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         dropImage.getTexture().dispose();
         player.texReg.getTexture().dispose();
-        tree1.texReg.getTexture().dispose();
-        tree2.texReg.getTexture().dispose();
-        tree3.texReg.getTexture().dispose();
+        world.tree1.texReg.getTexture().dispose();
+        world.tree2.texReg.getTexture().dispose();
+        world.tree3.texReg.getTexture().dispose();
         // todo dispose chunk images
 
     }

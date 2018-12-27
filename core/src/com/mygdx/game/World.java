@@ -27,7 +27,11 @@ class World {
     Something tree1;
     Something tree2;
     Something tree3;
+    Something tower1;
+    Something tower2;
+    Something tower3;
     Something lever;
+
     AnimatedSomething door1;
     AnimatedSomething door2;
     AnimatedNPC[] slime1;
@@ -73,6 +77,11 @@ class World {
         slime1 = new AnimatedNPC[slimeCount];
         slime2 = new AnimatedNPC[slimeCount];
         slime3 = new AnimatedNPC[slimeCount];
+        tower1 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
+        tower2 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
+        tower3 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
+
+
 
         tree1  .entity = Entity.Tree;
         tree2  .entity = Entity.Stone;
@@ -80,6 +89,9 @@ class World {
         lever  .entity = Entity.None;
         door1  .entity = Entity.None;
         door2  .entity = Entity.None;
+        tower1  .entity = Entity.Tower;
+        tower2  .entity = Entity.Tower;
+        tower3  .entity = Entity.Tower;
 
 
         worldGroup.addActor(tree1);
@@ -88,6 +100,9 @@ class World {
         worldGroup.addActor(lever);
         worldGroup.addActor(door1);
         worldGroup.addActor(door2);
+        worldGroup.addActor(tower1);
+        worldGroup.addActor(tower2);
+        worldGroup.addActor(tower3);
 
 
         for (int i = 0; i < slimeCount; i++) {
@@ -114,8 +129,9 @@ class World {
         lever.setBorders();
         door1.setBorders();
         door2.setBorders();
-
-
+        tower1.setBorders();
+        tower2.setBorders();
+        tower3.setBorders();
 
         tree1.setPosition(9 *tileSize,3 *tileSize);
         tree2.setPosition(3 *tileSize,6 *tileSize);
@@ -124,6 +140,9 @@ class World {
         door1.setPosition(12*tileSize,12*tileSize);
         door2.setPosition(15*tileSize,15*tileSize);
 
+        tower1.setPosition(18 *tileSize,0 *tileSize);
+        tower2.setPosition(18 *tileSize,5 *tileSize);
+        tower3.setPosition(18 *tileSize,10 *tileSize);
 
 
 //        tree1.setName("tree 1");

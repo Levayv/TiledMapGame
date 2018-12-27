@@ -84,6 +84,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         TextureRegion texRegTree = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
         TextureRegion texRegStone = new TextureRegion(new Texture(Gdx.files.internal("stone.png")));
         TextureRegion texRegOre = new TextureRegion(new Texture(Gdx.files.internal("ore.png")));
+        TextureRegion texRegTower = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
 
 
@@ -102,6 +103,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         //actors!
         player = new Player(texRegPlayer);
+//        player.setBorders();
         player.setBorders();
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2);
@@ -112,9 +114,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // World init
         WorldTexRegHandle buffer = new WorldTexRegHandle(100);
 
-        buffer.addTexReg(Entity.Tree,   texRegTree);
-        buffer.addTexReg(Entity.Stone,  texRegStone);
-        buffer.addTexReg(Entity.Ore,    texRegOre);
+        buffer.addTexReg(Entity.Tree,   texRegTree      );
+        buffer.addTexReg(Entity.Stone,  texRegStone     );
+        buffer.addTexReg(Entity.Ore,    texRegOre       );
+        buffer.addTexReg(Entity.Tower,  texRegTower     );
 
         world = new World(stage , buffer, new TextureRegion(texRegLever));
 
@@ -225,7 +228,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             ShapeRenderer shape = new ShapeRenderer();
             shape.setProjectionMatrix(stage.getCamera().combined);
             shape.begin(ShapeRenderer.ShapeType.Line);
-            shape.setColor(Color.RED);
+            shape.setColor(Color.RED); // Border Colider RED
             shape.rect(player.getBorderX(),
                        player.getBorderY(),
                        player.getBorderW(),
@@ -242,6 +245,23 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                         world.tree3.getBorderY(),
                         world.tree3.getBorderW(),
                         world.tree3.getBorderH());
+            shape.setColor(Color.YELLOW); // Texture Yellow
+            shape.rect( world.tree1.texReg.getRegionX(),
+                        world.tree1.texReg.getRegionY(),
+                        world.tree1.texReg.getRegionWidth(),
+                        world.tree1.texReg.getRegionHeight());
+            shape.rect( world.tree2.texReg.getRegionX(),
+                        world.tree2.texReg.getRegionY(),
+                        world.tree2.texReg.getRegionWidth(),
+                        world.tree2.texReg.getRegionHeight());
+            shape.rect( world.tree3.texReg.getRegionX(),
+                        world.tree3.texReg.getRegionY(),
+                        world.tree3.texReg.getRegionWidth(),
+                        world.tree3.texReg.getRegionHeight());
+            shape.setColor(Color.GREEN);    // Range Yellow
+            shape.circle(player.getRange().x,
+                         player.getRange().y,
+                         player.getRange().radius);
             shape.end();
         } // debugging if end
     }

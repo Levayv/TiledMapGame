@@ -4,6 +4,7 @@ public enum Entity {
     None(0),
     Player(1),
     NPC(2),
+    Tower(3),
     Tree(11),
     Stone(12),
     Ore(13);

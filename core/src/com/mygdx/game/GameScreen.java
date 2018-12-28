@@ -32,7 +32,7 @@ import com.mygdx.game.enums.DirConst;
 import com.mygdx.game.enums.Entity;
 
 
-public class GameScreen implements Screen , GestureDetector.GestureListener {
+public class GameScreen implements Screen {
     final MyGdxGame game;
 
     private boolean debugging = false;
@@ -58,6 +58,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     Stage stageUI;
     Actor lastHitActor;
     Actor lastHitUIActor;
+    GraphicalUserInterface ui;
     Something lastHitSomething;
 
     Player player;
@@ -112,7 +113,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         stage   = new Stage(viewport1, game.batch);
         stageUI = new Stage(viewport2, game.batch);
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,stageUI);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage , stageUI);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         //actors!
@@ -145,7 +146,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         colCheck.add(world.tree3. getBorder());
 
         // UI init
-        GraphicalUserInterface ui = new GraphicalUserInterface(stageUI);
+        ui = new GraphicalUserInterface(stageUI);
 
         //animation
         animationCreate();
@@ -270,34 +271,48 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         float buffer;
         // process user input ------------------------------------------
         if (Gdx.input.justTouched()) {
-            Vector2 screenPos = new Vector2();
-            screenPos.set(Gdx.input.getX(), Gdx.input.getY());
-            Vector2 pos = stage.screenToStageCoordinates(screenPos);
+            Vector2 screenPos1 = new Vector2(); // todo vector init each click wrong
+            Vector2 screenPos2 = new Vector2(); // todo vector init each click wrong
+            screenPos1.set(Gdx.input.getX(), Gdx.input.getY());
+            screenPos2.set(Gdx.input.getX(), Gdx.input.getY());
+            Vector2 pos1 = stage.screenToStageCoordinates(screenPos1);
+            Vector2 pos2 = stageUI.screenToStageCoordinates(screenPos2);
 
-            lastHitActor   = stage  .hit(pos.x,pos.y,false);
-            lastHitUIActor = stageUI.hit(pos.x,pos.y,true);
+            lastHitActor   = stage  .hit(pos1.x,pos1.y,true);
+            lastHitUIActor = stageUI.hit(pos2.x,pos2.y,true);
 
-            if (lastHitUIActor != null){
-                System.out.println("UI HITS");
-            }else {
+//            System.out.println(lastHitUIActor.getClass());
+//            System.out.println(lastHitActor.getClass());
+//            System.out.println(lastHitActor.getName() + " vs "+lastHitUIActor.getClass());
+
+            if (lastHitUIActor!=null){
+                System.out.println("FUCK");
+
+            }else{
                 if (lastHitActor!=null){
                     if (lastHitActor.getClass() == Something.class){
                         lastHitSomething = (Something) lastHitActor ;
-                        System.out.print("Hit: ActorName=");
-                        System.out.print(lastHitSomething.getName());
-                        System.out.print(" EntityID=");
-                        System.out.print(lastHitSomething.entity.GetID());
-                        System.out.print(" EntityName=");
-                        System.out.print(lastHitSomething.entity);
-                        System.out.println();
-                        // lastHitSomething.setDebug(true);
                     }else {
-                        System.out.println("Hit: Unknown Entity");
+                        if (lastHitActor.getClass() == Player.class){
+                            lastHitSomething = (Something) lastHitActor ;
+                        }else {
+                            System.out.println("Hit: Unknown Entity");
+                        }
                     }
+                    System.out.print("Hit111111: ActorName=");
+                    System.out.print(lastHitSomething.getName());
+                    System.out.print(" EntityID=");
+                    System.out.print(lastHitSomething.entity.GetID());
+                    System.out.print(" EntityName=");
+                    System.out.print(lastHitSomething.entity);
+                    System.out.println();
+                    // lastHitSomething.setDebug(true);
                 }else {
                     System.out.println("Hit: Void");
                 }
             }
+            lastHitActor   = null;
+            lastHitUIActor = null;
         }
 
         if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)){
@@ -524,51 +539,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // todo dispose atlas
         // todo dispose temp textures
         // todo dispose chunk images
-
-    }
-
-    @Override
-    public boolean touchDown(float x, float y, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean tap(float x, float y, int count, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean longPress(float x, float y) {
-        return false;
-    }
-
-    @Override
-    public boolean fling(float velocityX, float velocityY, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean pan(float x, float y, float deltaX, float deltaY) {
-        return false;
-    }
-
-    @Override
-    public boolean panStop(float x, float y, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean zoom(float initialDistance, float distance) {
-        return false;
-    }
-
-    @Override
-    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
-        return false;
-    }
-
-    @Override
-    public void pinchStop() {
 
     }
 

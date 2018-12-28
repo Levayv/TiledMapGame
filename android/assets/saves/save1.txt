@@ -1,5 +1,1 @@
-{
-"testInt": 1,
-"testFloat": 1.1,
-"testString": "str"
-}
+{}

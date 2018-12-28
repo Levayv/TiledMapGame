@@ -16,7 +16,7 @@ public class Something extends shit{
     private int borderXdelta;
     private int borderYdelta;
 
-    public Something(TextureRegion texReg) {
+    public Something(TextureRegion texReg) { //todo change constructor , only entrity enum must be needed
         super(texReg);
         border = new Rectangle();
         range = new Circle();

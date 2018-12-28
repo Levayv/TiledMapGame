@@ -41,6 +41,10 @@ public class AnimatedSomething extends Something{
     }
     @Override
     public void act(float delta){
+//        if (loopingEndless || startAnimCycle){
+//            setVisible(false);
+//        }else
+//            setVisible(true);
         if (startAnimCycle){
             if (frameDur*rows*1 < animationTime){
                 startAnimCycle = false;
@@ -60,6 +64,7 @@ public class AnimatedSomething extends Something{
 //                System.out.println(this.getName() + " FD="+ frameDur*rows*10);
             }
         }
+
 
     }
     @Override

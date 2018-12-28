@@ -43,7 +43,7 @@ public class GraphicalUserInterface {
         rootH -= tablePadY*2; // fix padding , pos and size by tablePadX/Y
         tableRoot.setPosition(rootX,rootY);
         tableRoot.setSize    (rootW,rootH);
-        tableRoot.left().top(); //! adding future actors default alignment
+        tableRoot.right().top(); //! adding future actors default alignment
         stage.addActor(tableRoot);
         // other ui items init , add to table
         TextButton button = new TextButton("Click me", skin, "default");

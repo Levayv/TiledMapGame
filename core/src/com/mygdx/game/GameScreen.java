@@ -4,6 +4,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -33,7 +34,7 @@ import com.mygdx.game.enums.Entity;
 public class GameScreen implements Screen , GestureDetector.GestureListener {
     final MyGdxGame game;
 
-    private boolean debuging = false;
+    private boolean debugging = false;
     private boolean colliding = true;
     private Sound dropSound;
     private Music rainMusic;
@@ -51,8 +52,11 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
     Collider colCheck;
 
-    Stage stage;
     World world;
+    Stage stage;
+    Stage stageUI;
+    Actor lastHitActor;
+    Something lastHitSomething;
 
     Player player;
 
@@ -99,7 +103,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         camera.setToOrtho(false, screen_width/2, screen_height/2);
         ScreenViewport viewport1 = new ScreenViewport(camera);
         stage = new Stage(viewport1, game.batch);
-        Gdx.input.setInputProcessor(stage);
+        stageUI = new Stage(viewport1, game.batch);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,stageUI);
+        Gdx.input.setInputProcessor(inputMultiplexer);
 
         //actors!
         player = new Player(texRegPlayer);
@@ -111,7 +118,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         player.setName("player");
         player.entity = Entity.Player;
 
-        // World init
+        // World and map init
         WorldTexRegHandle buffer = new WorldTexRegHandle(100);
 
         buffer.addTexReg(Entity.Tree,   texRegTree      );
@@ -122,32 +129,22 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         world = new World(stage , buffer, new TextureRegion(texRegLever));
         world.worldGroup.addActor(player);
 
-        //Map init
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
 
-//        tree1.border.x = 100;
-//        tree1.border.y = 100;
-//        tree2.border.x = 100;
-//        tree2.border.y = 200;
-//        tree3.border.x = 200;
-//        tree3.border.y = 100;
-
-
-
-//        world.chunks[0][0].addActor(tree1);
-//        world.chunks[0][0].addActor(tree2);
-//        world.chunks[0][0].addActor(tree3);
-
+        //Colider init
         colCheck = new Collider(3);
         colCheck.add(player.getBorder());
         colCheck.add(world.tree1. getBorder());
         colCheck.add(world.tree2. getBorder());
         colCheck.add(world.tree3. getBorder());
 
+        // UI init
+        GraphicalUserInterface ui = new GraphicalUserInterface(stageUI);
+
         //animation
         animationCreate();
 
-        testing();
+//        testing();
     }
 
 
@@ -179,12 +176,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     @Override
     public void render(float delta) {
         shittyControls(delta);
-        shittyMechanics(delta);
         shittyRenderer(delta);
     }
 
-    void shittyMechanics(float delta){
-    }
     void shittyRenderer(float delta){
         // clear the screen with a dark blue color.
 //        world.group.setCullingArea(new Rectangle(
@@ -200,8 +194,10 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
         stage.act(delta);
         stage.draw();
+        stageUI.act(delta);
+        stageUI.draw();
 
-        if (debuging){
+        if (debugging){
 //        game.batch.setProjectionMatrix(camera.combined); //? why ?
             game.batch.begin();
             float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
@@ -271,19 +267,22 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             Vector2 screenPos = new Vector2();
             screenPos.set(Gdx.input.getX(), Gdx.input.getY());
             Vector2 stagePos = stage.screenToStageCoordinates(screenPos);
-            Something hitSomething = (Something) stage.hit(stagePos.x,stagePos.y,false);
-            if (hitSomething!=null){
-                System.out.print("Hit: ActorName=");
-                System.out.print(hitSomething.getName());
-                System.out.print(" EntityID=");
-                System.out.print(hitSomething.entity.GetID());
-                System.out.print(" EntityName=");
-                System.out.print(hitSomething.entity);
-                System.out.println();
-                hitSomething.setDebug(true);
+            lastHitActor = stage.hit(stagePos.x,stagePos.y,false);
+            if (lastHitActor!=null){
+                if (lastHitActor.getClass() == Something.class){
+                    lastHitSomething = (Something) lastHitActor ;
+                    System.out.print("Hit: ActorName=");
+                    System.out.print(lastHitSomething.getName());
+                    System.out.print(" EntityID=");
+                    System.out.print(lastHitSomething.entity.GetID());
+                    System.out.print(" EntityName=");
+                    System.out.print(lastHitSomething.entity);
+                    System.out.println();
+//                    lastHitSomething.setDebug(true);
+                }
             }
-
-
+            else
+                System.out.println("Hit: Void");
         }
 
         if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)){
@@ -349,12 +348,18 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             stage.getCamera().translate(0, 6, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.E)) {
-            ((OrthographicCamera)stage.getCamera()).zoom += 1*delta;
+            if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)){
+                ((OrthographicCamera)stage.getCamera()).zoom += 1*delta;
+            }
         }
         if (Gdx.input.isKeyPressed(Keys.Q)) {
-            ((OrthographicCamera)stage.getCamera()).zoom -= 1*delta;
+            if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)){
+                ((OrthographicCamera)stage.getCamera()).zoom -= 1*delta;
+            }
         }
-
+        if (Gdx.input.isKeyPressed(Keys.E)) {
+            // menu ?
+        }
         // make sure the bucket stays within the screen bounds
 //        if (bucket.x < 0)
 //            bucket.x = 0;
@@ -413,8 +418,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             colliding = !colliding;
         }
         if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-            debuging = !debuging;
-            if (debuging){
+            debugging = !debugging;
+            if (debugging){
                 stage.setDebugAll(true);
                 Array<Actor> actors = stage.getActors();
                 System.out.println("Debug: Enabling borders for ["+actors.size+"] entities");
@@ -434,7 +439,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         }
 
         // framerate to console
-//        if (debuging) System.out.println(Gdx.graphics.getFramesPerSecond());
+//        if (debugging) System.out.println(Gdx.graphics.getFramesPerSecond());
     }
 
     private void randomize() {
@@ -448,6 +453,9 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         world.tree3.setY(r.nextInt(100)     );
     }
 
+
+
+
     private void saveGame() {
         // parse world object to data
 //        saveLoadData.getChunksToSave(world.chunks[0][0]);
@@ -458,7 +466,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         // notify save success
         System.out.println("Save Successful");
     }
-
+    private void loadGame() {
+        // find file to load
+        saveLoadFile = Gdx.files.local("saves/save1.txt");
+        // load file to json , then json to data
+        saveLoadData = saveLoadJson.fromJson(SaveLoadData.class, saveLoadFile);
+        // parse data to world object
+//        saveLoadData.setChunksToLoad(world.chunks[0][0]);
+        // notify load success
+        System.out.println("Load Successful");
+    }
     private static class SaveLoadData{
         private int testInt;
         private float testFloat;
@@ -474,16 +491,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             chunk.testfloat = this.testFloat;
             chunk.testString = this.testString ;
         }
-    }
-    private void loadGame() {
-        // find file to load
-        saveLoadFile = Gdx.files.local("saves/save1.txt");
-        // load file to json , then json to data
-        saveLoadData = saveLoadJson.fromJson(SaveLoadData.class, saveLoadFile);
-        // parse data to world object
-//        saveLoadData.setChunksToLoad(world.chunks[0][0]);
-        // notify load success
-        System.out.println("Load Successful");
     }
 
     @Override
@@ -525,6 +532,8 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         world.tree1.texReg.getTexture().dispose();
         world.tree2.texReg.getTexture().dispose();
         world.tree3.texReg.getTexture().dispose();
+        // todo dispose atlas
+        // todo dispose temp textures
         // todo dispose chunk images
 
     }

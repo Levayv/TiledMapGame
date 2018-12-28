@@ -1,9 +1,14 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -62,11 +67,27 @@ class World {
 //        grid.addObject();
 
 
+        MapLayer layer = map.getLayers().get(2); //todo fix ALL map object loading
+        MapObjects objects = layer.getObjects();
+        System.out.println("obj count = " +objects.getCount());
+// objects.getCount() returns 2 or 3 when i change items via editor
+        MapObject object = objects.get(0);
+// Entity entity;  // omitted for testing
+        MapProperties prop111 = object.getProperties();
+        if (prop111.containsKey("type111")){
+            int i = prop111.get("type111", int.class);
+            System.out.println(i);
+            System.out.println("hell yeah");
+            // entity = Entity.GetValue(i); // omitted for testing
+            // System.out.println(entity); // omitted for testing
+            // the goal is to store tile object types in Entity enum
+        }
+
         //------------------------------------------
-        System.out.println("1");
-        System.out.println("2" + texRegHandle.toString());
-        System.out.println("3" + texRegHandle.texRegsSize);
-        System.out.println("4" + texRegHandle.getTexRegByID(Entity.Tree));
+//        System.out.println("1");
+//        System.out.println("2" + texRegHandle.toString());
+//        System.out.println("3" + texRegHandle.texRegsSize);
+//        System.out.println("4" + texRegHandle.getTexRegByID(Entity.Tree));
 
         tree1  = new Something(texRegHandle.getTexRegByID(Entity.Tree));
         tree2  = new Something(texRegHandle.getTexRegByID(Entity.Stone));

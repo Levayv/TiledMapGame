@@ -44,6 +44,7 @@ public class GraphicalUserInterface {
         tableRoot.setPosition(rootX,rootY);
         tableRoot.setSize    (rootW,rootH);
         tableRoot.right().top(); //! adding future actors default alignment
+        if (tableRoot.isTouchable()) System.out.println("asdasd");
         stage.addActor(tableRoot);
         // other ui items init , add to table
         TextButton button = new TextButton("Click me", skin, "default");

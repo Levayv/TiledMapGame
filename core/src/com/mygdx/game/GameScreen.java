@@ -26,6 +26,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.ants.AnimatedSomething;
 import com.mygdx.game.ants.Something;
 import com.mygdx.game.enums.DirConst;
 import com.mygdx.game.enums.Entity;
@@ -56,6 +57,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
     Stage stage;
     Stage stageUI;
     Actor lastHitActor;
+    Actor lastHitUIActor;
     Something lastHitSomething;
 
     Player player;
@@ -99,11 +101,16 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
 
 
         //stage!
-        OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, screen_width/2, screen_height/2);
-        ScreenViewport viewport1 = new ScreenViewport(camera);
-        stage = new Stage(viewport1, game.batch);
-        stageUI = new Stage(viewport1, game.batch);
+
+        OrthographicCamera camera1 = new OrthographicCamera();
+        OrthographicCamera camera2 = new OrthographicCamera();
+        camera1.setToOrtho(false, screen_width/2, screen_height/2);
+        camera2.setToOrtho(false, screen_width/2, screen_height/2);
+        ScreenViewport viewport1 = new ScreenViewport(camera1);
+        ScreenViewport viewport2 = new ScreenViewport(camera2);
+
+        stage   = new Stage(viewport1, game.batch);
+        stageUI = new Stage(viewport2, game.batch);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,stageUI);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -126,8 +133,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         buffer.addTexReg(Entity.Ore,    texRegOre       );
         buffer.addTexReg(Entity.Tower,  texRegTower     );
 
-        world = new World(stage , buffer, new TextureRegion(texRegLever));
-        world.worldGroup.addActor(player);
+        world = new World(stage , player , buffer, new TextureRegion(texRegLever));
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
 
@@ -266,23 +272,32 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         if (Gdx.input.justTouched()) {
             Vector2 screenPos = new Vector2();
             screenPos.set(Gdx.input.getX(), Gdx.input.getY());
-            Vector2 stagePos = stage.screenToStageCoordinates(screenPos);
-            lastHitActor = stage.hit(stagePos.x,stagePos.y,false);
-            if (lastHitActor!=null){
-                if (lastHitActor.getClass() == Something.class){
-                    lastHitSomething = (Something) lastHitActor ;
-                    System.out.print("Hit: ActorName=");
-                    System.out.print(lastHitSomething.getName());
-                    System.out.print(" EntityID=");
-                    System.out.print(lastHitSomething.entity.GetID());
-                    System.out.print(" EntityName=");
-                    System.out.print(lastHitSomething.entity);
-                    System.out.println();
-//                    lastHitSomething.setDebug(true);
+            Vector2 pos = stage.screenToStageCoordinates(screenPos);
+
+            lastHitActor   = stage  .hit(pos.x,pos.y,false);
+            lastHitUIActor = stageUI.hit(pos.x,pos.y,true);
+
+            if (lastHitUIActor != null){
+                System.out.println("UI HITS");
+            }else {
+                if (lastHitActor!=null){
+                    if (lastHitActor.getClass() == Something.class){
+                        lastHitSomething = (Something) lastHitActor ;
+                        System.out.print("Hit: ActorName=");
+                        System.out.print(lastHitSomething.getName());
+                        System.out.print(" EntityID=");
+                        System.out.print(lastHitSomething.entity.GetID());
+                        System.out.print(" EntityName=");
+                        System.out.print(lastHitSomething.entity);
+                        System.out.println();
+                        // lastHitSomething.setDebug(true);
+                    }else {
+                        System.out.println("Hit: Unknown Entity");
+                    }
+                }else {
+                    System.out.println("Hit: Void");
                 }
             }
-            else
-                System.out.println("Hit: Void");
         }
 
         if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)){
@@ -334,7 +349,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             player.setDirY(DirConst.DOWN);
             player.go();
         }
-        // Camera moves
+        // Camera moves 4 dir
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             stage.getCamera().translate(-6, 0, 0);
         }
@@ -347,6 +362,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         if (Gdx.input.isKeyPressed(Keys.UP)) {
             stage.getCamera().translate(0, 6, 0);
         }
+        // Camera zoom temp
         if (Gdx.input.isKeyPressed(Keys.E)) {
             if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)){
                 ((OrthographicCamera)stage.getCamera()).zoom += 1*delta;
@@ -357,50 +373,27 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
                 ((OrthographicCamera)stage.getCamera()).zoom -= 1*delta;
             }
         }
-        if (Gdx.input.isKeyPressed(Keys.E)) {
-            // menu ?
+        if (Gdx.input.isKeyPressed(Keys.TAB)) {
+            // todo open close menu
         }
-        // make sure the bucket stays within the screen bounds
-//        if (bucket.x < 0)
-//            bucket.x = 0;
-//        if (bucket.x > 800 - 64)
-//            bucket.x = 800 - 64;
-//        if (bucket.y < 0)
-//            bucket.y = 0;
-//        if (bucket.y > 480 - 64)
-//            bucket.y = 480 - 64;
+        if (Gdx.input.isKeyJustPressed(Keys.F)) {
+            // Some action test todo remove this later
+            // try toggling AnimatedSomething animation
+            world.door2.setName("exp");
+            world.door2.animationTime = 0;
+            world.door2.startAnimCycle =  true;
+            System.out.println("Start anim"); //
 
-        // Border collision
-//        if (player.border.x < -world_width/2)
-//            player.border.x = -world_width/2;
-//        if (player.border.x > +world_width/2 - player.border.width)
-//            player.border.x = +world_width/2 - player.border.width;
-//        if (player.border.y < -world_height/2)
-//            player.border.y = -world_height/2;
-//        if (player.border.y > +world_height/2 - player.border.height)
-//            player.border.y = +world_height/2 - player.border.height;
+            float tempx =  player.getBorderX()+player.getBorderW()/2;
+            float tempy =  player.getBorderY()+player.getBorderH()/2;
 
-//         check if we need to create a new raindrop
-//        if (TimeUtils.nanoTime() - lastDropTime > 1000000000)
-//            spawnRaindrop();
+            tempx -= 96/2;
+            tempy -= 96/2;
 
-        // move the raindrops, remove any that are beneath the bottom edge of
-        // the screen or that hit the bucket. In the later case we increase the
-        // value our drops counter and add a sound effect.
-//        Iterator<Rectangle> iter = raindrops.iterator();
-//        while (iter.hasNext()) {
-//            Rectangle raindrop = iter.next();
-//            raindrop.y -= 200 * Gdx.graphics.getDeltaTime();
-//            if (raindrop.y + 64 < 0)
-//                iter.remove();
-//            if (raindrop.overlaps(player.border)) {
-//                dropsGathered++;
-//                dropSound.play();
-//                iter.remove();
-//            }
-//        }
+            world.door2.setPosition(tempx,tempy);
 
-        //exit
+        }
+
         if (Gdx.input.isKeyJustPressed(Keys.F5)) {
             saveGame();
         }
@@ -408,7 +401,7 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
             loadGame();
         }
         if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-            randomize();
+            randomize(); // for colider testing only
         }
         if (Gdx.input.isKeyJustPressed(Keys.F2)) {
             game.setScreen(new MainMenuScreen(game));
@@ -452,10 +445,6 @@ public class GameScreen implements Screen , GestureDetector.GestureListener {
         world.tree3.setX(r.nextInt(300)+200 );
         world.tree3.setY(r.nextInt(100)     );
     }
-
-
-
-
     private void saveGame() {
         // parse world object to data
 //        saveLoadData.getChunksToSave(world.chunks[0][0]);

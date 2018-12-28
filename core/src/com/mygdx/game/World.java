@@ -44,7 +44,7 @@ class World {
     AnimatedNPC[] slime3;
     private int slimeCount = 3;
 
-    World(Stage stage, WorldTexRegHandle buffer,TextureRegion texRegLever){
+    World(Stage stage,Player player, WorldTexRegHandle buffer,TextureRegion texRegLever){
         worldGroup = new Group();
         stage.addActor(worldGroup);
 
@@ -120,10 +120,11 @@ class World {
         worldGroup.addActor(tree3);
         worldGroup.addActor(lever);
         worldGroup.addActor(door1);
-        worldGroup.addActor(door2);
         worldGroup.addActor(tower1);
         worldGroup.addActor(tower2);
         worldGroup.addActor(tower3);
+        worldGroup.addActor(player);
+        worldGroup.addActorAfter(player,door2);
 
 
         for (int i = 0; i < slimeCount; i++) {
@@ -159,7 +160,7 @@ class World {
         tree3.setPosition(6 *tileSize,6 *tileSize);
         lever.setPosition(12*tileSize,9 *tileSize);
         door1.setPosition(12*tileSize,12*tileSize);
-        door2.setPosition(15*tileSize,15*tileSize);
+        door2.setPosition(15*tileSize,12*tileSize);
 
         tower1.setPosition(18 *tileSize,0 *tileSize);
         tower2.setPosition(18 *tileSize,5 *tileSize);
@@ -204,7 +205,10 @@ class World {
 //            entity = Entity.GetValue(i);
 //            System.out.println(entity);
             // goal is to store tile object types in Entity enum
-        }
+
+        door2.loopingEndless =  false ;
+
+    }
 
     private void setPosition(Actor actor , Pos pos){
         actor.setPosition(pos.x*tileSize , pos.y*tileSize);

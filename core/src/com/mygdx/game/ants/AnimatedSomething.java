@@ -9,11 +9,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class AnimatedSomething extends Something{
     TextureRegion[] animFrames;
     Animation<TextureRegion> eventAnimation;
-    private float animationTime = 0f;
+    public float animationTime = 0f;
+    private float frameDur;
+    private int rows;
     public boolean start;
+    public boolean loopingEndless = true;
+    public boolean startAnimCycle = false;
 
     public AnimatedSomething(TextureRegion texReg, String file, int rows) {
         super(texReg);
+        this.rows = rows;
         int FRAME_COLS = rows;
         int FRAME_ROWS = 1;
         Texture walkSheet = new Texture(Gdx.files.internal("animation/"+file+".png"));
@@ -30,17 +35,37 @@ public class AnimatedSomething extends Something{
         }
         index = 0;
         for (int i = 0; i < FRAME_COLS; i++) { animFrames[i] = buffer[index++];}
-        float frameDur = (0.025f / rows)*20;
-        eventAnimation = new Animation<TextureRegion>(frameDur*1, animFrames);
+        frameDur = (0.025f / rows)*20;
+        eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
 
     }
     @Override
     public void act(float delta){
-        texReg = eventAnimation.getKeyFrame(animationTime,true);
-        animationTime += delta;
+        if (startAnimCycle){
+            if (frameDur*rows*1 < animationTime){
+                startAnimCycle = false;
+                System.out.println("stop" + animationTime);
+            }else {
+                System.out.println("start" + animationTime);
+                texReg = eventAnimation.getKeyFrame(animationTime,true);
+                animationTime += delta;
+                System.out.println(this.getName() + " at="+ animationTime);
+                System.out.println(this.getName() + " FD="+ frameDur*rows*1);
+            }
+        }else {
+            if (loopingEndless){
+                texReg = eventAnimation.getKeyFrame(animationTime,loopingEndless);
+                animationTime += delta;
+//                System.out.println(this.getName() + " at="+ animationTime);
+//                System.out.println(this.getName() + " FD="+ frameDur*rows*10);
+            }
+        }
+
     }
     @Override
     public void draw (Batch batch, float parentAlpha) {
-        batch.draw(texReg, getX(), getY());
+        if (loopingEndless || startAnimCycle){
+            batch.draw(texReg, getX(), getY());
+        }
     }
 }

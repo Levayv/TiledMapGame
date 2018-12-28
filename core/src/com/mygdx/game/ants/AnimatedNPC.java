@@ -7,4 +7,5 @@ public class AnimatedNPC extends AnimatedSomething {
     public AnimatedNPC(TextureRegion texReg, String file, int rows) {
         super(texReg, file, rows);
     }
+
 }

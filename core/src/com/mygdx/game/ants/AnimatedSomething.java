@@ -35,7 +35,8 @@ public class AnimatedSomething extends Something{
         }
         index = 0;
         for (int i = 0; i < FRAME_COLS; i++) { animFrames[i] = buffer[index++];}
-        frameDur = (0.025f / rows)*20;
+        frameDur = (0.025f / rows)*20; // 3fps ?
+//        frameDur = 0.015f; // 60 fps !
         eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
 
     }

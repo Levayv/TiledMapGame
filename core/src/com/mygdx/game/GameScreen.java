@@ -31,7 +31,6 @@ import com.mygdx.game.ants.Something;
 import com.mygdx.game.enums.DirConst;
 import com.mygdx.game.enums.Entity;
 
-
 public class GameScreen implements Screen {
     final MyGdxGame game;
 
@@ -233,21 +232,21 @@ public class GameScreen implements Screen {
             shape.begin(ShapeRenderer.ShapeType.Line);
             shape.setColor(Color.RED); // Border Colider RED
             shape.rect(player.getBorderX(),
-                       player.getBorderY(),
-                       player.getBorderW(),
-                       player.getBorderH());
+                    player.getBorderY(),
+                    player.getBorderW(),
+                    player.getBorderH());
             shape.rect( world.tree1.getBorderX(),
-                        world.tree1.getBorderY(),
-                        world.tree1.getBorderW(),
-                        world.tree1.getBorderH());
+                    world.tree1.getBorderY(),
+                    world.tree1.getBorderW(),
+                    world.tree1.getBorderH());
             shape.rect( world.tree2.getBorderX(),
-                        world.tree2.getBorderY(),
-                        world.tree2.getBorderW(),
-                        world.tree2.getBorderH());
+                    world.tree2.getBorderY(),
+                    world.tree2.getBorderW(),
+                    world.tree2.getBorderH());
             shape.rect( world.tree3.getBorderX(),
-                        world.tree3.getBorderY(),
-                        world.tree3.getBorderW(),
-                        world.tree3.getBorderH());
+                    world.tree3.getBorderY(),
+                    world.tree3.getBorderW(),
+                    world.tree3.getBorderH());
 //            shape.rect( world.tree1.texReg.getRegionX(),
 //                        world.tree1.texReg.getRegionY(),
 //                        world.tree1.texReg.getRegionWidth(),
@@ -262,8 +261,13 @@ public class GameScreen implements Screen {
 //                        world.tree3.texReg.getRegionHeight());
             shape.setColor(Color.YELLOW);    // Range Yellow
             shape.circle(player.getRange().x,
-                         player.getRange().y,
-                         player.getRange().radius);
+                    player.getRange().y,
+                    player.getRange().radius);
+            for(int i = 0; i < 99-1; ++i)
+            {
+                shape.line(points[i], points[i+1]);
+            }
+
             shape.end();
         } // debugging if end
     }
@@ -280,10 +284,6 @@ public class GameScreen implements Screen {
 
             lastHitActor   = stage  .hit(pos1.x,pos1.y,true);
             lastHitUIActor = stageUI.hit(pos2.x,pos2.y,true);
-
-//            System.out.println(lastHitUIActor.getClass());
-//            System.out.println(lastHitActor.getClass());
-//            System.out.println(lastHitActor.getName() + " vs "+lastHitUIActor.getClass());
 
             if (lastHitUIActor!=null){
                 System.out.println("FUCK");
@@ -394,18 +394,41 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
             // Some action test todo remove this later
             // try toggling AnimatedSomething animation
-            world.door2.setName("exp");
-            world.door2.animationTime = 0;
-            world.door2.startAnimCycle =  true;
-            System.out.println("Start anim"); //
+//            world.door2.setName("exp");
+//            world.door2.animationTime = 0;
+//            world.door2.startAnimCycle =  true;
+//            System.out.println("Start anim"); //
+//
+//            float tempx =  player.getBorderX()+player.getBorderW()/2;
+//            float tempy =  player.getBorderY()+player.getBorderH()/2;
+//
+//            tempx -= 96/2;
+//            tempy -= 96/2;
+//            world.door2.setPosition(tempx,tempy);
 
-            float tempx =  player.getBorderX()+player.getBorderW()/2;
-            float tempy =  player.getBorderY()+player.getBorderH()/2;
+            points = world.slime1[0].findPath(stage);
+//            world.slime1[0].go();
 
-            tempx -= 96/2;
-            tempy -= 96/2;
 
-            world.door2.setPosition(tempx,tempy);
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.G)) {
+            // Some action test todo remove this later
+            // try toggling AnimatedSomething animation
+//            world.door2.setName("exp");
+//            world.door2.animationTime = 0;
+//            world.door2.startAnimCycle =  true;
+//            System.out.println("Start anim"); //
+//
+//            float tempx =  player.getBorderX()+player.getBorderW()/2;
+//            float tempy =  player.getBorderY()+player.getBorderH()/2;
+//
+//            tempx -= 96/2;
+//            tempy -= 96/2;
+//            world.door2.setPosition(tempx,tempy);
+
+//            world.slime1[0].findPath(stage);
+            world.slime1[0].go();
+
 
         }
 
@@ -542,6 +565,8 @@ public class GameScreen implements Screen {
 
     }
 
+    private  Vector2[] points ;
 }
 
-//stage.act( Math.minDeltaDebug( Gdx.graphics.getDeltaTime(), 1/30 ) );
+    //stage.act( Math.minDeltaDebug( Gdx.graphics.getDeltaTime(), 1/30 ) );
+

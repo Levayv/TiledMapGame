@@ -19,6 +19,7 @@ import com.mygdx.game.enums.Entity;
 
 class World {
     // World's knowledge about grid
+    private boolean debugging = false; // todo fix debugging boolean in all classes
     private int tileSize;
     private TiledMap map;
     private  int mapWidth;
@@ -69,15 +70,15 @@ class World {
 
         MapLayer layer = map.getLayers().get(2); //todo fix ALL map object loading
         MapObjects objects = layer.getObjects();
-        System.out.println("obj count = " +objects.getCount());
+        if (debugging) System.out.println("obj count = " +objects.getCount());
 // objects.getCount() returns 2 or 3 when i change items via editor
         MapObject object = objects.get(0);
 // Entity entity;  // omitted for testing
         MapProperties prop111 = object.getProperties();
         if (prop111.containsKey("type111")){
             int i = prop111.get("type111", int.class);
-            System.out.println(i);
-            System.out.println("hell yeah");
+            if (debugging) System.out.println(i);
+            if (debugging) System.out.println("hell yeah");
             // entity = Entity.GetValue(i); // omitted for testing
             // System.out.println(entity); // omitted for testing
             // the goal is to store tile object types in Entity enum

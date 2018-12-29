@@ -11,7 +11,6 @@ public class Something extends shit{
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object
     private Circle range;
-    public Entity entity;
     private Vector2 buffVect2;
     private int borderXdelta;
     private int borderYdelta;

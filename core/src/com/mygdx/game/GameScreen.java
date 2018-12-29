@@ -114,6 +114,15 @@ public class GameScreen implements Screen {
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage , stageUI);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        // WorldTexRegManager init
+        WorldTexRegManager buffer = new WorldTexRegManager(100);
+
+        buffer.addTexReg(Entity.Tree,   texRegTree      );
+        buffer.addTexReg(Entity.Stone,  texRegStone     );
+        buffer.addTexReg(Entity.Ore,    texRegOre       );
+        buffer.addTexReg(Entity.Tower,  texRegTower     );
+        buffer.addTexReg(Entity.Temp,   texRegTemp32     );
+
         //actors!
         player = new Player(texRegPlayer);
 //        player.setBorders();
@@ -124,15 +133,8 @@ public class GameScreen implements Screen {
         player.setName("player");
         player.entity = Entity.Player;
 
-        // WorldManager and map init
-        WorldTexRegHandle buffer = new WorldTexRegHandle(100);
 
-        buffer.addTexReg(Entity.Tree,   texRegTree      );
-        buffer.addTexReg(Entity.Stone,  texRegStone     );
-        buffer.addTexReg(Entity.Ore,    texRegOre       );
-        buffer.addTexReg(Entity.Tower,  texRegTower     );
-        buffer.addTexReg(Entity.Temp,   texRegTemp32     );
-
+        // WorldManager init
         worldManager = new WorldManager(stage , player , buffer, new TextureRegion(texRegLever));
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());

@@ -24,7 +24,7 @@ class WorldManager {
     private  int mapWidth;
     private  int mapHeight;
     private Grid grid;
-    private  WorldTexRegHandle texRegHandle;
+    private WorldTexRegManager texRegManager;
 
     private Pos lastPos;
     public Group world;
@@ -115,14 +115,14 @@ class WorldManager {
             }
         }
     }
-    WorldManager(Stage stage, Player player, WorldTexRegHandle buffer, TextureRegion texRegLever){
+    WorldManager(Stage stage, Player player, WorldTexRegManager buffer, TextureRegion texRegLever){
         world = new Group();
         stage.addActor(world);
 
         TextureRegion texRegTree;
 
         // Texture Handler
-        texRegHandle = buffer;
+        texRegManager = buffer;
 
 
         // load map , get props
@@ -138,7 +138,7 @@ class WorldManager {
         getMapData();
 
         // temp grid manipulations
-        Spawner spawner = new Spawner(texRegHandle.getTexRegByID(Entity.Temp));
+        Spawner spawner = new Spawner(texRegManager.getTexRegByID(Entity.Temp));
         spawner.entity = Entity.Temp;
         world.addActor(spawner);
         spawner.setBorders();
@@ -147,18 +147,18 @@ class WorldManager {
 
 
 
-        tree1  = new Something(texRegHandle.getTexRegByID(Entity.Tree));
-        tree2  = new Something(texRegHandle.getTexRegByID(Entity.Stone));
-        tree3  = new Something(texRegHandle.getTexRegByID(Entity.Ore));
+        tree1  = new Something(texRegManager.getTexRegByID(Entity.Tree));
+        tree2  = new Something(texRegManager.getTexRegByID(Entity.Stone));
+        tree3  = new Something(texRegManager.getTexRegByID(Entity.Ore));
         lever  = new Something(texRegLever);
         door1  = new AnimatedSomething(texRegLever, "door1" , 18);
         door2  = new AnimatedSomething(texRegLever, "Explosion" , 12);
         slime1 = new AnimatedNPC[slimeCount];
         slime2 = new AnimatedNPC[slimeCount];
         slime3 = new AnimatedNPC[slimeCount];
-        tower1 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
-        tower2 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
-        tower3 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
+        tower1 = new Something(texRegManager.getTexRegByID(Entity.Tower));
+        tower2 = new Something(texRegManager.getTexRegByID(Entity.Tower));
+        tower3 = new Something(texRegManager.getTexRegByID(Entity.Tower));
 
 
         tree1  .entity = Entity.Tree;

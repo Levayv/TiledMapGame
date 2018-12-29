@@ -1,7 +1,5 @@
 package com.mygdx.game;
 
-import com.mygdx.game.ants.Something;
-
 public class Grid {
     private boolean[][] have;
     private int[][] id;
@@ -18,17 +16,17 @@ public class Grid {
 
 
     }
-    private void cycle(){
-        for (i = 0; i < width; i++) {
-            for (j = 0; j < height; j++) {
-                have[i][j] = false;
-                id[i][j] = 0;
-            }
-        }
-    }
+//    private void cycle(){
+//        for (i = 0; i < width; i++) {
+//            for (j = 0; j < height; j++) {
+//                have[i][j] = false;
+//                id[i][j] = 0;
+//            }
+//        }
+//    }
 
-    public void addObject(Something something, int x, int y) {
-        have[x][y] = true;
-        id[x][y] = something.entity.GetID();
-    }
+//    public void addObject(Something something, int x, int y) {
+//        have[x][y] = true;
+//        id[x][y] = something.entity.GetID();
+//    }
 }

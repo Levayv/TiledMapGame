@@ -3,13 +3,13 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.enums.Entity;
 
-public class WorldTexRegHandle {
+public class WorldTexRegManager {
 
     private TextureRegion[] texRegs;
     private TextureRegion texReg;
-    public int texRegsSize = 0;
+    private int texRegsSize = 0;
     private int arrayCap;
-    WorldTexRegHandle(int texRegArrayCap){
+    WorldTexRegManager(int texRegArrayCap){
         this.arrayCap = texRegArrayCap;
         texRegs = new TextureRegion[arrayCap];
     }

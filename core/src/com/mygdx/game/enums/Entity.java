@@ -7,7 +7,8 @@ public enum Entity {
     Tower(3),
     Tree(11),
     Stone(12),
-    Ore(13);
+    Ore(13),
+    Temp(66);
 
     int id;
     private Entity(int i){id = i;}

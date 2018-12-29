@@ -16,7 +16,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -26,7 +25,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.ants.AnimatedSomething;
 import com.mygdx.game.ants.Something;
 import com.mygdx.game.enums.DirConst;
 import com.mygdx.game.enums.Entity;
@@ -52,7 +50,7 @@ public class GameScreen implements Screen {
 
     Collider colCheck;
 
-    World world;
+    WorldManager worldManager;
     Stage stage;
     Stage stageUI;
     Actor lastHitActor;
@@ -92,6 +90,7 @@ public class GameScreen implements Screen {
         TextureRegion texRegOre = new TextureRegion(new Texture(Gdx.files.internal("ore.png")));
         TextureRegion texRegTower = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
+        TextureRegion texRegTemp32 = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
 
 
         // load sound & music
@@ -125,24 +124,25 @@ public class GameScreen implements Screen {
         player.setName("player");
         player.entity = Entity.Player;
 
-        // World and map init
+        // WorldManager and map init
         WorldTexRegHandle buffer = new WorldTexRegHandle(100);
 
         buffer.addTexReg(Entity.Tree,   texRegTree      );
         buffer.addTexReg(Entity.Stone,  texRegStone     );
         buffer.addTexReg(Entity.Ore,    texRegOre       );
         buffer.addTexReg(Entity.Tower,  texRegTower     );
+        buffer.addTexReg(Entity.Temp,   texRegTemp32     );
 
-        world = new World(stage , player , buffer, new TextureRegion(texRegLever));
+        worldManager = new WorldManager(stage , player , buffer, new TextureRegion(texRegLever));
 
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(world.getMap());
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //Colider init
         colCheck = new Collider(3);
         colCheck.add(player.getBorder());
-        colCheck.add(world.tree1. getBorder());
-        colCheck.add(world.tree2. getBorder());
-        colCheck.add(world.tree3. getBorder());
+        colCheck.add(worldManager.tree1. getBorder());
+        colCheck.add(worldManager.tree2. getBorder());
+        colCheck.add(worldManager.tree3. getBorder());
 
         // UI init
         ui = new GraphicalUserInterface(stageUI);
@@ -159,11 +159,11 @@ public class GameScreen implements Screen {
         System.out.println("Testing LINE START");
 //        for (int i = 0; i < 3; i++) {
 //            for (int j = 0; j < 3; j++) {
-//                world.chunks[i][j].setName("CHUNK" + i + "" +j);
+//                worldManager.chunks[i][j].setName("CHUNK" + i + "" +j);
 //                System.out.println(
-//                        world.chunks[i][j].getName() +
+//                        worldManager.chunks[i][j].getName() +
 //                                " " +
-//                                world.chunks[i][j].getZIndex()
+//                                worldManager.chunks[i][j].getZIndex()
 //                );
 //            }
 //        }
@@ -187,7 +187,7 @@ public class GameScreen implements Screen {
 
     void shittyRenderer(float delta){
         // clear the screen with a dark blue color.
-//        world.group.setCullingArea(new Rectangle(
+//        worldManager.group.setCullingArea(new Rectangle(
 //                stage.getCamera().position.x - stage.getCamera().viewportWidth /2 ,
 //                stage.getCamera().position.y - stage.getCamera().viewportHeight/2,
 //                stage.getCamera().viewportWidth ,
@@ -235,38 +235,41 @@ public class GameScreen implements Screen {
                     player.getBorderY(),
                     player.getBorderW(),
                     player.getBorderH());
-            shape.rect( world.tree1.getBorderX(),
-                    world.tree1.getBorderY(),
-                    world.tree1.getBorderW(),
-                    world.tree1.getBorderH());
-            shape.rect( world.tree2.getBorderX(),
-                    world.tree2.getBorderY(),
-                    world.tree2.getBorderW(),
-                    world.tree2.getBorderH());
-            shape.rect( world.tree3.getBorderX(),
-                    world.tree3.getBorderY(),
-                    world.tree3.getBorderW(),
-                    world.tree3.getBorderH());
-//            shape.rect( world.tree1.texReg.getRegionX(),
-//                        world.tree1.texReg.getRegionY(),
-//                        world.tree1.texReg.getRegionWidth(),
-//                        world.tree1.texReg.getRegionHeight());
-//            shape.rect( world.tree2.texReg.getRegionX(),
-//                        world.tree2.texReg.getRegionY(),
-//                        world.tree2.texReg.getRegionWidth(),
-//                        world.tree2.texReg.getRegionHeight());
-//            shape.rect( world.tree3.texReg.getRegionX(),
-//                        world.tree3.texReg.getRegionY(),
-//                        world.tree3.texReg.getRegionWidth(),
-//                        world.tree3.texReg.getRegionHeight());
+            shape.rect( worldManager.tree1.getBorderX(),
+                    worldManager.tree1.getBorderY(),
+                    worldManager.tree1.getBorderW(),
+                    worldManager.tree1.getBorderH());
+            shape.rect( worldManager.tree2.getBorderX(),
+                    worldManager.tree2.getBorderY(),
+                    worldManager.tree2.getBorderW(),
+                    worldManager.tree2.getBorderH());
+            shape.rect( worldManager.tree3.getBorderX(),
+                    worldManager.tree3.getBorderY(),
+                    worldManager.tree3.getBorderW(),
+                    worldManager.tree3.getBorderH());
+//            shape.rect( worldManager.tree1.texReg.getRegionX(),
+//                        worldManager.tree1.texReg.getRegionY(),
+//                        worldManager.tree1.texReg.getRegionWidth(),
+//                        worldManager.tree1.texReg.getRegionHeight());
+//            shape.rect( worldManager.tree2.texReg.getRegionX(),
+//                        worldManager.tree2.texReg.getRegionY(),
+//                        worldManager.tree2.texReg.getRegionWidth(),
+//                        worldManager.tree2.texReg.getRegionHeight());
+//            shape.rect( worldManager.tree3.texReg.getRegionX(),
+//                        worldManager.tree3.texReg.getRegionY(),
+//                        worldManager.tree3.texReg.getRegionWidth(),
+//                        worldManager.tree3.texReg.getRegionHeight());
             shape.setColor(Color.YELLOW);    // Range Yellow
             shape.circle(player.getRange().x,
                     player.getRange().y,
                     player.getRange().radius);
-            for(int i = 0; i < 99-1; ++i)
-            {
-                shape.line(points[i], points[i+1]);
+            if (points!=null){
+                for(int i = 0; i < 99-1; ++i)
+                {
+                    shape.line(points[i], points[i+1]);
+                }
             }
+
 
             shape.end();
         } // debugging if end
@@ -290,22 +293,21 @@ public class GameScreen implements Screen {
 
             }else{
                 if (lastHitActor!=null){
-                    if (lastHitActor.getClass() == Something.class){
+                    if (lastHitActor.getClass() == Something.class ||
+                            lastHitActor.getClass() == Player.class ||
+                            lastHitActor.getClass() == Spawner.class ||
+                            lastHitActor.getClass() == Something.class ){ // todo fix entity vs texReg
                         lastHitSomething = (Something) lastHitActor ;
+                        System.out.print("Hit: ActorName=");
+                        System.out.print(lastHitSomething.getName());
+                        System.out.print(" EntityID=");
+                        System.out.print(lastHitSomething.entity.GetID());
+                        System.out.print(" EntityName=");
+                        System.out.print(lastHitSomething.entity);
+                        System.out.println();
                     }else {
-                        if (lastHitActor.getClass() == Player.class){
-                            lastHitSomething = (Something) lastHitActor ;
-                        }else {
                             System.out.println("Hit: Unknown Entity");
-                        }
                     }
-                    System.out.print("Hit111111: ActorName=");
-                    System.out.print(lastHitSomething.getName());
-                    System.out.print(" EntityID=");
-                    System.out.print(lastHitSomething.entity.GetID());
-                    System.out.print(" EntityName=");
-                    System.out.print(lastHitSomething.entity);
-                    System.out.println();
                     // lastHitSomething.setDebug(true);
                 }else {
                     System.out.println("Hit: Void");
@@ -394,9 +396,9 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
             // Some action test todo remove this later
             // try toggling AnimatedSomething animation
-//            world.door2.setName("exp");
-//            world.door2.animationTime = 0;
-//            world.door2.startAnimCycle =  true;
+//            worldManager.door2.setName("exp");
+//            worldManager.door2.animationTime = 0;
+//            worldManager.door2.startAnimCycle =  true;
 //            System.out.println("Start anim"); //
 //
 //            float tempx =  player.getBorderX()+player.getBorderW()/2;
@@ -404,19 +406,20 @@ public class GameScreen implements Screen {
 //
 //            tempx -= 96/2;
 //            tempy -= 96/2;
-//            world.door2.setPosition(tempx,tempy);
+//            worldManager.door2.setPosition(tempx,tempy);
 
-            points = world.slime1[0].findPath(stage);
-//            world.slime1[0].go();
+
+
+//            points = worldManager.slime1[0].findPath(stage);
 
 
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
             // Some action test todo remove this later
             // try toggling AnimatedSomething animation
-//            world.door2.setName("exp");
-//            world.door2.animationTime = 0;
-//            world.door2.startAnimCycle =  true;
+//            worldManager.door2.setName("exp");
+//            worldManager.door2.animationTime = 0;
+//            worldManager.door2.startAnimCycle =  true;
 //            System.out.println("Start anim"); //
 //
 //            float tempx =  player.getBorderX()+player.getBorderW()/2;
@@ -424,10 +427,11 @@ public class GameScreen implements Screen {
 //
 //            tempx -= 96/2;
 //            tempy -= 96/2;
-//            world.door2.setPosition(tempx,tempy);
+//            worldManager.door2.setPosition(tempx,tempy);
 
-//            world.slime1[0].findPath(stage);
-            world.slime1[0].go();
+
+
+//            worldManager.slime1[0].go();
 
 
         }
@@ -476,16 +480,16 @@ public class GameScreen implements Screen {
     private void randomize() {
         Random r = new Random();
 
-        world.tree1.setX(r.nextInt(100)     );
-        world.tree1.setY(r.nextInt(100)     );
-        world.tree2.setX(r.nextInt(200)+100 );
-        world.tree2.setY(r.nextInt(200)+100 );
-        world.tree3.setX(r.nextInt(300)+200 );
-        world.tree3.setY(r.nextInt(100)     );
+        worldManager.tree1.setX(r.nextInt(100)     );
+        worldManager.tree1.setY(r.nextInt(100)     );
+        worldManager.tree2.setX(r.nextInt(200)+100 );
+        worldManager.tree2.setY(r.nextInt(200)+100 );
+        worldManager.tree3.setX(r.nextInt(300)+200 );
+        worldManager.tree3.setY(r.nextInt(100)     );
     }
     private void saveGame() {
-        // parse world object to data
-//        saveLoadData.getChunksToSave(world.chunks[0][0]);
+        // parse worldManager object to data
+//        saveLoadData.getChunksToSave(worldManager.chunks[0][0]);
         // find file to save
         saveLoadFile = Gdx.files.local("saves/save1.txt");
         // save json to file, after parsing data to json
@@ -498,8 +502,8 @@ public class GameScreen implements Screen {
         saveLoadFile = Gdx.files.local("saves/save1.txt");
         // load file to json , then json to data
         saveLoadData = saveLoadJson.fromJson(SaveLoadData.class, saveLoadFile);
-        // parse data to world object
-//        saveLoadData.setChunksToLoad(world.chunks[0][0]);
+        // parse data to worldManager object
+//        saveLoadData.setChunksToLoad(worldManager.chunks[0][0]);
         // notify load success
         System.out.println("Load Successful");
     }
@@ -556,9 +560,9 @@ public class GameScreen implements Screen {
         dropSound.dispose();
 
         player.texReg.getTexture().dispose();
-        world.tree1.texReg.getTexture().dispose();
-        world.tree2.texReg.getTexture().dispose();
-        world.tree3.texReg.getTexture().dispose();
+        worldManager.tree1.texReg.getTexture().dispose();
+        worldManager.tree2.texReg.getTexture().dispose();
+        worldManager.tree3.texReg.getTexture().dispose();
         // todo dispose atlas
         // todo dispose temp textures
         // todo dispose chunk images

@@ -2,13 +2,12 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,8 +16,8 @@ import com.mygdx.game.ants.AnimatedSomething;
 import com.mygdx.game.ants.Something;
 import com.mygdx.game.enums.Entity;
 
-class World {
-    // World's knowledge about grid
+class WorldManager {
+    // WorldManager's knowledge about grid
     private boolean debugging = false; // todo fix debugging boolean in all classes
     private int tileSize;
     private TiledMap map;
@@ -28,7 +27,7 @@ class World {
     private  WorldTexRegHandle texRegHandle;
 
     private Pos lastPos;
-    public Group worldGroup;
+    public Group world;
 
     Something tree1;
     Something tree2;
@@ -45,9 +44,80 @@ class World {
     AnimatedNPC[] slime3;
     private int slimeCount = 3;
 
-    World(Stage stage,Player player, WorldTexRegHandle buffer,TextureRegion texRegLever){
-        worldGroup = new Group();
-        stage.addActor(worldGroup);
+    private int aLayersCount;   // all layers
+    private int tLayersCount;   // tile layers
+    private int oLayersCount;   // object layers
+    private TiledMapTileLayer[] tLayers;
+    private MapLayer[] oLayers;
+    private boolean[][] isRoad;
+    private int[][] tileID;
+    private int[] objID;
+    private int[] objX;
+    private int[] objY;
+    private Rectangle[] objRect;
+    private int[] objCountPerLayer;
+    private void getMapData(){
+        aLayersCount = map.getLayers().getCount(); // get both /sum of both T&O layers
+        for (int i = 0; i < aLayersCount; i++) {   // get individual T&O layers count
+            if (map.getLayers().get(i).getName().contains("Tile Layer")){
+                tLayersCount++; // increment T layers count
+            }
+            if (map.getLayers().get(i).getName().contains("Object Layer")){
+                oLayersCount++; // increment O layers count
+            }
+        }
+        if (tLayersCount>0 && oLayersCount>0){  // at least one of T&O layers must be present
+            tLayers = new TiledMapTileLayer [tLayersCount]; // separate T layers to array
+            oLayers = new MapLayer          [oLayersCount]; // separate O layers to array
+            for (int i = 0; i < tLayersCount; i++) { // separate T layers to array
+                tLayers[i] = (TiledMapTileLayer) map.getLayers().get(i);
+            }
+            for (int i = tLayersCount; i < aLayersCount; i++) { // separate O layers to array
+                oLayers[i-tLayersCount] = map.getLayers().get(i);
+            }
+            tileID = new int[mapWidth][mapHeight]; // init tileID based on map size
+            for (int i = 0; i < mapWidth; i++) { // todo fix for multi layer tiles
+                for (int j = 0; j < mapHeight; j++) {
+                    //populate entity id from tmx, [0][0] is left bottom corner
+                    tileID[i][j] = tLayers[0].getCell(i,j).getTile().getProperties().get("entity", int.class);
+                    //todo add func to read all properties
+                }
+            }
+//            System.out.println("oL COunt 0 = "+oLayers[0].getObjects().getCount());
+//            System.out.println("oL COunt 1 = "+oLayers[1].getObjects().getCount());
+//            System.out.println("oL COunt 2 = "+oLayers[2].getObjects().getCount());
+            objCountPerLayer = new int[1]; // todo fix for multi layer map objects
+            objCountPerLayer[0] = oLayers[0].getObjects().getCount();
+            objID = new int[objCountPerLayer[0]];
+            objX = new int[objCountPerLayer[0]];
+            objY = new int[objCountPerLayer[0]];
+            objRect = new Rectangle[objCountPerLayer[0]];
+            for (int i = 0; i < objCountPerLayer[0]; i++) { // get ID X Y from O layer objects
+                objID[i] = oLayers[0].getObjects().get(i).getProperties()
+                        .get("entity", int.class);
+                objX[i] = (int) ((TextureMapObject) oLayers[0].getObjects().get(i)).getX();
+                objY[i] = (int) ((TextureMapObject) oLayers[0].getObjects().get(i)).getX();
+            }
+
+            if (debugging){
+                System.out.println(this.getClass() + ": mapWidth    = "+ mapWidth       );
+                System.out.println(this.getClass() + ": mapHeight   = "+ mapHeight      );
+                System.out.println(this.getClass() + ": tileSize    = "+ tileSize       +"px");
+                System.out.println(this.getClass() + ": tLayersCount = "+ tLayersCount +"/"+ tLayers.length);
+                System.out.println(this.getClass() + ": oLayersCount = "+ oLayersCount +"/"+ oLayers.length);
+                System.out.println(this.getClass() + ": tileID[0][0]    = "+ tileID[0][0]       );
+                System.out.println(this.getClass() + ": tileSize    = "+ tileSize       +"px");
+                for (int i = 0; i < objCountPerLayer[0]; i++) {
+                    System.out.println(this.getClass() + ": objID["+i+"] = "+ objID[i]);
+                    System.out.println(this.getClass() + ": objX["+i+"] = "+ objX[i]);
+                    System.out.println(this.getClass() + ": objY["+i+"] = "+ objY[i]);
+                }
+            }
+        }
+    }
+    WorldManager(Stage stage, Player player, WorldTexRegHandle buffer, TextureRegion texRegLever){
+        world = new Group();
+        stage.addActor(world);
 
         TextureRegion texRegTree;
 
@@ -64,31 +134,18 @@ class World {
         // Grid init
         grid = new Grid(mapWidth , mapHeight);
 
+        //read tmx
+        getMapData();
+
         // temp grid manipulations
-//        grid.addObject();
+        Spawner spawner = new Spawner(texRegHandle.getTexRegByID(Entity.Temp));
+        spawner.entity = Entity.Temp;
+        world.addActor(spawner);
+        spawner.setBorders();
+        spawner.setPosition(objX[0],objY[0]);
+        spawner.create(world);
 
 
-        MapLayer layer = map.getLayers().get(2); //todo fix ALL map object loading
-        MapObjects objects = layer.getObjects();
-        if (debugging) System.out.println("obj count = " +objects.getCount());
-// objects.getCount() returns 2 or 3 when i change items via editor
-        MapObject object = objects.get(0);
-// Entity entity;  // omitted for testing
-        MapProperties prop111 = object.getProperties();
-        if (prop111.containsKey("type111")){
-            int i = prop111.get("type111", int.class);
-            if (debugging) System.out.println(i);
-            if (debugging) System.out.println("hell yeah");
-            // entity = Entity.GetValue(i); // omitted for testing
-            // System.out.println(entity); // omitted for testing
-            // the goal is to store tile object types in Entity enum
-        }
-
-        //------------------------------------------
-//        System.out.println("1");
-//        System.out.println("2" + texRegHandle.toString());
-//        System.out.println("3" + texRegHandle.texRegsSize);
-//        System.out.println("4" + texRegHandle.getTexRegByID(Entity.Tree));
 
         tree1  = new Something(texRegHandle.getTexRegByID(Entity.Tree));
         tree2  = new Something(texRegHandle.getTexRegByID(Entity.Stone));
@@ -104,7 +161,6 @@ class World {
         tower3 = new Something(texRegHandle.getTexRegByID(Entity.Tower));
 
 
-
         tree1  .entity = Entity.Tree;
         tree2  .entity = Entity.Stone;
         tree3  .entity = Entity.Ore;
@@ -115,17 +171,16 @@ class World {
         tower2  .entity = Entity.Tower;
         tower3  .entity = Entity.Tower;
 
-
-        worldGroup.addActor(tree1);
-        worldGroup.addActor(tree2);
-        worldGroup.addActor(tree3);
-        worldGroup.addActor(lever);
-        worldGroup.addActor(door1);
-        worldGroup.addActor(tower1);
-        worldGroup.addActor(tower2);
-        worldGroup.addActor(tower3);
-        worldGroup.addActor(player);
-        worldGroup.addActorAfter(player,door2);
+        world.addActor(tree1);
+        world.addActor(tree2);
+        world.addActor(tree3);
+        world.addActor(lever);
+        world.addActor(door1);
+        world.addActor(tower1);
+        world.addActor(tower2);
+        world.addActor(tower3);
+        world.addActor(player);
+        world.addActorAfter(player,door2);
 
 
         for (int i = 0; i < slimeCount; i++) {
@@ -138,9 +193,9 @@ class World {
             slime1[i].setPosition(i*tileSize,1*tileSize);
             slime2[i].setPosition(i*tileSize,6*tileSize);
             slime3[i].setPosition(i*tileSize,9*tileSize);
-            worldGroup.addActor(slime1[i]);
-            worldGroup.addActor(slime2[i]);
-            worldGroup.addActor(slime3[i]);
+            world.addActor(slime1[i]);
+            world.addActor(slime2[i]);
+            world.addActor(slime3[i]);
         }
 
 
@@ -214,9 +269,12 @@ class World {
     private void setPosition(Actor actor , Pos pos){
         actor.setPosition(pos.x*tileSize , pos.y*tileSize);
     }
-    TiledMap getMap(){
+
+
+
+    public TiledMap getMap(){
         return map;
-    }
+    } // for Renderer
 
 
     //        chunks = new Chunk[chunkSize][chunkSize];

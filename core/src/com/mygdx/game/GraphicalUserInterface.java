@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import java.util.Random;
 
 public class GraphicalUserInterface {
-    private boolean debuging = true;
+    private boolean debuging = false;
     public Table tableRoot;
     GraphicalUserInterface(Stage stage){
 
@@ -28,9 +28,9 @@ public class GraphicalUserInterface {
         String fileLoc = "data/neon.json"; // skin location
         if (debuging){
             if  (new FileHandle(fileLoc).exists())
-                System.out.println("file OK");
+                System.out.println("GUI: skin file OK");
             else
-                System.out.println("file Missing");
+                System.out.println("GUI: skin file Missing");
         }
         Skin skin;
         skin = new Skin(Gdx.files.internal(fileLoc));

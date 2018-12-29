@@ -213,17 +213,16 @@ public class GameScreen implements Screen {
             if (currCustomDelta > maxDeltaDebug){
                 maxDeltaDebug = currCustomDelta;
             }
-
             game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
                             " Min/Max = "+ minDeltaDebug +"/"+ maxDeltaDebug +" - "+currCustomDelta,
-                    stage.getCamera().position.x-screen_width/2,
-                    stage.getCamera().position.y+screen_height/2-0);
+                    stageUI.getCamera().position.x-screen_width/2,
+                    stageUI.getCamera().position.y+screen_height/2-0);
             game.font.draw(game.batch, "Player Coordinates: "
                             + (int) player.getX() + ":" + (int) player.getY() ,
-                    stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-20);
+                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-20);
             game.font.draw(game.batch, "Camera Coordinates: "
-                            + (int) stage.getCamera().position.x + ":" + (int) stage.getCamera().position.y ,
-                    stage.getCamera().position.x-screen_width/2, stage.getCamera().position.y+screen_height/2-40);
+                            + (int) stageUI.getCamera().position.x + ":" + (int) stageUI.getCamera().position.y ,
+                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-40);
 //            animationRender();
             game.batch.end();
 
@@ -512,12 +511,12 @@ public class GameScreen implements Screen {
         private float testFloat;
         private String testString;
         private Chunk chunk;
-        void getChunksToSave(Chunk chunk){
+        void getChunksToSave(){
             this.testInt = chunk.testInt         ;
             this.testFloat = chunk.testfloat       ;
             this.testString = chunk.testString      ;
         }
-        void setChunksToLoad(Chunk chunk){
+        void setChunksToLoad(){
             chunk.testInt = this.testInt    ;
             chunk.testfloat = this.testFloat;
             chunk.testString = this.testString ;

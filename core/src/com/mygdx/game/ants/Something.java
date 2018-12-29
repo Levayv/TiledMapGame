@@ -64,18 +64,4 @@ public class Something extends shit{
     public float getBorderH(){ return border.height;}
     public Rectangle getBorder(){ return border;}
     public Circle getRange(){ return range;}
-
-    //        Actor a = super.hit(x,y,touchable);
-//    @Override
-    //    public Actor hit(float x, float y, boolean touchable){
-//        System.out.println("!");
-////        Something s = (Something) a;
-//        return a;
-//    }
-//    @Override
-//    public Actor hit(float x, float y, boolean touchable){
-//        System.out.println("!");
-//        return null;
-//    }
-
 }

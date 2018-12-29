@@ -115,7 +115,7 @@ class WorldManager {
             }
         }
     }
-    WorldManager(Stage stage, Player player, WorldTexRegManager buffer, TextureRegion texRegLever){
+    WorldManager(Stage stage, WorldTexRegManager buffer, TextureRegion texRegLever){
         world = new Group();
         stage.addActor(world);
 
@@ -138,64 +138,63 @@ class WorldManager {
         getMapData();
 
         // temp grid manipulations
-        Spawner spawner = new Spawner(texRegManager.getTexRegByID(Entity.Temp));
-        spawner.entity = Entity.Temp;
-        world.addActor(spawner);
+        Spawner spawner = new Spawner(Entity.Temp , texRegManager, world);
+//        spawner.entity = Entity.Temp;
+//        world.addActor(spawner);
         spawner.setBorders();
         spawner.setPosition(objX[0],objY[0]);
-        spawner.create(world);
+//        spawner.create(world);
 
 
 
-        tree1  = new Something(texRegManager.getTexRegByID(Entity.Tree));
-        tree2  = new Something(texRegManager.getTexRegByID(Entity.Stone));
-        tree3  = new Something(texRegManager.getTexRegByID(Entity.Ore));
-        lever  = new Something(texRegLever);
-        door1  = new AnimatedSomething(texRegLever, "door1" , 18);
-        door2  = new AnimatedSomething(texRegLever, "Explosion" , 12);
+        tree1  = new Something(Entity.Tree  , texRegManager , world);
+        tree2  = new Something(Entity.Stone , texRegManager , world);
+        tree3  = new Something(Entity.Ore   , texRegManager , world);
+        lever  = new Something(Entity.Temp  , texRegManager , world);
+        door1  = new AnimatedSomething(Entity.Temp,texRegManager,world, "door1" , 18);
+        door2  = new AnimatedSomething(Entity.Temp,texRegManager,world, "Explosion" , 12);
         slime1 = new AnimatedNPC[slimeCount];
         slime2 = new AnimatedNPC[slimeCount];
         slime3 = new AnimatedNPC[slimeCount];
-        tower1 = new Something(texRegManager.getTexRegByID(Entity.Tower));
-        tower2 = new Something(texRegManager.getTexRegByID(Entity.Tower));
-        tower3 = new Something(texRegManager.getTexRegByID(Entity.Tower));
+        tower1 = new Something(Entity.Tower,texRegManager,world);
+        tower2 = new Something(Entity.Tower,texRegManager,world);
+        tower3 = new Something(Entity.Tower,texRegManager,world);
 
 
-        tree1  .entity = Entity.Tree;
-        tree2  .entity = Entity.Stone;
-        tree3  .entity = Entity.Ore;
-        lever  .entity = Entity.None;
-        door1  .entity = Entity.None;
-        door2  .entity = Entity.None;
-        tower1  .entity = Entity.Tower;
-        tower2  .entity = Entity.Tower;
-        tower3  .entity = Entity.Tower;
+//        tree1  .entity = Entity.Tree;
+//        tree2  .entity = Entity.Stone;
+//        tree3  .entity = Entity.Ore;
+//        lever  .entity = Entity.None;
+//        door1  .entity = Entity.None;
+//        door2  .entity = Entity.None;
+//        tower1  .entity = Entity.Tower;
+//        tower2  .entity = Entity.Tower;
+//        tower3  .entity = Entity.Tower;
 
-        world.addActor(tree1);
-        world.addActor(tree2);
-        world.addActor(tree3);
-        world.addActor(lever);
-        world.addActor(door1);
-        world.addActor(tower1);
-        world.addActor(tower2);
-        world.addActor(tower3);
-        world.addActor(player);
-        world.addActorAfter(player,door2);
+//        world.addActor(tree1);
+//        world.addActor(tree2);
+//        world.addActor(tree3);
+//        world.addActor(lever);
+//        world.addActor(door1);
+//        world.addActor(tower1);
+//        world.addActor(tower2);
+//        world.addActor(tower3);
+//        world.addActor(player);
 
 
         for (int i = 0; i < slimeCount; i++) {
-            slime1[i] = new AnimatedNPC(texRegLever, "slime-blue" , 4);
-            slime2[i] = new AnimatedNPC(texRegLever, "slime-green" , 4);
-            slime3[i] = new AnimatedNPC(texRegLever, "slime-orange" , 4);
+            slime1[i] = new AnimatedNPC(Entity.Temp, texRegManager,world,"slime-blue" , 4);
+            slime2[i] = new AnimatedNPC(Entity.Temp, texRegManager,world,"slime-green" , 4);
+            slime3[i] = new AnimatedNPC(Entity.Temp, texRegManager,world,"slime-orange" , 4);
             slime1[i].setBorders();
             slime2[i].setBorders();
             slime3[i].setBorders();
             slime1[i].setPosition(i*tileSize,1*tileSize);
             slime2[i].setPosition(i*tileSize,6*tileSize);
             slime3[i].setPosition(i*tileSize,9*tileSize);
-            world.addActor(slime1[i]);
-            world.addActor(slime2[i]);
-            world.addActor(slime3[i]);
+//            world.addActor(slime1[i]);
+//            world.addActor(slime2[i]);
+//            world.addActor(slime3[i]);
         }
 
 

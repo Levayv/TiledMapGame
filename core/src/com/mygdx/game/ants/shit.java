@@ -13,14 +13,14 @@ import sun.security.acl.WorldGroupImpl;
 
 public class shit extends Actor {
     public TextureRegion texReg;
-    public Entity entity;
+    private Entity entity;
 
-    public shit (TextureRegion texReg) {
-//        texReg = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
-        this.texReg = texReg;
-        setBounds(texReg.getRegionX(), texReg.getRegionY(),
-                texReg.getRegionWidth(), texReg.getRegionHeight());
-    }
+//    public shit (TextureRegion texReg) {
+////        texReg = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
+//        this.texReg = texReg;
+//        setBounds(texReg.getRegionX(), texReg.getRegionY(),
+//                texReg.getRegionWidth(), texReg.getRegionHeight());
+//    }
     public shit(Entity entity, WorldTexRegManager texRegManager, Group world){
         this.entity = entity;
         world.addActor(this);
@@ -34,5 +34,12 @@ public class shit extends Actor {
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         batch.draw(texReg, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+    }
+
+    public int getEntityID() {
+        return entity.GetID();
+    }
+    public String getEntityName(){
+        return entity.name();
     }
 }

@@ -122,22 +122,27 @@ public class GameScreen implements Screen {
         buffer.addTexReg(Entity.Ore,    texRegOre       );
         buffer.addTexReg(Entity.Tower,  texRegTower     );
         buffer.addTexReg(Entity.Temp,   texRegTemp32     );
+        buffer.addTexReg(Entity.Player, texRegPlayer     );
+
+
+
+
+        // WorldManager init
+        worldManager = new WorldManager(stage , buffer, new TextureRegion(texRegLever));
+
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //actors!
-        player = new Player(texRegPlayer);
+        player = new Player(Entity.Player, buffer,worldManager.world );
 //        player.setBorders();
 //        player.setBorders(10,10,20,20);
         player.setBorders(20,0,20,20);
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2);
         player.setName("player");
-        player.entity = Entity.Player;
+//        world.addActorAfter(player,door2); //! fix
 
-
-        // WorldManager init
-        worldManager = new WorldManager(stage , player , buffer, new TextureRegion(texRegLever));
-
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
+//        player.entity = Entity.Player; redundant
 
         //Colider init
         colCheck = new Collider(3);
@@ -302,9 +307,9 @@ public class GameScreen implements Screen {
                         System.out.print("Hit: ActorName=");
                         System.out.print(lastHitSomething.getName());
                         System.out.print(" EntityID=");
-                        System.out.print(lastHitSomething.entity.GetID());
+                        System.out.print(lastHitSomething.getEntityID());
                         System.out.print(" EntityName=");
-                        System.out.print(lastHitSomething.entity);
+                        System.out.print(lastHitSomething.getEntityName());
                         System.out.println();
                     }else {
                             System.out.println("Hit: Unknown Entity");

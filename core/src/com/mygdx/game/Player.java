@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.ants.AnimatedPlayableCharacter;
 import com.mygdx.game.enums.DirConst;
+import com.mygdx.game.enums.Entity;
 
 
 class Player extends AnimatedPlayableCharacter {
@@ -45,11 +47,11 @@ class Player extends AnimatedPlayableCharacter {
     private float frameDur = 0.025f;
     float animationTime = 0f;
 
-    public Player(TextureRegion texReg, String file, int rows) {
-        super(texReg, file, rows);
+    public Player(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
+        super(entity,  texRegManager,  world, file, rows);
     }
-    public Player(TextureRegion texReg) {
-        super(texReg , "Explosion", 111);
+    public Player(Entity entity, WorldTexRegManager texRegManager, Group world) {
+        super(entity,  texRegManager,  world, "Explosion", 111);
         dirLast = DirConst.NULL;
         dirX = DirConst.NULL;
         dirY = DirConst.NULL;

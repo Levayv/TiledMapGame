@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.mygdx.game.WorldTexRegManager;
 import com.mygdx.game.enums.Entity;
 
 public class Something extends shit{
@@ -15,8 +17,14 @@ public class Something extends shit{
     private int borderXdelta;
     private int borderYdelta;
 
-    public Something(TextureRegion texReg) { //todo change constructor , only entrity enum must be needed
-        super(texReg);
+//    public Something(TextureRegion texReg) { //todo change constructor , only entrity enum must be needed
+//        super(texReg);
+//        border = new Rectangle();
+//        range = new Circle();
+//        buffVect2 = new Vector2();
+//    }
+    public Something(Entity entity, WorldTexRegManager texRegManager, Group world) { //todo change constructor , only entrity enum must be needed
+        super( entity,  texRegManager,  world);
         border = new Rectangle();
         range = new Circle();
         buffVect2 = new Vector2();

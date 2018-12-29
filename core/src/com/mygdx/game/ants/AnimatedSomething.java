@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.enums.Entity;
 
 public class AnimatedSomething extends Something{
     TextureRegion[] animFrames;
@@ -16,8 +19,8 @@ public class AnimatedSomething extends Something{
     public boolean loopingEndless = true;
     public boolean startAnimCycle = false;
 
-    public AnimatedSomething(TextureRegion texReg, String file, int rows) {
-        super(texReg);
+    public AnimatedSomething(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
+        super(entity,  texRegManager,  world);
         this.rows = rows;
         int FRAME_COLS = rows;
         int FRAME_ROWS = 1;

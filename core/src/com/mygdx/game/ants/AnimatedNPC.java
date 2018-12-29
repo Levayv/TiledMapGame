@@ -8,8 +8,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.WorldTexRegManager;
 import com.mygdx.game.enums.DirConst;
+import com.mygdx.game.enums.Entity;
 
 public class AnimatedNPC extends AnimatedSomething {
 
@@ -19,8 +22,8 @@ public class AnimatedNPC extends AnimatedSomething {
         go = true;
     }
     private Path path;
-    public AnimatedNPC(TextureRegion texReg, String file, int rows) {
-        super(texReg, file, rows);
+    public AnimatedNPC(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
+        super(entity,  texRegManager,  world, file, rows);
     }
     @Override
     public void act(float delta){

@@ -11,7 +11,7 @@ import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.enums.Entity;
 
 public class AnimatedSomething extends Something {
-
+    private int animationsCount = 1;
     TextureRegion[] animFrames;
     Animation<TextureRegion> eventAnimation;
     public float animationTime = 0f;

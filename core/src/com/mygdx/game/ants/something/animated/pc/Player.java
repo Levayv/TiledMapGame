@@ -197,7 +197,6 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
     }
 
     private void getDirFromDir() { // Fix dir enum for 8 directional and integrate with animations
-
         switch (dirLast){
             case UP:    dirNumber = 0; break;
             case DOWN:  dirNumber = 2; break;

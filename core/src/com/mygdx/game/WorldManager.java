@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.ants.something.animated.npc.NonPlayableCharacter;
 import com.mygdx.game.ants.something.animated.AnimatedSomething;
 import com.mygdx.game.ants.something.Something;
+import com.mygdx.game.ants.something.worldObjects.Door;
 import com.mygdx.game.enums.Entity;
 
 class WorldManager {
@@ -37,7 +38,7 @@ class WorldManager {
     Something tower3;
     Something lever;
 
-    AnimatedSomething door1;
+    Door door1;
     AnimatedSomething door2;
     NonPlayableCharacter[] slime1;
     NonPlayableCharacter[] slime2;
@@ -151,7 +152,8 @@ class WorldManager {
         tree2  = new Something(Entity.Stone , texRegManager , world);
         tree3  = new Something(Entity.Ore   , texRegManager , world);
         lever  = new Something(Entity.Temp  , texRegManager , world);
-        door1  = new AnimatedSomething(Entity.Temp,texRegManager,world, "door1" , 18);
+        door1  = new Door(Entity.Temp,texRegManager,world, "door1" , 18);
+//        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
         door2  = new AnimatedSomething(Entity.Temp,texRegManager,world, "Explosion" , 12);
         slime1 = new NonPlayableCharacter[slimeCount];
         slime2 = new NonPlayableCharacter[slimeCount];

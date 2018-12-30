@@ -11,9 +11,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.ants.AnimatedNPC;
-import com.mygdx.game.ants.AnimatedSomething;
-import com.mygdx.game.ants.Something;
+import com.mygdx.game.ants.something.animated.npc.NonPlayableCharacter;
+import com.mygdx.game.ants.something.animated.AnimatedSomething;
+import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.enums.Entity;
 
 class WorldManager {
@@ -39,9 +39,9 @@ class WorldManager {
 
     AnimatedSomething door1;
     AnimatedSomething door2;
-    AnimatedNPC[] slime1;
-    AnimatedNPC[] slime2;
-    AnimatedNPC[] slime3;
+    NonPlayableCharacter[] slime1;
+    NonPlayableCharacter[] slime2;
+    NonPlayableCharacter[] slime3;
     private int slimeCount = 3;
 
     private int aLayersCount;   // all layers
@@ -153,9 +153,9 @@ class WorldManager {
         lever  = new Something(Entity.Temp  , texRegManager , world);
         door1  = new AnimatedSomething(Entity.Temp,texRegManager,world, "door1" , 18);
         door2  = new AnimatedSomething(Entity.Temp,texRegManager,world, "Explosion" , 12);
-        slime1 = new AnimatedNPC[slimeCount];
-        slime2 = new AnimatedNPC[slimeCount];
-        slime3 = new AnimatedNPC[slimeCount];
+        slime1 = new NonPlayableCharacter[slimeCount];
+        slime2 = new NonPlayableCharacter[slimeCount];
+        slime3 = new NonPlayableCharacter[slimeCount];
         tower1 = new Something(Entity.Tower,texRegManager,world);
         tower2 = new Something(Entity.Tower,texRegManager,world);
         tower3 = new Something(Entity.Tower,texRegManager,world);
@@ -181,11 +181,12 @@ class WorldManager {
 //        world.addActor(tower3);
 //        world.addActor(player);
 
+//        world.addActorAfter(player,door2); //! fix
 
         for (int i = 0; i < slimeCount; i++) {
-            slime1[i] = new AnimatedNPC(Entity.Temp, texRegManager,world,"slime-blue" , 4);
-            slime2[i] = new AnimatedNPC(Entity.Temp, texRegManager,world,"slime-green" , 4);
-            slime3[i] = new AnimatedNPC(Entity.Temp, texRegManager,world,"slime-orange" , 4);
+            slime1[i] = new NonPlayableCharacter(Entity.Temp, texRegManager,world,"slime-blue" , 4);
+            slime2[i] = new NonPlayableCharacter(Entity.Temp, texRegManager,world,"slime-green" , 4);
+            slime3[i] = new NonPlayableCharacter(Entity.Temp, texRegManager,world,"slime-orange" , 4);
             slime1[i].setBorders();
             slime2[i].setBorders();
             slime3[i].setBorders();

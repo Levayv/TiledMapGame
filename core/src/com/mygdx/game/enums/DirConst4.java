@@ -1,9 +1,9 @@
 package com.mygdx.game.enums;
 
-public enum DirConst {
+public enum DirConst4 {
+    NULL,
     UP,
     DOWN,
     LEFT,
-    RIGHT,
-    NULL
+    RIGHT
 }

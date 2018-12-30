@@ -1,20 +1,16 @@
-package com.mygdx.game.ants;
+package com.mygdx.game.ants.something.animated.npc;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.WorldTexRegManager;
-import com.mygdx.game.enums.DirConst;
+import com.mygdx.game.ants.something.animated.AnimatedSomething;
 import com.mygdx.game.enums.Entity;
 
-public class AnimatedNPC extends AnimatedSomething {
+public class NonPlayableCharacter extends AnimatedSomething {
 
     private boolean go;
     private float time = 0;
@@ -22,7 +18,7 @@ public class AnimatedNPC extends AnimatedSomething {
         go = true;
     }
     private Path path;
-    public AnimatedNPC(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
+    public NonPlayableCharacter(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
         super(entity,  texRegManager,  world, file, rows);
     }
     @Override

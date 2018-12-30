@@ -25,8 +25,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.ants.Something;
-import com.mygdx.game.enums.DirConst;
+import com.mygdx.game.ants.something.Something;
+import com.mygdx.game.ants.something.animated.pc.Player;
+import com.mygdx.game.enums.DirConst4;
+import com.mygdx.game.enums.DirConst8;
+import com.mygdx.game.enums.DirParser;
 import com.mygdx.game.enums.Entity;
 
 public class GameScreen implements Screen {
@@ -66,11 +69,12 @@ public class GameScreen implements Screen {
 
     // Save Load
     private FileHandle saveLoadFile;
-    private SaveLoadData saveLoadData = new SaveLoadData();;
-    private Json saveLoadJson = new Json();;
+    private SaveLoadData saveLoadData = new SaveLoadData();
+    private Json saveLoadJson = new Json();
 
     private float minDeltaDebug = 999999; //temp
     private float maxDeltaDebug = 1; //temp
+    DirParser dirParser = new DirParser();
 
     public GameScreen(final MyGdxGame game) {
         this.game = game;
@@ -356,20 +360,20 @@ public class GameScreen implements Screen {
         }
 
         if (Gdx.input.isKeyPressed(Keys.A)) {
-            player.setDirX(DirConst.LEFT);
+            player.setDirX(DirConst4.LEFT);
             player.go();
 
         }
         if (Gdx.input.isKeyPressed(Keys.D)) {
-            player.setDirX(DirConst.RIGHT);
+            player.setDirX(DirConst4.RIGHT);
             player.go();
         }
         if (Gdx.input.isKeyPressed(Keys.W)) {
-            player.setDirY(DirConst.UP);
+            player.setDirY(DirConst4.UP);
             player.go();
         }
         if (Gdx.input.isKeyPressed(Keys.S)) {
-            player.setDirY(DirConst.DOWN);
+            player.setDirY(DirConst4.DOWN);
             player.go();
         }
         // Camera moves 4 dir
@@ -413,8 +417,8 @@ public class GameScreen implements Screen {
 //            tempx -= 96/2;
 //            tempy -= 96/2;
 //            worldManager.door2.setPosition(tempx,tempy);
-
-
+            DirConst8 dir8 = dirParser.to8(DirConst4.DOWN);
+            System.out.println(dir8);
 
 //            points = worldManager.slime1[0].findPath(stage);
 

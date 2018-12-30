@@ -9,19 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.WorldTexRegManager;
 import com.mygdx.game.enums.Entity;
 
-import sun.security.acl.WorldGroupImpl;
-
-public class shit extends Actor {
+public class coreActor extends Actor {
     public TextureRegion texReg;
     private Entity entity;
 
-//    public shit (TextureRegion texReg) {
+//    public coreActor (TextureRegion texReg) {
 ////        texReg = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
 //        this.texReg = texReg;
 //        setBounds(texReg.getRegionX(), texReg.getRegionY(),
 //                texReg.getRegionWidth(), texReg.getRegionHeight());
 //    }
-    public shit(Entity entity, WorldTexRegManager texRegManager, Group world){
+    public coreActor(Entity entity, WorldTexRegManager texRegManager, Group world){
         this.entity = entity;
         world.addActor(this);
         texReg = texRegManager.getTexRegByID(entity);

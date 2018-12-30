@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.ants.something.animated.pc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,22 +6,22 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.ants.AnimatedPlayableCharacter;
-import com.mygdx.game.enums.DirConst;
+import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.Entity;
 
 
-class Player extends AnimatedPlayableCharacter {
+public class Player extends PlayableCharacter { // todo future refactor to main player or ?
     private static int low      = 50;
     private static int medium   = 200;
     private static int high     = 600;
-    int moveSpeedL = medium;
-    int moveSpeedR = medium;
-    int moveSpeedU = medium;
-    int moveSpeedD = medium;
-    private DirConst dirX;
-    private DirConst dirY;
-    private DirConst dirLast;
+    public int moveSpeedL = medium;
+    public int moveSpeedR = medium;
+    public int moveSpeedU = medium;
+    public int moveSpeedD = medium;
+    private DirConst4 dirX;
+    private DirConst4 dirY;
+    private DirConst4 dirLast;
     private byte dirNumber;
 
     private boolean upLock          ;
@@ -52,21 +52,21 @@ class Player extends AnimatedPlayableCharacter {
     }
     public Player(Entity entity, WorldTexRegManager texRegManager, Group world) {
         super(entity,  texRegManager,  world, "Explosion", 111);
-        dirLast = DirConst.NULL;
-        dirX = DirConst.NULL;
-        dirY = DirConst.NULL;
+        dirLast = DirConst4.NULL;
+        dirX = DirConst4.NULL;
+        dirY = DirConst4.NULL;
     }
 
-    public void setupLock (boolean upLock){
+    public void setUpLock(boolean upLock){
         this.upLock = upLock;
     }
-    public void setdownLock (boolean downLock){
+    public void setDownLock(boolean downLock){
         this.downLock = downLock;
     }
-    public void setleftLock (boolean leftLock){
+    public void setLeftLock(boolean leftLock){
         this.leftLock  = leftLock;
     }
-    public void setrightLock (boolean rightLock){
+    public void setRightLock(boolean rightLock){
         this.rightLock = rightLock;
     }
     public void go(){
@@ -80,27 +80,27 @@ class Player extends AnimatedPlayableCharacter {
         if (go){
             updateX = 0;
             updateY = 0;
-            if (dirX == DirConst.LEFT  && !leftLock  ){
+            if (dirX == DirConst4.LEFT  && !leftLock  ){
                 updateX = -moveSpeedL*delta;
             }
-            if (dirX == DirConst.RIGHT && !rightLock ){
+            if (dirX == DirConst4.RIGHT && !rightLock ){
                 updateX = moveSpeedR*delta;
             }
-            if (dirY == DirConst.UP    && !upLock    ){
+            if (dirY == DirConst4.UP    && !upLock    ){
                 updateY = moveSpeedU*delta;
             }
-            if (dirY == DirConst.DOWN  && !downLock  ){
+            if (dirY == DirConst4.DOWN  && !downLock  ){
                 updateY = -moveSpeedD*delta;
             }
             moveBy(updateX, updateY);
-            if (dirY != DirConst.NULL)
+            if (dirY != DirConst4.NULL)
                 dirLast = dirY;
             else
                 dirLast = dirX;
             getDirFromDir();
             getAnimationsWorking(delta);
-            dirX = DirConst.NULL;
-            dirY = DirConst.NULL;
+            dirX = DirConst4.NULL;
+            dirY = DirConst4.NULL;
             go = false;
             if (getDebug()){
                 System.out.print("Moves ");
@@ -120,16 +120,16 @@ class Player extends AnimatedPlayableCharacter {
     }
 
     private void getAnimationsWorking(float delta) {
-        if (dirY == DirConst.UP){
+        if (dirY == DirConst4.UP){
             texReg = walkAnimationU.getKeyFrame(animationTime,true);
         }
-        if (dirY == DirConst.DOWN){
+        if (dirY == DirConst4.DOWN){
             texReg = walkAnimationD.getKeyFrame(animationTime,true);
         }
-        if (dirX == DirConst.LEFT){
+        if (dirX == DirConst4.LEFT){
             texReg = walkAnimationL.getKeyFrame(animationTime,true);
         }
-        if (dirX == DirConst.RIGHT){
+        if (dirX == DirConst4.RIGHT){
             texReg = walkAnimationR.getKeyFrame(animationTime,true);
         }
         animationTime += delta;
@@ -206,29 +206,29 @@ class Player extends AnimatedPlayableCharacter {
         }
     }
 
-    void speedLow(){
+    public void speedLow(){
         moveSpeedL = low;
         moveSpeedR = low;
         moveSpeedU = low;
         moveSpeedD = low;
     }
-    void speedMed(){
+    public void speedMed(){
         moveSpeedL = medium;
         moveSpeedR = medium;
         moveSpeedU = medium;
         moveSpeedD = medium;
     }
-    void speedHigh(){
+    public void speedHigh(){
         moveSpeedL = high;
         moveSpeedR = high;
         moveSpeedU = high;
         moveSpeedD = high;
     }
 
-    public void setDirX(DirConst dirX) {
+    public void setDirX(DirConst4 dirX) {
         this.dirX = dirX;
     }
-    public void setDirY(DirConst dirY) {
+    public void setDirY(DirConst4 dirY) {
         this.dirY = dirY;
     }
 }

@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.ants.something.animated.pc.Player;
 
 public class Collider {
     boolean upLockFinal;
@@ -118,9 +119,9 @@ public class Collider {
 
             }
         }
-        player.setleftLock  (leftLockFinal   ) ;
-        player.setrightLock (rightLockFinal  ) ;
-        player.setupLock    (upLockFinal     ) ;
-        player.setdownLock  (downLockFinal   ) ;
+        player.setLeftLock(leftLockFinal   ) ;
+        player.setRightLock(rightLockFinal  ) ;
+        player.setUpLock(upLockFinal     ) ;
+        player.setDownLock(downLockFinal   ) ;
     }
 }

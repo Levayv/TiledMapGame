@@ -1,15 +1,14 @@
-package com.mygdx.game.ants;
+package com.mygdx.game.ants.something;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.ants.coreActor;
 import com.mygdx.game.enums.Entity;
 
-public class Something extends shit{
+public class Something extends coreActor {
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object
     private Circle range;

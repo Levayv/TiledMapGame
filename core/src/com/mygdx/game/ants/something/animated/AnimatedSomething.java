@@ -1,4 +1,4 @@
-package com.mygdx.game.ants;
+package com.mygdx.game.ants.something.animated;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.enums.Entity;
 
-public class AnimatedSomething extends Something{
+public class AnimatedSomething extends Something {
+
     TextureRegion[] animFrames;
     Animation<TextureRegion> eventAnimation;
     public float animationTime = 0f;

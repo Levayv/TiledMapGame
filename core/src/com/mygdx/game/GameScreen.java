@@ -95,16 +95,17 @@ public class GameScreen implements Screen {
         TextureRegion texRegTower = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
         TextureRegion texRegTemp32 = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
-        // WorldTexRegManager init
-        WorldTexRegManager buffer = new WorldTexRegManager(100);
-
-        buffer.addTexReg(Entity.Tree,   texRegTree      );
-        buffer.addTexReg(Entity.Stone,  texRegStone     );
-        buffer.addTexReg(Entity.Ore,    texRegOre       );
-        buffer.addTexReg(Entity.Tower,  texRegTower     );
-        buffer.addTexReg(Entity.Temp,   texRegTemp32     );
-        buffer.addTexReg(Entity.Player, texRegPlayer     );
-
+        Texture texAnimTemp = new Texture(Gdx.files.internal("animation/pumpkin.png"));
+        // WorldResTexRegManager init
+        WorldResTexRegManager buffer1 = new WorldResTexRegManager(100);
+        buffer1.addTexReg(Entity.Tree,   texRegTree      );
+        buffer1.addTexReg(Entity.Stone,  texRegStone     );
+        buffer1.addTexReg(Entity.Ore,    texRegOre       );
+        buffer1.addTexReg(Entity.Tower,  texRegTower     );
+        buffer1.addTexReg(Entity.Temp,   texRegTemp32     );
+        buffer1.addTexReg(Entity.Player, texRegPlayer     );
+        WorldResAnimManager buffer2 = new WorldResAnimManager(100);
+        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp);
 
         // load sound & music
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
@@ -128,12 +129,12 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         // WorldManager init
-        worldManager = new WorldManager(stage , buffer, new TextureRegion(texRegLever));
+        worldManager = new WorldManager(stage , buffer1, buffer2, new TextureRegion(texRegLever));
 
         tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //actors!
-        player = new Player(Entity.Player, buffer,worldManager.world );
+        player = new Player(Entity.Player, buffer1,worldManager.world );
 //        player.setBorders();
 //        player.setBorders(10,10,20,20);
         player.setBorders(20,0,20,20);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.WorldResTexRegManager;
 import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.enums.Entity;
 
@@ -22,8 +22,8 @@ public class AnimatedSomething extends Something {
     public boolean loopingEndless = true;
     public boolean startAnimCycle = false;
 
-    public AnimatedSomething(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
-        super(entity,  texRegManager,  world);
+    public AnimatedSomething(Entity entity, WorldResTexRegManager resTexRegManager, Group world, String file, int rows) {
+        super(entity,  resTexRegManager,  world);
         this.rows = rows;
         int FRAME_COLS = rows;
         int FRAME_ROWS = 1;
@@ -44,6 +44,9 @@ public class AnimatedSomething extends Something {
         frameDur = (0.025f / rows)*20; // 3fps ?
 //        frameDur = 0.015f; // 60 fps !
         eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
+    }
+    public void tempCHANGEANIM(Animation anim){
+        eventAnimation = anim;
     }
     @Override
     public void act(float delta){

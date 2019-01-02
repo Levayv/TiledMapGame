@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.WorldResTexRegManager;
 import com.mygdx.game.ants.coreActor;
 import com.mygdx.game.enums.Entity;
 
@@ -22,7 +22,7 @@ public class Something extends coreActor {
 //        range = new Circle();
 //        buffVect2 = new Vector2();
 //    }
-    public Something(Entity entity, WorldTexRegManager texRegManager, Group world) { //todo change constructor , only entrity enum must be needed
+    public Something(Entity entity, WorldResTexRegManager texRegManager, Group world) { //todo change constructor , only entrity enum must be needed
         super( entity,  texRegManager,  world);
         border = new Rectangle();
         range = new Circle();

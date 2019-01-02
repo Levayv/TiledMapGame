@@ -5,7 +5,7 @@ import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.enums.Entity;
 
 class Spawner extends Something {
-    public Spawner(Entity entity, WorldTexRegManager texRegManager, Group world) {
+    public Spawner(Entity entity, WorldResTexRegManager texRegManager, Group world) {
         super(entity,  texRegManager,  world);
     }
     public void create(Group worldGroup){

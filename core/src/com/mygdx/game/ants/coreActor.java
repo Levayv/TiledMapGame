@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.WorldTexRegManager;
+import com.mygdx.game.WorldResTexRegManager;
 import com.mygdx.game.enums.Entity;
 
 public class coreActor extends Actor {
@@ -19,7 +18,7 @@ public class coreActor extends Actor {
 //        setBounds(texReg.getRegionX(), texReg.getRegionY(),
 //                texReg.getRegionWidth(), texReg.getRegionHeight());
 //    }
-    public coreActor(Entity entity, WorldTexRegManager texRegManager, Group world){
+    public coreActor(Entity entity, WorldResTexRegManager texRegManager, Group world){
         this.entity = entity;
         world.addActor(this);
         texReg = texRegManager.getTexRegByID(entity);

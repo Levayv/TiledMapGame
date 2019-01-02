@@ -6,8 +6,7 @@ import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.WorldTexRegManager;
-import com.mygdx.game.ants.something.animated.AnimatedSomething;
+import com.mygdx.game.WorldResTexRegManager;
 import com.mygdx.game.ants.something.animated.doorAKAeventBased.AnimatedEventSomething;
 import com.mygdx.game.enums.Entity;
 
@@ -19,7 +18,7 @@ public class NonPlayableCharacter extends AnimatedEventSomething {
         go = true;
     }
     private Path path;
-    public NonPlayableCharacter(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
+    public NonPlayableCharacter(Entity entity, WorldResTexRegManager texRegManager, Group world, String file, int rows) {
         super(entity,  texRegManager,  world, file, rows,1);
     }
     @Override

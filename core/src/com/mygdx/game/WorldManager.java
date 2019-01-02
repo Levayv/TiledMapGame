@@ -25,7 +25,8 @@ class WorldManager {
     private  int mapWidth;
     private  int mapHeight;
     private Grid grid;
-    private WorldTexRegManager texRegManager;
+    private WorldResTexRegManager texRegManager;
+    private WorldResAnimManager animManager;
 
     private Pos lastPos;
     public Group world;
@@ -116,14 +117,18 @@ class WorldManager {
             }
         }
     }
-    WorldManager(Stage stage, WorldTexRegManager buffer, TextureRegion texRegLever){
+    WorldManager(Stage stage,
+                 WorldResTexRegManager buffer1,
+                 WorldResAnimManager buffer2,
+                 TextureRegion texRegLever){
         world = new Group();
         stage.addActor(world);
 
         TextureRegion texRegTree;
 
         // Texture Handler
-        texRegManager = buffer;
+        texRegManager = buffer1;
+        animManager   = buffer2;
 
 
         // load map , get props
@@ -153,6 +158,7 @@ class WorldManager {
         tree3  = new Something(Entity.Ore   , texRegManager , world);
         lever  = new Something(Entity.Temp  , texRegManager , world);
         door1  = new Door(Entity.Temp,texRegManager,world, "door1" , 18);
+        door1.tempCHANGEANIM(buffer2.getAnimationByID(Entity.Temp));
 //        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
         door2  = new AnimatedSomething(Entity.Temp,texRegManager,world, "Explosion" , 12);
         slime1 = new NonPlayableCharacter[slimeCount];

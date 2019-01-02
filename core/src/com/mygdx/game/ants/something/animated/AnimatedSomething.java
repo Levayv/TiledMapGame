@@ -11,9 +11,10 @@ import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.enums.Entity;
 
 public class AnimatedSomething extends Something {
-    private int animationsCount = 1;
+    protected int animationsCount = 1;
     TextureRegion[] animFrames;
     Animation<TextureRegion> eventAnimation;
+//    Animation allAnimations;
     public float animationTime = 0f;
     private float frameDur;
     private int rows;
@@ -43,7 +44,6 @@ public class AnimatedSomething extends Something {
         frameDur = (0.025f / rows)*20; // 3fps ?
 //        frameDur = 0.015f; // 60 fps !
         eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
-
     }
     @Override
     public void act(float delta){

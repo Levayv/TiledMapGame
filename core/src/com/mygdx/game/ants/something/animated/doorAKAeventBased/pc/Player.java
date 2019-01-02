@@ -1,4 +1,4 @@
-package com.mygdx.game.ants.something.animated.pc;
+package com.mygdx.game.ants.something.animated.doorAKAeventBased.pc;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -21,7 +21,7 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
     public int moveSpeedD = medium;
     private DirConst4 dirX;
     private DirConst4 dirY;
-    private DirConst4 dirLast;
+    public DirConst4 dirLast;
     private byte dirNumber;
 
     private boolean upLock          ;

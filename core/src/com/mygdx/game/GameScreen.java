@@ -26,7 +26,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ants.something.Something;
-import com.mygdx.game.ants.something.animated.pc.Player;
+import com.mygdx.game.ants.something.animated.doorAKAeventBased.pc.Player;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirConst8;
 import com.mygdx.game.enums.DirParser;
@@ -88,13 +88,22 @@ public class GameScreen implements Screen {
         atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
         TextureRegion texRegDrop = atlas.createSprite("droplet");
-//      // loading temp images with Texture
+//      // loading (temp) images with Texture
         TextureRegion texRegTree = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
         TextureRegion texRegStone = new TextureRegion(new Texture(Gdx.files.internal("stone.png")));
         TextureRegion texRegOre = new TextureRegion(new Texture(Gdx.files.internal("ore.png")));
         TextureRegion texRegTower = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
         TextureRegion texRegTemp32 = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
+        // WorldTexRegManager init
+        WorldTexRegManager buffer = new WorldTexRegManager(100);
+
+        buffer.addTexReg(Entity.Tree,   texRegTree      );
+        buffer.addTexReg(Entity.Stone,  texRegStone     );
+        buffer.addTexReg(Entity.Ore,    texRegOre       );
+        buffer.addTexReg(Entity.Tower,  texRegTower     );
+        buffer.addTexReg(Entity.Temp,   texRegTemp32     );
+        buffer.addTexReg(Entity.Player, texRegPlayer     );
 
 
         // load sound & music
@@ -117,19 +126,6 @@ public class GameScreen implements Screen {
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer(stage , stageUI);
         Gdx.input.setInputProcessor(inputMultiplexer);
-
-        // WorldTexRegManager init
-        WorldTexRegManager buffer = new WorldTexRegManager(100);
-
-        buffer.addTexReg(Entity.Tree,   texRegTree      );
-        buffer.addTexReg(Entity.Stone,  texRegStone     );
-        buffer.addTexReg(Entity.Ore,    texRegOre       );
-        buffer.addTexReg(Entity.Tower,  texRegTower     );
-        buffer.addTexReg(Entity.Temp,   texRegTemp32     );
-        buffer.addTexReg(Entity.Player, texRegPlayer     );
-
-
-
 
         // WorldManager init
         worldManager = new WorldManager(stage , buffer, new TextureRegion(texRegLever));
@@ -192,97 +188,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        shittyMechanics(delta);
         shittyControls(delta);
         shittyRenderer(delta);
     }
-
-    void shittyRenderer(float delta){
-        // clear the screen with a dark blue color.
-//        worldManager.group.setCullingArea(new Rectangle(
-//                stage.getCamera().position.x - stage.getCamera().viewportWidth /2 ,
-//                stage.getCamera().position.y - stage.getCamera().viewportHeight/2,
-//                stage.getCamera().viewportWidth ,
-//                stage.getCamera().viewportHeight));
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        stage.getCamera().update(); //? why
-        tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
-        tiledMapRenderer.render();
-
-        stage.act(delta);
-        stage.draw();
-        stageUI.act(delta);
-        stageUI.draw();
-
-        if (debugging){
-//        game.batch.setProjectionMatrix(camera.combined); //? why ?
-            game.batch.begin();
-            float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
-            if (currCustomDelta < minDeltaDebug){
-                minDeltaDebug = currCustomDelta;
-            }
-            if (currCustomDelta > maxDeltaDebug){
-                maxDeltaDebug = currCustomDelta;
-            }
-            game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
-                            " Min/Max = "+ minDeltaDebug +"/"+ maxDeltaDebug +" - "+currCustomDelta,
-                    stageUI.getCamera().position.x-screen_width/2,
-                    stageUI.getCamera().position.y+screen_height/2-0);
-            game.font.draw(game.batch, "Player Coordinates: "
-                            + (int) player.getX() + ":" + (int) player.getY() ,
-                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-20);
-            game.font.draw(game.batch, "Camera Coordinates: "
-                            + (int) stageUI.getCamera().position.x + ":" + (int) stageUI.getCamera().position.y ,
-                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-40);
-//            animationRender();
-            game.batch.end();
-
-            ShapeRenderer shape = new ShapeRenderer();
-            shape.setProjectionMatrix(stage.getCamera().combined);
-            shape.begin(ShapeRenderer.ShapeType.Line);
-            shape.setColor(Color.RED); // Border Colider RED
-            shape.rect(player.getBorderX(),
-                    player.getBorderY(),
-                    player.getBorderW(),
-                    player.getBorderH());
-            shape.rect( worldManager.tree1.getBorderX(),
-                    worldManager.tree1.getBorderY(),
-                    worldManager.tree1.getBorderW(),
-                    worldManager.tree1.getBorderH());
-            shape.rect( worldManager.tree2.getBorderX(),
-                    worldManager.tree2.getBorderY(),
-                    worldManager.tree2.getBorderW(),
-                    worldManager.tree2.getBorderH());
-            shape.rect( worldManager.tree3.getBorderX(),
-                    worldManager.tree3.getBorderY(),
-                    worldManager.tree3.getBorderW(),
-                    worldManager.tree3.getBorderH());
-//            shape.rect( worldManager.tree1.texReg.getRegionX(),
-//                        worldManager.tree1.texReg.getRegionY(),
-//                        worldManager.tree1.texReg.getRegionWidth(),
-//                        worldManager.tree1.texReg.getRegionHeight());
-//            shape.rect( worldManager.tree2.texReg.getRegionX(),
-//                        worldManager.tree2.texReg.getRegionY(),
-//                        worldManager.tree2.texReg.getRegionWidth(),
-//                        worldManager.tree2.texReg.getRegionHeight());
-//            shape.rect( worldManager.tree3.texReg.getRegionX(),
-//                        worldManager.tree3.texReg.getRegionY(),
-//                        worldManager.tree3.texReg.getRegionWidth(),
-//                        worldManager.tree3.texReg.getRegionHeight());
-            shape.setColor(Color.YELLOW);    // Range Yellow
-            shape.circle(player.getRange().x,
-                    player.getRange().y,
-                    player.getRange().radius);
-            if (points!=null){
-                for(int i = 0; i < 99-1; ++i)
-                {
-                    shape.line(points[i], points[i+1]);
-                }
-            }
-
-
-            shape.end();
-        } // debugging if end
+    void shittyMechanics(float delta) {
+        worldManager.door1.update();
     }
     void shittyControls(float delta){
         float buffer;
@@ -316,7 +227,7 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getEntityName());
                         System.out.println();
                     }else {
-                            System.out.println("Hit: Unknown Entity");
+                        System.out.println("Hit: Unknown Entity");
                     }
                     // lastHitSomething.setDebug(true);
                 }else {
@@ -417,11 +328,11 @@ public class GameScreen implements Screen {
 //            tempx -= 96/2;
 //            tempy -= 96/2;
 //            worldManager.door2.setPosition(tempx,tempy);
-            DirConst8 dir8 = dirParser.to8(DirConst4.DOWN);
-            System.out.println(dir8);
+            DirConst8 dir8 = dirParser.to8(player.dirLast);
+            System.out.println(player.dirLast+" or "+dir8);
 
 //            points = worldManager.slime1[0].findPath(stage);
-
+            worldManager.door1.unhandledSignal = true;
 
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
@@ -485,6 +396,94 @@ public class GameScreen implements Screen {
 
         // framerate to console
 //        if (debugging) System.out.println(Gdx.graphics.getFramesPerSecond());
+    }
+    void shittyRenderer(float delta){
+        // clear the screen with a dark blue color.
+//        worldManager.group.setCullingArea(new Rectangle(
+//                stage.getCamera().position.x - stage.getCamera().viewportWidth /2 ,
+//                stage.getCamera().position.y - stage.getCamera().viewportHeight/2,
+//                stage.getCamera().viewportWidth ,
+//                stage.getCamera().viewportHeight));
+        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        stage.getCamera().update(); //? why
+        tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
+        tiledMapRenderer.render();
+
+        stage.act(delta);
+        stage.draw();
+        stageUI.act(delta);
+        stageUI.draw();
+
+        if (debugging){
+//        game.batch.setProjectionMatrix(camera.combined); //? why ?
+            game.batch.begin();
+            float currCustomDelta = ((float)Math.round(delta*1000000))/1000;
+            if (currCustomDelta < minDeltaDebug){
+                minDeltaDebug = currCustomDelta;
+            }
+            if (currCustomDelta > maxDeltaDebug){
+                maxDeltaDebug = currCustomDelta;
+            }
+            game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+
+                            " Min/Max = "+ minDeltaDebug +"/"+ maxDeltaDebug +" - "+currCustomDelta,
+                    stageUI.getCamera().position.x-screen_width/2,
+                    stageUI.getCamera().position.y+screen_height/2-0);
+            game.font.draw(game.batch, "Player Coordinates: "
+                            + (int) player.getX() + ":" + (int) player.getY() ,
+                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-20);
+            game.font.draw(game.batch, "Camera Coordinates: "
+                            + (int) stageUI.getCamera().position.x + ":" + (int) stageUI.getCamera().position.y ,
+                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-40);
+//            animationRender();
+            game.batch.end();
+
+            ShapeRenderer shape = new ShapeRenderer();
+            shape.setProjectionMatrix(stage.getCamera().combined);
+            shape.begin(ShapeRenderer.ShapeType.Line);
+            shape.setColor(Color.RED); // Border Colider RED
+            shape.rect(player.getBorderX(),
+                    player.getBorderY(),
+                    player.getBorderW(),
+                    player.getBorderH());
+            shape.rect( worldManager.tree1.getBorderX(),
+                    worldManager.tree1.getBorderY(),
+                    worldManager.tree1.getBorderW(),
+                    worldManager.tree1.getBorderH());
+            shape.rect( worldManager.tree2.getBorderX(),
+                    worldManager.tree2.getBorderY(),
+                    worldManager.tree2.getBorderW(),
+                    worldManager.tree2.getBorderH());
+            shape.rect( worldManager.tree3.getBorderX(),
+                    worldManager.tree3.getBorderY(),
+                    worldManager.tree3.getBorderW(),
+                    worldManager.tree3.getBorderH());
+//            shape.rect( worldManager.tree1.texReg.getRegionX(),
+//                        worldManager.tree1.texReg.getRegionY(),
+//                        worldManager.tree1.texReg.getRegionWidth(),
+//                        worldManager.tree1.texReg.getRegionHeight());
+//            shape.rect( worldManager.tree2.texReg.getRegionX(),
+//                        worldManager.tree2.texReg.getRegionY(),
+//                        worldManager.tree2.texReg.getRegionWidth(),
+//                        worldManager.tree2.texReg.getRegionHeight());
+//            shape.rect( worldManager.tree3.texReg.getRegionX(),
+//                        worldManager.tree3.texReg.getRegionY(),
+//                        worldManager.tree3.texReg.getRegionWidth(),
+//                        worldManager.tree3.texReg.getRegionHeight());
+            shape.setColor(Color.YELLOW);    // Range Yellow
+            shape.circle(player.getRange().x,
+                    player.getRange().y,
+                    player.getRange().radius);
+            if (points!=null){
+                for(int i = 0; i < 99-1; ++i)
+                {
+                    shape.line(points[i], points[i+1]);
+                }
+            }
+
+
+            shape.end();
+        } // debugging if end
     }
 
     private void randomize() {

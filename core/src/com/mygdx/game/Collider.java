@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.ants.something.animated.pc.Player;
+import com.mygdx.game.ants.something.animated.doorAKAeventBased.pc.Player;
 
 public class Collider {
     boolean upLockFinal;

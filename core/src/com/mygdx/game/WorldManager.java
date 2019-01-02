@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.ants.something.animated.npc.NonPlayableCharacter;
+import com.mygdx.game.ants.something.animated.doorAKAeventBased.npc.NonPlayableCharacter;
 import com.mygdx.game.ants.something.animated.AnimatedSomething;
 import com.mygdx.game.ants.something.Something;
 import com.mygdx.game.ants.something.worldObjects.Door;

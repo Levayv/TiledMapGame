@@ -1,4 +1,4 @@
-package com.mygdx.game.ants.something.animated.npc;
+package com.mygdx.game.ants.something.animated.doorAKAeventBased.npc;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.CatmullRomSpline;
@@ -8,9 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.WorldTexRegManager;
 import com.mygdx.game.ants.something.animated.AnimatedSomething;
+import com.mygdx.game.ants.something.animated.doorAKAeventBased.AnimatedEventSomething;
 import com.mygdx.game.enums.Entity;
 
-public class NonPlayableCharacter extends AnimatedSomething {
+public class NonPlayableCharacter extends AnimatedEventSomething {
 
     private boolean go;
     private float time = 0;
@@ -19,7 +20,7 @@ public class NonPlayableCharacter extends AnimatedSomething {
     }
     private Path path;
     public NonPlayableCharacter(Entity entity, WorldTexRegManager texRegManager, Group world, String file, int rows) {
-        super(entity,  texRegManager,  world, file, rows);
+        super(entity,  texRegManager,  world, file, rows,1);
     }
     @Override
     public void act(float delta){

@@ -11,11 +11,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.game.ants.something.animated.doorAKAeventBased.npc.NonPlayableCharacter;
-import com.mygdx.game.ants.something.animated.AnimatedSomething;
-import com.mygdx.game.ants.something.Something;
-import com.mygdx.game.ants.something.worldObjects.Door;
+import com.mygdx.game.ants.something.animated.event.npc.a.NonPlayableCharacter;
+import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
+import com.mygdx.game.ants.something.a.Something;
+import com.mygdx.game.ants.something.animated.event.a.Door;
 import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityAnimation;
 
 class WorldManager {
     // WorldManager's knowledge about grid
@@ -143,8 +144,14 @@ class WorldManager {
         //read tmx
         getMapData();
 
+        //populate world, player then trees rocks //todo some kind of order , move player init here
+//        System.out.println(stage.getViewport().getScreenWidth()+" "+
+//      stage.getViewport().getScreenHeight());
+
         // temp grid manipulations
-        Spawner spawner = new Spawner(Entity.Temp , texRegManager, world);
+        Spawner spawner = new Spawner(Entity.Temp );
+        spawner.set1TexReg(texRegManager);
+        spawner.set2World(world);
 //        spawner.entity = Entity.Temp;
 //        world.addActor(spawner);
         spawner.setBorders();
@@ -153,21 +160,47 @@ class WorldManager {
 
 
 
-        tree1  = new Something(Entity.Tree  , texRegManager , world);
-        tree2  = new Something(Entity.Stone , texRegManager , world);
-        tree3  = new Something(Entity.Ore   , texRegManager , world);
-        lever  = new Something(Entity.Temp  , texRegManager , world);
-        door1  = new Door(Entity.Temp,texRegManager,world, "door1" , 18);
-        door1.tempCHANGEANIM(buffer2.getAnimationByID(Entity.Temp));
+        tree1  = new Something(Entity.Tree  );
+        tree2  = new Something(Entity.Stone );
+        tree3  = new Something(Entity.Ore   );
+        lever  = new Something(Entity.Temp  );
+        door1  = new Door(Entity.Temp, EntityAnimation.DOOR_OPEN);
+//        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
 //        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
-        door2  = new AnimatedSomething(Entity.Temp,texRegManager,world, "Explosion" , 12);
+        door2  = new AnimatedSomething(Entity.Temp,EntityAnimation.TEMP); // ,"Explosion" , 12
         slime1 = new NonPlayableCharacter[slimeCount];
         slime2 = new NonPlayableCharacter[slimeCount];
         slime3 = new NonPlayableCharacter[slimeCount];
-        tower1 = new Something(Entity.Tower,texRegManager,world);
-        tower2 = new Something(Entity.Tower,texRegManager,world);
-        tower3 = new Something(Entity.Tower,texRegManager,world);
+        tower1 = new Something(Entity.Tower);
+        tower2 = new Something(Entity.Tower);
+        tower3 = new Something(Entity.Tower);
 
+        tree1.set1TexReg(texRegManager);
+        tree2.set1TexReg(texRegManager);
+        tree3.set1TexReg(texRegManager);
+        lever.set1TexReg(texRegManager);
+        tower1.set1TexReg(texRegManager);
+        tower2.set1TexReg(texRegManager);
+        tower3.set1TexReg(texRegManager);
+        door1.set1TexReg(texRegManager);
+        door2.set1TexReg(texRegManager);
+
+        tree1.set2World(world);
+        tree2.set2World(world);
+        tree3.set2World(world);
+        lever.set2World(world);
+        tower1.set2World(world);
+        tower2.set2World(world);
+        tower3.set2World(world);
+        door1.set2World(world);
+        door2 .set2World(world);
+
+        door1.tempINT = 12;
+        door1.tempString = "Explosion";
+        door1.setAnim(animManager);
+//        door2.tempINT = 12;
+//        door2.tempString = "Explosion";
+        door2.setAnim(animManager);
 
 //        tree1  .entity = Entity.Tree;
 //        tree2  .entity = Entity.Stone;
@@ -192,15 +225,24 @@ class WorldManager {
 //        world.addActorAfter(player,door2); //! fix
 
         for (int i = 0; i < slimeCount; i++) {
-            slime1[i] = new NonPlayableCharacter(Entity.Temp, texRegManager,world,"slime-blue" , 4);
-            slime2[i] = new NonPlayableCharacter(Entity.Temp, texRegManager,world,"slime-green" , 4);
-            slime3[i] = new NonPlayableCharacter(Entity.Temp, texRegManager,world,"slime-orange" , 4);
+            slime1[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_1);
+            slime2[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_2);
+            slime3[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_3);
+            slime1[i].set1TexReg(texRegManager);
+            slime2[i].set1TexReg(texRegManager);
+            slime3[i].set1TexReg(texRegManager);
+            slime1[i].set2World(world);
+            slime2[i].set2World(world);
+            slime3[i].set2World(world);
             slime1[i].setBorders();
             slime2[i].setBorders();
             slime3[i].setBorders();
             slime1[i].setPosition(i*tileSize,1*tileSize);
             slime2[i].setPosition(i*tileSize,6*tileSize);
             slime3[i].setPosition(i*tileSize,9*tileSize);
+            slime1[i].setAnim(animManager);
+            slime2[i].setAnim(animManager);
+            slime3[i].setAnim(animManager);
 //            world.addActor(slime1[i]);
 //            world.addActor(slime2[i]);
 //            world.addActor(slime3[i]);
@@ -225,57 +267,16 @@ class WorldManager {
         lever.setPosition(12*tileSize,9 *tileSize);
         door1.setPosition(12*tileSize,12*tileSize);
         door2.setPosition(15*tileSize,12*tileSize);
-
         tower1.setPosition(18 *tileSize,0 *tileSize);
         tower2.setPosition(18 *tileSize,5 *tileSize);
         tower3.setPosition(18 *tileSize,10 *tileSize);
-
-
-//        tree1.setName("tree 1");
-//        tree2.setName("tree 2");
-//        tree3.setName("tree 3");
-//        lever.setName("lever1");
-//        door1.setName("door1");
-//        door2.setName("door2 AKA explosion");  //! wtf
-//        slime1.setName("door2 AKA explosion");  //! wtf
-//        slime2.setName("door2 AKA explosion");  //! wtf
-//        slime3.setName("door2 AKA explosion");  //! wtf
-//        stage.addActor(tree1);
-//        stage.addActor(tree2);
-//        stage.addActor(tree3);
-//        stage.addActor(lever);
-//        stage.addActor(door1);
-//        stage.addActor(door2);
-
-//        MapLayers layers = map.getLayers();
-//        TiledMapTileLayer layer = (TiledMapTileLayer)map.getLayers().get("background0");
-//        MapLayer layer = layers.get("background0");
-//        MapLayer layer = map.getLayers().get(2);
-//        TiledMapTileLayer.Cell cell = layer.getCell(0,0);
-//        TiledMapTile tile = cell.getTile();
-//        tile.getProperties();
-//        MapProperties prop = tile.getProperties();
-
-//        System.out.println(tile.getId());
-//        tile.setId(40);
-//        System.out.println(tile.getId());
-
-
-//        if (prop.containsKey("typeZ")){
-//             ignored , i got 2 objects both with property
-//             type 1 and type 2
-//            int i = prop.get("typeZ", Integer.class);
-//            System.out.println(i);
-//            entity = Entity.GetValue(i);
-//            System.out.println(entity);
-            // goal is to store tile object types in Entity enum
 
         door2.loopingEndless =  false ;
 
     }
 
-    private void setPosition(Actor actor , Pos pos){
-        actor.setPosition(pos.x*tileSize , pos.y*tileSize);
+    private void setPosition(Actor actor , int x, int y){
+        actor.setPosition(x*tileSize , y*tileSize);
     }
 
 

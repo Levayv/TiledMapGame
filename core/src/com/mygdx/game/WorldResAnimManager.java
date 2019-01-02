@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityAnimation;
 
 public class WorldResAnimManager {
     private Animation[] animations;
@@ -15,21 +15,20 @@ public class WorldResAnimManager {
         animations = new Animation[arrayCap];
 //        animations = new TextureRegion[arrayCap];
     }
-    public void addAnimation(Entity entity, Animation animation){
+    public void addAnimation(EntityAnimation entity, Animation animation){
         animations[entity.GetID()] = animation;
         animationsSize++;
     }
-    public Animation getAnimationByID(Entity entity){
+    public Animation getAnimationByID(EntityAnimation entity){
+        System.out.println(entity);
         animation = animations[entity.GetID()];
         return animation;
     }
-    public void addAnimationFromFile(Entity entity, Texture inTex){
+    public void addAnimationFromFile(EntityAnimation entity, Texture walkSheet, int FRAME_COLS){
+        int FRAME_ROWS = 1;
         TextureRegion[] animFrames;
         float frameDur = 0;
         //        this.rows = rows;
-        int FRAME_COLS = 8;
-        int FRAME_ROWS = 1;
-        Texture walkSheet = inTex;
         TextureRegion[][] tmp = TextureRegion.split(walkSheet,
                 walkSheet.getWidth() / FRAME_COLS,
                 walkSheet.getHeight() / FRAME_ROWS);

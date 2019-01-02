@@ -1,4 +1,4 @@
-package com.mygdx.game.ants.something.worldObjects;
+package com.mygdx.game.ants.something.animated.event.a;
 
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;

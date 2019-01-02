@@ -1,14 +1,13 @@
-package com.mygdx.game.ants.something.animated.doorAKAeventBased.pc;
+package com.mygdx.game.ants.something.animated.event.pc.a;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.WorldResTexRegManager;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityAnimation;
 
 
 public class Player extends PlayableCharacter { // todo future refactor to main player or ?
@@ -47,11 +46,11 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
     private float frameDur = 0.025f;
     float animationTime = 0f;
 
-    public Player(Entity entity, WorldResTexRegManager texRegManager, Group world, String file, int rows) {
-        super(entity,  texRegManager,  world, file, rows);
-    }
-    public Player(Entity entity, WorldResTexRegManager texRegManager, Group world) {
-        super(entity,  texRegManager,  world, "Explosion", 111);
+//    public Player(Entity entity, String file, int rows) {
+//        super(entity, file, rows);
+//    }
+    public Player(Entity entity) {
+        super(entity, EntityAnimation.EXPLOSION);
         dirLast = DirConst4.NULL;
         dirX = DirConst4.NULL;
         dirY = DirConst4.NULL;

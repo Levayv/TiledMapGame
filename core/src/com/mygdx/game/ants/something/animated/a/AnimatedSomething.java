@@ -1,19 +1,19 @@
-package com.mygdx.game.ants.something.animated;
+package com.mygdx.game.ants.something.animated.a;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.WorldResTexRegManager;
-import com.mygdx.game.ants.something.Something;
+import com.mygdx.game.WorldResAnimManager;
+import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityAnimation;
 
 public class AnimatedSomething extends Something {
     protected int animationsCount = 1;
     TextureRegion[] animFrames;
-    Animation<TextureRegion> eventAnimation;
+    protected Animation<TextureRegion> eventAnimation;
 //    Animation allAnimations;
     public float animationTime = 0f;
     private float frameDur;
@@ -21,33 +21,40 @@ public class AnimatedSomething extends Something {
     public boolean start;
     public boolean loopingEndless = true;
     public boolean startAnimCycle = false;
+    protected EntityAnimation entityAnim;
+    public int tempINT;
+    public String tempString;
 
-    public AnimatedSomething(Entity entity, WorldResTexRegManager resTexRegManager, Group world, String file, int rows) {
-        super(entity,  resTexRegManager,  world);
-        this.rows = rows;
-        int FRAME_COLS = rows;
-        int FRAME_ROWS = 1;
-        Texture walkSheet = new Texture(Gdx.files.internal("animation/"+file+".png"));
-        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
-                walkSheet.getWidth() / FRAME_COLS,
-                walkSheet.getHeight() / FRAME_ROWS);
-        TextureRegion[] buffer = new TextureRegion[FRAME_COLS * FRAME_ROWS];
-        animFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
-        int index = 0;
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                buffer[index++] = tmp[i][j];
-            }
-        }
-        index = 0;
-        for (int i = 0; i < FRAME_COLS; i++) { animFrames[i] = buffer[index++];}
+    public AnimatedSomething(Entity entity, EntityAnimation entityAnim) {
+        super(entity);
+        this.entityAnim = entityAnim;
+//        this.rows = rows;
+//        int FRAME_COLS = rows;
+//        int FRAME_ROWS = 1;
+//        Texture walkSheet = new Texture(Gdx.files.internal("animation/"+file+".png"));
+//        TextureRegion[][] tmp = TextureRegion.split(walkSheet,
+//                walkSheet.getWidth() / FRAME_COLS,
+//                walkSheet.getHeight() / FRAME_ROWS);
+//        TextureRegion[] buffer = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+//        animFrames = new TextureRegion[FRAME_COLS*FRAME_ROWS];
+//        int index = 0;
+//        for (int i = 0; i < FRAME_ROWS; i++) {
+//            for (int j = 0; j < FRAME_COLS; j++) {
+//                buffer[index++] = tmp[i][j];
+//            }
+//        }
+//        index = 0;
+//        for (int i = 0; i < FRAME_COLS; i++) { animFrames[i] = buffer[index++];}
+
+//        eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
+    }
+    public void setAnim(WorldResAnimManager animManager){
+        eventAnimation = animManager.getAnimationByID(this.entityAnim);
+        rows = eventAnimation.getKeyFrames().length;
         frameDur = (0.025f / rows)*20; // 3fps ?
 //        frameDur = 0.015f; // 60 fps !
-        eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
     }
-    public void tempCHANGEANIM(Animation anim){
-        eventAnimation = anim;
-    }
+
     @Override
     public void act(float delta){
 //        if (loopingEndless || startAnimCycle){

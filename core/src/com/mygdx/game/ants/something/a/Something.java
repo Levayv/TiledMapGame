@@ -1,11 +1,9 @@
-package com.mygdx.game.ants.something;
+package com.mygdx.game.ants.something.a;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.WorldResTexRegManager;
-import com.mygdx.game.ants.coreActor;
+import com.mygdx.game.ants.a.coreActor;
 import com.mygdx.game.enums.Entity;
 
 public class Something extends coreActor {
@@ -22,18 +20,13 @@ public class Something extends coreActor {
 //        range = new Circle();
 //        buffVect2 = new Vector2();
 //    }
-    public Something(Entity entity, WorldResTexRegManager texRegManager, Group world) { //todo change constructor , only entrity enum must be needed
-        super( entity,  texRegManager,  world);
+    public Something(Entity entity) { //todo change constructor , only entrity enum must be needed
+        super( entity );
         border = new Rectangle();
         range = new Circle();
         buffVect2 = new Vector2();
+
     }
-
-//    int x;
-//    int y;
-//    int width;
-//    int height;
-
     public void setBorders(){
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
@@ -42,9 +35,7 @@ public class Something extends coreActor {
 //        border.x = this.getX() + 0;
 //        border.y = this.getY() + 0;
 //        range.set(border.getCenter(new Vector2()),new Vector2(border.x*2,border.y*2)  );
-        range.setPosition(border.getCenter(new Vector2()));
-        range.setRadius(border.x*2);
-
+        setRange();
     }
     public void setBorders(int borderXdelta, int borderYdelta , int borderWdelta, int borderHdelta  ){
         this.borderXdelta = borderXdelta;
@@ -53,9 +44,13 @@ public class Something extends coreActor {
         border.y = texReg.getRegionY() + this.borderYdelta;
         border.width  = texReg.getRegionWidth()  - borderWdelta*2;
         border.height = texReg.getRegionHeight() - borderHdelta*2;
+        setRange();
+    }
+    public void setRange(){
         range.setPosition(border.getCenter(new Vector2()));
         range.setRadius(border.x*2);
     }
+
     @Override
     protected void positionChanged(){
         if (range != null && border != null) {

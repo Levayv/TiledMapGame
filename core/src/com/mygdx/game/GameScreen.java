@@ -25,12 +25,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.ants.something.Something;
-import com.mygdx.game.ants.something.animated.doorAKAeventBased.pc.Player;
+import com.mygdx.game.ants.something.a.Something;
+import com.mygdx.game.ants.something.animated.event.pc.a.Player;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirConst8;
 import com.mygdx.game.enums.DirParser;
 import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityAnimation;
 
 public class GameScreen implements Screen {
     final MyGdxGame game;
@@ -95,7 +96,12 @@ public class GameScreen implements Screen {
         TextureRegion texRegTower = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
         TextureRegion texRegTemp32 = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
-        Texture texAnimTemp = new Texture(Gdx.files.internal("animation/pumpkin.png"));
+        Texture texAnimTemp1 = new Texture(Gdx.files.internal("animation/pumpkin.png"));
+        Texture texAnimTemp2 = new Texture(Gdx.files.internal("animation/door2.png"));
+        Texture texAnimTemp3 = new Texture(Gdx.files.internal("animation/Explosion.png"));
+        Texture texAnimTemps1 = new Texture(Gdx.files.internal("animation/slime-blue.png"));
+        Texture texAnimTemps2 = new Texture(Gdx.files.internal("animation/slime-green.png"));
+        Texture texAnimTemps3 = new Texture(Gdx.files.internal("animation/slime-orange.png"));
         // WorldResTexRegManager init
         WorldResTexRegManager buffer1 = new WorldResTexRegManager(100);
         buffer1.addTexReg(Entity.Tree,   texRegTree      );
@@ -105,7 +111,14 @@ public class GameScreen implements Screen {
         buffer1.addTexReg(Entity.Temp,   texRegTemp32     );
         buffer1.addTexReg(Entity.Player, texRegPlayer     );
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
-        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp);
+//        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimTemp1,21);
+        buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimTemp2,21);
+        buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimTemp3,44);
+        buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimTemp3,9);
+        buffer2.addAnimationFromFile(EntityAnimation.SLIME_1,texAnimTemps1,4);
+        buffer2.addAnimationFromFile(EntityAnimation.SLIME_2,texAnimTemps2,4);
+        buffer2.addAnimationFromFile(EntityAnimation.SLIME_3,texAnimTemps3,4);
 
         // load sound & music
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
@@ -134,13 +147,15 @@ public class GameScreen implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //actors!
-        player = new Player(Entity.Player, buffer1,worldManager.world );
+        player = new Player(Entity.Player);
+        player.set1TexReg(buffer1);
+        player.set2World(worldManager.world);
 //        player.setBorders();
 //        player.setBorders(10,10,20,20);
         player.setBorders(20,0,20,20);
         player.setPosition(screen_width / 2 - object_width / 2,
-                screen_height/ 2 - object_height / 2);
-        player.setName("player");
+                screen_height/ 2 - object_height / 2); //todo screen_w/h object_w/h are final ?
+//        player.setName("player");
 //        world.addActorAfter(player,door2); //! fix
 
 //        player.entity = Entity.Player; redundant
@@ -196,7 +211,7 @@ public class GameScreen implements Screen {
     void shittyMechanics(float delta) {
         worldManager.door1.update();
     }
-    void shittyControls(float delta){
+    void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         float buffer;
         // process user input ------------------------------------------
         if (Gdx.input.justTouched()) {
@@ -214,11 +229,11 @@ public class GameScreen implements Screen {
                 System.out.println("FUCK");
 
             }else{
-                if (lastHitActor!=null){
-                    if (lastHitActor.getClass() == Something.class ||
+                if (lastHitActor!=null){ // todo fix entity vs texReg,
+                    if (lastHitActor.getClass() == Something.class || //todo check and remove IF
                             lastHitActor.getClass() == Player.class ||
                             lastHitActor.getClass() == Spawner.class ||
-                            lastHitActor.getClass() == Something.class ){ // todo fix entity vs texReg
+                            lastHitActor.getClass() == Something.class ){
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");
                         System.out.print(lastHitSomething.getName());
@@ -228,7 +243,14 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getEntityName());
                         System.out.println();
                     }else {
-                        System.out.println("Hit: Unknown Entity");
+                        lastHitSomething = (Something) lastHitActor ;
+                        System.out.print("Hit: ActorName=");
+                        System.out.print(lastHitSomething.getName());
+                        System.out.print(" EntityID=");
+                        System.out.print(lastHitSomething.getEntityID());
+                        System.out.print(" EntityName=");
+                        System.out.print(lastHitSomething.getEntityName());
+                        System.out.println();
                     }
                     // lastHitSomething.setDebug(true);
                 }else {

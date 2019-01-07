@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -24,14 +25,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ants.something.a.Something;
+import com.mygdx.game.enums.BasicEvents;
 import com.mygdx.game.ants.something.animated.event.pc.a.Player;
 import com.mygdx.game.debug.tools.PerfCounter;
 import com.mygdx.game.debug.tools.ProfilerID;
 import com.mygdx.game.enums.DirConst4;
-import com.mygdx.game.enums.DirConst8;
 import com.mygdx.game.enums.DirParser;
 import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
@@ -173,7 +173,7 @@ public class GameScreen implements Screen {
         colCheck.add(worldManager.tree3. getBorder());
 
         // UI init
-        ui = new GraphicalUserInterface(stageUI);
+        ui = new GraphicalUserInterface(stageUI,worldManager);
 
         //animation
         animationCreate();
@@ -231,7 +231,7 @@ public class GameScreen implements Screen {
             lastHitUIActor = stageUI.hit(pos2.x,pos2.y,true);
 
             if (lastHitUIActor!=null){
-                System.out.println("FUCK");
+//                System.out.println("FUCK");
 
             }else{
                 if (lastHitActor!=null){ // todo fix entity vs texReg,
@@ -377,8 +377,15 @@ public class GameScreen implements Screen {
 
 //            points = worldManager.slime1[0].findPath(stage);
 //            worldManager.door1.unhandledSignal = true;
-            // todo another test to be removed [EVENTS]
-
+            // todo another test to be removed [EVENTS] or [OBSERVER]
+//            com.mygdx.game.craps.observerTest.Subject subject =
+//                    new com.mygdx.game.craps.observerTest.Subject();
+//            new com.mygdx.game.craps.observerTest.BinaryObserver(subject);
+//            System.out.println("First state change: 15");
+//            subject.setState(15);
+            MessageDispatcher mDispetcher = new MessageDispatcher();
+            mDispetcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
+            mDispetcher.dispatchMessage(BasicEvents.CLOSE.getID());
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
             // Some action test todo remove this later
@@ -422,15 +429,15 @@ public class GameScreen implements Screen {
             debugging = !debugging;
             if (debugging){
                 stage.setDebugAll(true);
-                Array<Actor> actors = stage.getActors();
-                System.out.println("Debug: Enabling borders for ["+actors.size+"] entities");
+                Gdx.app.setLogLevel(3);
+                System.out.println("Debug: Enabling borders for ["+stage.getActors().size+"] entities");
 //                for (int i = 0; i < actors.size; i++) {
 //                    actors.items[i].setDebug(true);
 //                }
             }else{
                 stage.setDebugAll(false);
-                Array<Actor> actors = stage.getActors();
-                System.out.println("Debug: Disabling borders for ["+actors.size+"] entities");
+                Gdx.app.setLogLevel(0);
+                System.out.println("Debug: Disabling borders for ["+stage.getActors().size+"] entities");
 //                for (int i = 0; i < actors.size; i++) {
 //                    actors.items[i].setDebug(false);
 //                }

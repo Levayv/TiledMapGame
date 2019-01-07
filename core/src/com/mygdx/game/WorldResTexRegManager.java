@@ -14,11 +14,11 @@ public class WorldResTexRegManager {
         texRegs = new TextureRegion[arrayCap];
     }
     public void addTexReg(Entity entity, TextureRegion texReg){
-        texRegs[entity.GetID()] = texReg;
+        texRegs[entity.getID()] = texReg;
         texRegsSize++;
     }
     public TextureRegion getTexRegByID(Entity entity){
-        texReg = texRegs[entity.GetID()];
+        texReg = texRegs[entity.getID()];
         return texReg;
     }
 }

@@ -1,9 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,13 +18,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.mygdx.game.enums.BasicEvents;
 
 import java.util.Random;
 
 public class GraphicalUserInterface {
     private boolean debuging = false;
     public Table tableRoot;
-    GraphicalUserInterface(Stage stage){
+    private MessageDispatcher dispatcher = new MessageDispatcher();
+    GraphicalUserInterface(Stage stage, WorldManager worldManager){
 
         //skin init
         String fileLoc = "data/neon.json"; // skin location
@@ -59,8 +63,8 @@ public class GraphicalUserInterface {
         TextButton button2 = new TextButton("Click me too", skin, "default");
         int buttonW = 200;
         int buttonH = 20;
-        button1.setName("button1 shit");
-        button2.setName("button2 shit");
+        button1.setName("button1 sh*t");
+        button2.setName("button2 sh*t");
         button1.setWidth(buttonW);
         button2.setWidth(buttonW);
         button1.setHeight(buttonH);
@@ -81,22 +85,22 @@ public class GraphicalUserInterface {
 //        tableRoot.add(button1);
 //        tableRoot.add(button2);
 //         listeners
+        dispatcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
+        dispatcher.addListener(worldManager.door1 , BasicEvents.OPEN.getID());
         button1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-//                System.out.print("GUI: ");
-//                System.out.print("Changed 1 Shit");
-//                System.out.println();
-//                System.out.println(actor.getName());
+                Gdx.app.log("GUI","Button 1 pressed");
+                dispatcher.dispatchMessage(BasicEvents.CLOSE.getID());
             }
         });
         button2.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                System.out.print("GUI: ");
-//                System.out.print("Changed 2 Shit");
-//                System.out.println();
-                return false;
+                Gdx.app.log("GUI","Button 2 pressed" );
+                dispatcher.dispatchMessage(BasicEvents.OPEN.getID());
+
+                return true;
             }
         });
     }

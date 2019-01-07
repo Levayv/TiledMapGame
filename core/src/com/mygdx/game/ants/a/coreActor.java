@@ -38,7 +38,7 @@ public class coreActor extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
     public int getEntityID() {
-        return this.entity.GetID();
+        return this.entity.getID();
     }
     public String getEntityName(){
         return entity.name();

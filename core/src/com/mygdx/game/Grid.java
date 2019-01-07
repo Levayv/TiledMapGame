@@ -27,6 +27,6 @@ public class Grid {
 
 //    public void addObject(Something something, int x, int y) {
 //        have[x][y] = true;
-//        id[x][y] = something.entity.GetID();
+//        id[x][y] = something.entity.getID();
 //    }
 }

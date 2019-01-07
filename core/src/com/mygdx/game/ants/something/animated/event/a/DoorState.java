@@ -1,7 +1,10 @@
 package com.mygdx.game.ants.something.animated.event.a;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
+import com.mygdx.game.enums.BasicEvents;
 
 public enum DoorState implements State<Door> {
     OPEN(){
@@ -12,9 +15,9 @@ public enum DoorState implements State<Door> {
 
         @Override
         public void update(Door door) {
-            if (door.unhandledSignal){
-                door.stateMachine.changeState(DoorState.CLOSING);
-            }
+//            if (door.unhandledSignal){ //todo WIPE
+//                door.stateMachine.changeState(DoorState.CLOSING);
+//            }
         }
 
         @Override
@@ -22,7 +25,13 @@ public enum DoorState implements State<Door> {
 
         }
 
-
+        @Override
+        public boolean onMessage(Door entity, Telegram telegram) {
+            if (telegram.message==BasicEvents.CLOSE.getID()){
+                entity.stateMachine.changeState(DoorState.CLOSED);
+            }
+            return true;
+        }
     },
     CLOSED(){
         @Override
@@ -32,14 +41,20 @@ public enum DoorState implements State<Door> {
 
         @Override
         public void update(Door door) {
-            if (door.unhandledSignal){
-                door.stateMachine.changeState(DoorState.OPENING);
-            }
+
         }
 
         @Override
         public void exit(Door door) {
 
+        }
+
+        @Override
+        public boolean onMessage(Door entity, Telegram telegram) {
+            if (telegram.message==BasicEvents.OPEN.getID()){
+                entity.stateMachine.changeState(DoorState.OPEN);
+            }
+            return false;
         }
     },
     CLOSING(){
@@ -57,6 +72,12 @@ public enum DoorState implements State<Door> {
         public void exit(Door door) {
 
         }
+
+        @Override
+        public boolean onMessage(Door entity, Telegram telegram) {
+            
+            return true;
+        }
     },
     OPENING(){
         @Override
@@ -73,9 +94,11 @@ public enum DoorState implements State<Door> {
         public void exit(Door door) {
 
         }
+
+        @Override
+        public boolean onMessage(Door entity, Telegram telegram) {
+            
+            return true;
+        }
     };
-    @Override
-    public boolean onMessage(Door door, Telegram telegram) {
-        return false;
-    }
 }

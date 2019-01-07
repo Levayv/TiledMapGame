@@ -12,7 +12,7 @@ public enum Entity {
 
     int id;
     private Entity(int i){id = i;}
-    public int GetID(){return id;}
+    public int getID(){return id;}
 //    public boolean IsEmpty(){return this.equals(Entity.None);}
 //    public boolean Compare(int i){return id == i;}
 //    public static Entity GetValue(int _id)

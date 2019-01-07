@@ -122,7 +122,7 @@ class WorldManager {
         world = new Group();
         stage.addActor(world);
 
-        TextureRegion texRegTree;
+        TextureRegion texRegTree; //todo wtf is this ?
 
         // Texture Handler
         texRegManager = buffer1;

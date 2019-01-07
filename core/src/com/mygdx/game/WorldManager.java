@@ -69,14 +69,14 @@ class WorldManager {
                 oLayersCount++; // increment O layers count
             }
         }
-        if (tLayersCount>0 && oLayersCount>0){  // at least one of T&O layers must be present
-            tLayers = new TiledMapTileLayer [tLayersCount]; // separate T layers to array
-            oLayers = new MapLayer          [oLayersCount]; // separate O layers to array
+        if (tLayersCount > 0 && oLayersCount > 0) {  // at least one of T&O layers must be present
+            tLayers = new TiledMapTileLayer[tLayersCount]; // separate T layers to array
+            oLayers = new MapLayer[oLayersCount]; // separate O layers to array
             for (int i = 0; i < tLayersCount; i++) { // separate T layers to array
                 tLayers[i] = (TiledMapTileLayer) map.getLayers().get(i);
             }
             for (int i = tLayersCount; i < aLayersCount; i++) { // separate O layers to array
-                oLayers[i-tLayersCount] = map.getLayers().get(i);
+                oLayers[i - tLayersCount] = map.getLayers().get(i);
             }
             tileID = new int[mapWidth][mapHeight]; // init tileID based on map size
             for (int i = 0; i < mapWidth; i++) { // todo fix for multi layer tiles
@@ -86,9 +86,6 @@ class WorldManager {
                     //todo add func to read all properties
                 }
             }
-//            System.out.println("oL COunt 0 = "+oLayers[0].getObjects().getCount());
-//            System.out.println("oL COunt 1 = "+oLayers[1].getObjects().getCount());
-//            System.out.println("oL COunt 2 = "+oLayers[2].getObjects().getCount());
             objCountPerLayer = new int[1]; // todo fix for multi layer map objects
             objCountPerLayer[0] = oLayers[0].getObjects().getCount();
             objID = new int[objCountPerLayer[0]];

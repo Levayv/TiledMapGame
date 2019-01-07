@@ -8,19 +8,19 @@ import com.mygdx.game.enums.Entity;
 
 public class Something extends coreActor {
 //    Sprite sprite;
-    private Rectangle border; // todo Change to dynamic object
+    private Rectangle border; // todo Change to dynamic object ?
     private Circle range;
     private Vector2 buffVect2;
     private int borderXdelta;
     private int borderYdelta;
 
-//    public Something(TextureRegion texReg) { //todo change constructor , only entrity enum must be needed
+//    public Something(TextureRegion texReg) { //todo change constructor , only entity enum must be needed
 //        super(texReg);
 //        border = new Rectangle();
 //        range = new Circle();
 //        buffVect2 = new Vector2();
 //    }
-    public Something(Entity entity) { //todo change constructor , only entrity enum must be needed
+    public Something(Entity entity) { //todo change constructor , only entity enum must be needed
         super( entity );
         border = new Rectangle();
         range = new Circle();

@@ -59,7 +59,7 @@ public enum ElsaState implements State<Elsa> {
                 // Send a delayed message myself so that I know when to take the
                 // stew out of the oven
                 MessageManager.getInstance().dispatchMessage( //
-                        1.5f, // time delay
+                        1.5f, // loads delay
                         elsa, // sender ID
                         elsa, // receiver ID
                         MessageType.STEW_READY, // msg
@@ -83,7 +83,7 @@ public enum ElsaState implements State<Elsa> {
         public boolean onMessage (Elsa elsa, Telegram telegram) {
             if (telegram.message == MessageType.STEW_READY) {
 
-                talk(elsa, "Message STEW_READY received at time: " + GdxAI.getTimepiece().getTime());
+                talk(elsa, "Message STEW_READY received at loads: " + GdxAI.getTimepiece().getTime());
 
                 talk(elsa, "StewReady! Lets eat");
 
@@ -120,7 +120,7 @@ public enum ElsaState implements State<Elsa> {
 
             if (telegram.message == MessageType.HI_HONEY_I_M_HOME) {
 
-                talk(elsa, "Message HI_HONEY_I_M_HOME handled at time: " + GdxAI.getTimepiece().getTime());
+                talk(elsa, "Message HI_HONEY_I_M_HOME handled at loads: " + GdxAI.getTimepiece().getTime());
 
                 talk(elsa, "Hi honey. Let me make you some of mah fine country stew");
 

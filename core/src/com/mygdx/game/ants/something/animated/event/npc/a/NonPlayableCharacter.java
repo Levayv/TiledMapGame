@@ -28,10 +28,10 @@ public class NonPlayableCharacter extends AnimatedEventSomething {
 //            float updateY = 0;
 //            moveBy(updateX, updateY);
 //
-//            time += delta;
-//            if (time > 3){ //stop after 3 sec
+//            loads += delta;
+//            if (loads > 3){ //stop after 3 sec
 //                go = false;
-//                time = 0;
+//                loads = 0;
 //            }
 //        }
         if (go){ //todo fix move testing

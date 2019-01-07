@@ -54,7 +54,7 @@ enum BobState implements State<Bob> {
 
                 // Let Elsa know I'm home
                 MessageManager.getInstance().dispatchMessage( //
-                        0.0f, // time delay
+                        0.0f, // loads delay
                         bob, // ID of sender
                         bob.elsa, // ID of recipient
                         MessageType.HI_HONEY_I_M_HOME, // the message
@@ -84,7 +84,7 @@ enum BobState implements State<Bob> {
         public boolean onMessage (Bob bob, Telegram telegram) {
             if (telegram.message == MessageType.STEW_READY) {
 
-                talk(bob, "Message STEW_READY handled at time: " + GdxAI.getTimepiece().getTime());
+                talk(bob, "Message STEW_READY handled at loads: " + GdxAI.getTimepiece().getTime());
 
                 talk(bob, "Okay Hun, ahm a comin'!");
 

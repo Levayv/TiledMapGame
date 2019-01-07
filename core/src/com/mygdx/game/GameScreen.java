@@ -24,9 +24,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.pc.a.Player;
+import com.mygdx.game.debug.tools.PerfCounter;
+import com.mygdx.game.debug.tools.ProfilerID;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirConst8;
 import com.mygdx.game.enums.DirParser;
@@ -37,6 +40,7 @@ public class GameScreen implements Screen {
     final MyGdxGame game;
 
     private boolean debugging = false;
+    private boolean profiling = false;
     private boolean colliding = true;
     private Sound dropSound;
     private Music rainMusic;
@@ -63,7 +67,8 @@ public class GameScreen implements Screen {
     Something lastHitSomething;
 
     Player player;
-
+//    MyProfiler myProfiler = new MyProfiler ("Profiler: ");
+    PerfCounter profiler = new PerfCounter (ProfilerID.GLOBAL,true);
 
     TiledMapRenderer tiledMapRenderer;
 
@@ -289,8 +294,10 @@ public class GameScreen implements Screen {
 
 
         if (Gdx.input.isKeyPressed(Keys.ANY_KEY)){
-            if (colliding)
+            if (colliding){
                 colCheck.calc(player); // Check colider
+
+            }
         }
 
         if (Gdx.input.isKeyPressed(Keys.A)) {
@@ -338,8 +345,8 @@ public class GameScreen implements Screen {
             // todo open close menu
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
-            // Some action test todo remove this later
-            // try toggling AnimatedSomething animation
+            // Some action test todo remove ALL OF THIS later
+            // todo try toggling AnimatedSomething animation
 //            worldManager.door2.setName("exp");
 //            worldManager.door2.animationTime = 0;
 //            worldManager.door2.startAnimCycle =  true;
@@ -351,11 +358,26 @@ public class GameScreen implements Screen {
 //            tempx -= 96/2;
 //            tempy -= 96/2;
 //            worldManager.door2.setPosition(tempx,tempy);
-            DirConst8 dir8 = dirParser.to8(player.dirLast);
-            System.out.println(player.dirLast+" or "+dir8);
+//
+//            DirConst8 dir8 = dirParser.to8(player.dirLast);
+//            System.out.println(player.dirLast+" or "+dir8);
+
+              //todo profiler integrate to render
+//            if (profiling){
+//                profiler.start();
+//                for (int i = 0; i < 2000000; i++) {
+//                    profiling = !profiling;
+//                    profiling = !profiling;
+//                }
+//                profiler.stop(delta);
+//                System.out.println(profiler.export(delta));
+//                profiler.tick(delta);
+//            }
+
 
 //            points = worldManager.slime1[0].findPath(stage);
-            worldManager.door1.unhandledSignal = true;
+//            worldManager.door1.unhandledSignal = true;
+            // todo another test to be removed [EVENTS]
 
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
@@ -432,11 +454,12 @@ public class GameScreen implements Screen {
 //        stage.getCamera().update(); //? why
         tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
         tiledMapRenderer.render();
-
         stage.act(delta);
         stage.draw();
         stageUI.act(delta);
         stageUI.draw();
+
+
 
         if (debugging){
 //        game.batch.setProjectionMatrix(camera.combined); //? why ?
@@ -598,7 +621,6 @@ public class GameScreen implements Screen {
         // todo dispose atlas
         // todo dispose temp textures
         // todo dispose chunk images
-
     }
 
     private  Vector2[] points ;

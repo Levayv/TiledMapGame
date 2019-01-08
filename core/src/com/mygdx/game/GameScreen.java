@@ -22,7 +22,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -33,7 +32,7 @@ import com.mygdx.game.debug.tools.PerfCounter;
 import com.mygdx.game.debug.tools.ProfilerID;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirParser;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityTex;
 import com.mygdx.game.enums.EntityAnimation;
 
 public class GameScreen implements Screen {
@@ -109,14 +108,14 @@ public class GameScreen implements Screen {
         Texture texAnimTemps3 = new Texture(Gdx.files.internal("animation/slime-orange.png"));
         // WorldResTexRegManager init
         WorldResTexRegManager buffer1 = new WorldResTexRegManager(100);
-        buffer1.addTexReg(Entity.Tree,   texRegTree      );
-        buffer1.addTexReg(Entity.Stone,  texRegStone     );
-        buffer1.addTexReg(Entity.Ore,    texRegOre       );
-        buffer1.addTexReg(Entity.Tower,  texRegTower     );
-        buffer1.addTexReg(Entity.Temp,   texRegTemp32     );
-        buffer1.addTexReg(Entity.Player, texRegPlayer     );
+        buffer1.addTexReg(EntityTex.Tree,   texRegTree      );
+        buffer1.addTexReg(EntityTex.Stone,  texRegStone     );
+        buffer1.addTexReg(EntityTex.Ore,    texRegOre       );
+        buffer1.addTexReg(EntityTex.Tower,  texRegTower     );
+        buffer1.addTexReg(EntityTex.Temp,   texRegTemp32     );
+        buffer1.addTexReg(EntityTex.Player, texRegPlayer     );
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
-//        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
+//        buffer2.addAnimationFromFile(EntityTex.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimTemp1,21);
         buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimTemp2,21);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimTemp3,44);
@@ -152,7 +151,7 @@ public class GameScreen implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //actors!
-        player = new Player(Entity.Player);
+        player = new Player(EntityTex.Player);
         player.set1TexReg(buffer1);
         player.set2World(worldManager.world);
 //        player.setBorders();
@@ -163,7 +162,7 @@ public class GameScreen implements Screen {
 //        player.setName("player");
 //        world.addActorAfter(player,door2); //! fix
 
-//        player.entity = Entity.Player; redundant
+//        player.entityTex = EntityTex.Player; redundant
 
         //Colider init
         colCheck = new Collider(3);
@@ -234,7 +233,7 @@ public class GameScreen implements Screen {
 //                System.out.println("FUCK");
 
             }else{
-                if (lastHitActor!=null){ // todo fix entity vs texReg,
+                if (lastHitActor!=null){ // todo fix entityTex vs texReg,
                     if (lastHitActor.getClass() == Something.class || //todo check and remove IF
                             lastHitActor.getClass() == Player.class ||
                             lastHitActor.getClass() == Spawner.class ||

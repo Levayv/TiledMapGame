@@ -6,17 +6,16 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
-import com.mygdx.game.enums.BasicEvents;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityTex;
 import com.mygdx.game.enums.EntityAnimation;
 
 public class Door extends AnimatedEventSomething implements Telegraph {
     StateMachine<Door, DoorState> stateMachine;
-    public Door(Entity entity, EntityAnimation entityAnimation) {
-        super(entity, entityAnimation, DoorState.values().length);
+    public Door(EntityTex entityTex, EntityAnimation entityAnimation) {
+        super(entityTex, entityAnimation, DoorState.values().length);
         this.animationsCount = 2;
-        this.entity = Entity.Temp; //todo fix ASAP
-//        System.out.println(Entity.Temp+""+this.entity+"WTF");
+        this.entityTex = EntityTex.Temp; //todo fix ASAP
+//        System.out.println(EntityTex.Temp+""+this.entityTex+"WTF");
 
         stateMachine = new DefaultStateMachine<Door, DoorState>(this, DoorState.CLOSED);
     }

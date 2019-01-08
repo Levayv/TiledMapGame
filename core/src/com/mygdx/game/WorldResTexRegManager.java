@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityTex;
 
 public class WorldResTexRegManager {
 
@@ -13,12 +13,12 @@ public class WorldResTexRegManager {
         this.arrayCap = texRegArrayCap;
         texRegs = new TextureRegion[arrayCap];
     }
-    public void addTexReg(Entity entity, TextureRegion texReg){
-        texRegs[entity.getID()] = texReg;
+    public void addTexReg(EntityTex entityTex, TextureRegion texReg){
+        texRegs[entityTex.getID()] = texReg;
         texRegsSize++;
     }
-    public TextureRegion getTexRegByID(Entity entity){
-        texReg = texRegs[entity.getID()];
+    public TextureRegion getTexRegByID(EntityTex entityTex){
+        texReg = texRegs[entityTex.getID()];
         return texReg;
     }
 }

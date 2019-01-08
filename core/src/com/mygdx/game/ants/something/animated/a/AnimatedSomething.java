@@ -1,13 +1,11 @@
 package com.mygdx.game.ants.something.animated.a;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.WorldResAnimManager;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.EntityTex;
 import com.mygdx.game.enums.EntityAnimation;
 
 public class AnimatedSomething extends Something {
@@ -25,8 +23,8 @@ public class AnimatedSomething extends Something {
     public int tempINT;
     public String tempString;
 
-    public AnimatedSomething(Entity entity, EntityAnimation entityAnim) {
-        super(entity);
+    public AnimatedSomething(EntityTex entityTex, EntityAnimation entityAnim) {
+        super(entityTex);
         this.entityAnim = entityAnim;
 //        this.rows = rows;
 //        int FRAME_COLS = rows;

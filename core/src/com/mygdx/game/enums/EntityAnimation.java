@@ -15,17 +15,17 @@ public enum EntityAnimation {
     private EntityAnimation(int i){id = i;}
 
     public int GetID(){return id;}
-//    public boolean IsEmpty(){return this.equals(Entity.None);}
+//    public boolean IsEmpty(){return this.equals(EntityTex.None);}
 //    public boolean Compare(int i){return id == i;}
-//    public static Entity GetValue(int _id)
+//    public static EntityTex GetValue(int _id)
 //    {
-//        Entity[] As = Entity.values();
+//        EntityTex[] As = EntityTex.values();
 //        for(int i = 0; i < As.length; i++)
 //        {
 //            if(As[i].Compare(_id))
 //                return As[i];
 //        }
-//        return Entity.None;
+//        return EntityTex.None;
 //    }
 }
 

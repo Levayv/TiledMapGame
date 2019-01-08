@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
-import com.mygdx.game.enums.EntityTex;
+import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 
 public class NonPlayableCharacter extends AnimatedEventSomething {
@@ -17,8 +17,8 @@ public class NonPlayableCharacter extends AnimatedEventSomething {
         go = true;
     }
     private Path path;
-    public NonPlayableCharacter(EntityTex entityTex, EntityAnimation entityAnim) {
-        super(entityTex, entityAnim,1);
+    public NonPlayableCharacter(Entity entity, EntityAnimation entityAnim) {
+        super(entity, entityAnim,1);
     }
     @Override
     public void act(float delta){

@@ -12,20 +12,20 @@ public enum EntityAnimation {
     TEMP(66);
 
     int id;
-    private EntityAnimation(int i){id = i;}
+    EntityAnimation(int i){id = i;}
 
     public int GetID(){return id;}
-//    public boolean IsEmpty(){return this.equals(EntityTex.None);}
+//    public boolean IsEmpty(){return this.equals(Entity.None);}
 //    public boolean Compare(int i){return id == i;}
-//    public static EntityTex GetValue(int _id)
+//    public static Entity GetValue(int _id)
 //    {
-//        EntityTex[] As = EntityTex.values();
+//        Entity[] As = Entity.values();
 //        for(int i = 0; i < As.length; i++)
 //        {
 //            if(As[i].Compare(_id))
 //                return As[i];
 //        }
-//        return EntityTex.None;
+//        return Entity.None;
 //    }
 }
 

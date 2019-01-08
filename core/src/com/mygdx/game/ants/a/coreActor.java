@@ -6,11 +6,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.WorldResTexRegManager;
-import com.mygdx.game.enums.EntityTex;
+import com.mygdx.game.enums.Entity;
 
 public class coreActor extends Actor {
     public TextureRegion texReg;
-    protected EntityTex entityTex;
+    protected Entity entity;
     private Color color;
 
 //    public coreActor (TextureRegion texReg) {
@@ -19,11 +19,11 @@ public class coreActor extends Actor {
 //        setBounds(texReg.getRegionX(), texReg.getRegionY(),
 //                texReg.getRegionWidth(), texReg.getRegionHeight());
 //    }
-    protected coreActor(EntityTex entityTex){
-        this.entityTex = entityTex;
+    protected coreActor(Entity entity){
+        this.entity = entity;
     }
     public void set1TexReg(WorldResTexRegManager texRegManager){
-        texReg = texRegManager.getTexRegByID(entityTex);
+        texReg = texRegManager.getTexRegByID(entity);
         setBounds(texReg.getRegionX(), texReg.getRegionY(),
                 texReg.getRegionWidth(), texReg.getRegionHeight());
     }
@@ -38,9 +38,9 @@ public class coreActor extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
     public int getEntityID() {
-        return this.entityTex.getID();
+        return this.entity.getID();
     }
     public String getEntityName(){
-        return entityTex.name();
+        return entity.name();
     }
 }

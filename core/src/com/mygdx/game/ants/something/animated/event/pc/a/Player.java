@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.enums.DirConst4;
-import com.mygdx.game.enums.EntityTex;
+import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 
 
@@ -46,11 +46,11 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
     private float frameDur = 0.025f;
     float animationTime = 0f;
 
-//    public Player(EntityTex entityTex, String file, int rows) {
-//        super(entityTex, file, rows);
+//    public Player(Entity entity, String file, int rows) {
+//        super(entity, file, rows);
 //    }
-    public Player(EntityTex entityTex) {
-        super(entityTex, EntityAnimation.EXPLOSION);
+    public Player(Entity entity) {
+        super(entity, EntityAnimation.EXPLOSION);
         dirLast = DirConst4.NULL;
         dirX = DirConst4.NULL;
         dirY = DirConst4.NULL;

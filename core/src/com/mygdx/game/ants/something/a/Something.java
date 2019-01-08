@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.ants.a.coreActor;
-import com.mygdx.game.enums.EntityTex;
+import com.mygdx.game.enums.Entity;
 
 public class Something extends coreActor {
 //    Sprite sprite;
@@ -14,14 +14,14 @@ public class Something extends coreActor {
     private int borderXdelta;
     private int borderYdelta;
 
-//    public Something(TextureRegion texReg) { //todo change constructor , only entityTex enum must be needed
+//    public Something(TextureRegion texReg) { //todo change constructor , only entity enum must be needed
 //        super(texReg);
 //        border = new Rectangle();
 //        range = new Circle();
 //        buffVect2 = new Vector2();
 //    }
-    public Something(EntityTex entityTex) { //todo change constructor , only entityTex enum must be needed
-        super(entityTex);
+    public Something(Entity entity) { //todo change constructor , only entity enum must be needed
+        super(entity);
         border = new Rectangle();
         range = new Circle();
         buffVect2 = new Vector2();

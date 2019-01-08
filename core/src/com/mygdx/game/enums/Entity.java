@@ -1,6 +1,6 @@
 package com.mygdx.game.enums;
 
-public enum EntityTex {
+public enum Entity {
     None(0),
     Player(1),
     NPC(2),
@@ -12,18 +12,18 @@ public enum EntityTex {
     Temp(66);
 
     int id;
-    private EntityTex(int i){id = i;}
+    Entity(int i){id = i;}
     public int getID(){return id;}
-//    public boolean IsEmpty(){return this.equals(EntityTex.None);}
+//    public boolean IsEmpty(){return this.equals(Entity.None);}
 //    public boolean Compare(int i){return id == i;}
-//    public static EntityTex GetValue(int _id)
+//    public static Entity GetValue(int _id)
 //    {
-//        EntityTex[] As = EntityTex.values();
+//        Entity[] As = Entity.values();
 //        for(int i = 0; i < As.length; i++)
 //        {
 //            if(As[i].Compare(_id))
 //                return As[i];
 //        }
-//        return EntityTex.None;
+//        return Entity.None;
 //    }
 }

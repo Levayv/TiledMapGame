@@ -15,7 +15,7 @@ import com.mygdx.game.ants.something.animated.event.npc.a.NonPlayableCharacter;
 import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
-import com.mygdx.game.enums.EntityTex;
+import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 
 class WorldManager {
@@ -81,8 +81,8 @@ class WorldManager {
             tileID = new int[mapWidth][mapHeight]; // init tileID based on map size
             for (int i = 0; i < mapWidth; i++) { // todo fix for multi layer tiles
                 for (int j = 0; j < mapHeight; j++) {
-                    //populate entityTex id from tmx, [0][0] is left bottom corner
-                    tileID[i][j] = tLayers[0].getCell(i,j).getTile().getProperties().get("entityTex", int.class);
+                    //populate entity id from tmx, [0][0] is left bottom corner
+                    tileID[i][j] = tLayers[0].getCell(i,j).getTile().getProperties().get("entity", int.class);
                     //todo add func to read all properties
                 }
             }
@@ -94,7 +94,7 @@ class WorldManager {
             objRect = new Rectangle[objCountPerLayer[0]];
             for (int i = 0; i < objCountPerLayer[0]; i++) { // get ID X Y from O layer objects
                 objID[i] = oLayers[0].getObjects().get(i).getProperties()
-                        .get("entityTex", int.class);
+                        .get("entity", int.class);
                 objX[i] = (int) ((TextureMapObject) oLayers[0].getObjects().get(i)).getX();
                 objY[i] = (int) ((TextureMapObject) oLayers[0].getObjects().get(i)).getX();
             }
@@ -146,10 +146,10 @@ class WorldManager {
 //      stage.getViewport().getScreenHeight());
 
         // temp grid manipulations
-        Spawner spawner = new Spawner(EntityTex.Temp );
+        Spawner spawner = new Spawner(Entity.Temp );
         spawner.set1TexReg(texRegManager);
         spawner.set2World(world);
-//        spawner.entityTex = EntityTex.Temp;
+//        spawner.entity = Entity.Temp;
 //        world.addActor(spawner);
         spawner.setBorders();
         spawner.setPosition(objX[0],objY[0]);
@@ -157,20 +157,20 @@ class WorldManager {
 
 
 
-        tree1  = new Something(EntityTex.Tree  );
-        tree2  = new Something(EntityTex.Stone );
-        tree3  = new Something(EntityTex.Ore   );
-        lever  = new Something(EntityTex.Temp  );
-        door1  = new Door(EntityTex.Temp, EntityAnimation.DOOR_OPEN);
+        tree1  = new Something(Entity.Tree  );
+        tree2  = new Something(Entity.Stone );
+        tree3  = new Something(Entity.Ore   );
+        lever  = new Something(Entity.Temp  );
+        door1  = new Door(Entity.Temp, EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
-//        door1  = new Door(EntityTex.Temp,texRegManager,world, "pumpkin" , 8);
-        door2 = new AnimatedSomething(EntityTex.Temp,EntityAnimation.TEMP); // ,"Explosion" , 12
+//        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
+        door2 = new AnimatedSomething(Entity.Temp,EntityAnimation.TEMP); // ,"Explosion" , 12
         slime1 = new NonPlayableCharacter[slimeCount];
         slime2 = new NonPlayableCharacter[slimeCount];
         slime3 = new NonPlayableCharacter[slimeCount];
-        tower1 = new Something(EntityTex.Tower);
-        tower2 = new Something(EntityTex.Tower);
-        tower3 = new Something(EntityTex.Tower);
+        tower1 = new Something(Entity.Tower);
+        tower2 = new Something(Entity.Tower);
+        tower3 = new Something(Entity.Tower);
 
         tree1.set1TexReg(texRegManager);
         tree2.set1TexReg(texRegManager);
@@ -192,22 +192,22 @@ class WorldManager {
         door1.set2World(world);
         door2.set2World(world);
 
-        door1.tempINT = 12;
-        door1.tempString = "Explosion";
-        door1.setAnim(animManager);
+//        door1.tempINT = 12;
+//        door1.tempString = "Explosion";
 //        door2.tempINT = 12;
 //        door2.tempString = "Explosion";
+        door1.setAnim(animManager);
         door2.setAnim(animManager);
 
-//        tree1  .entityTex = EntityTex.Tree;
-//        tree2  .entityTex = EntityTex.Stone;
-//        tree3  .entityTex = EntityTex.Ore;
-//        lever  .entityTex = EntityTex.None;
-//        door1  .entityTex = EntityTex.None;
-//        door2  .entityTex = EntityTex.None;
-//        tower1  .entityTex = EntityTex.Tower;
-//        tower2  .entityTex = EntityTex.Tower;
-//        tower3  .entityTex = EntityTex.Tower;
+//        tree1  .entity = Entity.Tree;
+//        tree2  .entity = Entity.Stone;
+//        tree3  .entity = Entity.Ore;
+//        lever  .entity = Entity.None;
+//        door1  .entity = Entity.None;
+//        door2  .entity = Entity.None;
+//        tower1  .entity = Entity.Tower;
+//        tower2  .entity = Entity.Tower;
+//        tower3  .entity = Entity.Tower;
 
 //        world.addActor(tree1);
 //        world.addActor(tree2);
@@ -222,9 +222,9 @@ class WorldManager {
 //        world.addActorAfter(player,door2); //! fix
 
         for (int i = 0; i < slimeCount; i++) {
-            slime1[i] = new NonPlayableCharacter(EntityTex.Temp,EntityAnimation.SLIME_1);
-            slime2[i] = new NonPlayableCharacter(EntityTex.Temp,EntityAnimation.SLIME_2);
-            slime3[i] = new NonPlayableCharacter(EntityTex.Temp,EntityAnimation.SLIME_3);
+            slime1[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_1);
+            slime2[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_2);
+            slime3[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_3);
             slime1[i].set1TexReg(texRegManager);
             slime2[i].set1TexReg(texRegManager);
             slime3[i].set1TexReg(texRegManager);
@@ -268,7 +268,7 @@ class WorldManager {
         tower2.setPosition(18 *tileSize,5 *tileSize);
         tower3.setPosition(18 *tileSize,10 *tileSize);
 
-        door2.loopingEndless =  false ;
+        door2.setLoop(false);
 
     }
 

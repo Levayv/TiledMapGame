@@ -1,12 +1,10 @@
 package com.mygdx.game.ants.something.animated.event.a;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.WorldResAnimManager;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.a.MyAnimation;
-import com.mygdx.game.enums.EntityTex;
+import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 
 public class AnimatedEventSomething extends Something {
@@ -26,14 +24,14 @@ public class AnimatedEventSomething extends Something {
     //    TextureRegion[][] animFramesBuffer;
     protected EntityAnimation entityAnim;
 
-    public AnimatedEventSomething(EntityTex entityTex,
+    public AnimatedEventSomething(Entity entity,
                                   EntityAnimation entityAnim,
                                   int stateCount) {
-        super(entityTex);
-        animation = new MyAnimation(true);
-//        super(entityTex, entityAnim);
+        super(entity);
+
         this.entityAnim = entityAnim;
         this.stateCount = stateCount;
+        animation = new MyAnimation(true);
 
 
     }

@@ -44,6 +44,9 @@ public class MyAnimation {
     public void startAnim(){
         this.startAnimCycle = true;
     }
+    public void setLoopingEndless(boolean loopingEndless){
+        this.loopingEndless = loopingEndless;
+    }
     public boolean drawOrNot(){
         return loopingEndless || startAnimCycle;
     }

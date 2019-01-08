@@ -9,7 +9,7 @@ import com.mygdx.game.enums.EntityAnimation;
 
 public class AnimatedEventSomething extends Something {
     int stateCount;
-    private MyAnimation animation;
+    protected MyAnimation animation; // can be manipulated by children only
     // old
 //    public boolean loopingEndless = true;
 //    public boolean startAnimCycle = false;
@@ -56,8 +56,6 @@ public class AnimatedEventSomething extends Something {
     }
     @Override
     public void draw (Batch batch, float parentAlpha) {
-        if (animation.drawOrNot()){
             batch.draw(texReg, getX(), getY());
-        }
     }
 }

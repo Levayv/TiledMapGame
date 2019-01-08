@@ -85,13 +85,26 @@ public class GraphicalUserInterface {
 //        tableRoot.add(button1);
 //        tableRoot.add(button2);
 //         listeners
-        dispatcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
-        dispatcher.addListener(worldManager.door1 , BasicEvents.OPEN.getID());
-        button1.addListener(new ChangeListener() {
+        dispatcher.addListener(worldManager.door1     , BasicEvents.OPEN.getID());
+        dispatcher.addListener(worldManager.door1     , BasicEvents.CLOSE.getID());
+
+        for (int i = 0; i < worldManager.mobCount; i++) {
+            dispatcher.addListener(worldManager.doorss[i] , BasicEvents.OPEN.getID());
+            dispatcher.addListener(worldManager.doorss[i] , BasicEvents.CLOSE.getID());
+        }
+//        button1.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                Gdx.app.log("GUI","Button 1 pressed");
+//                dispatcher.dispatchMessage(BasicEvents.CLOSE.getID());
+//            }
+//        });
+        button1.addListener(new InputListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("GUI","Button 1 pressed");
                 dispatcher.dispatchMessage(BasicEvents.CLOSE.getID());
+                return false;
             }
         });
         button2.addListener(new InputListener() {
@@ -99,8 +112,7 @@ public class GraphicalUserInterface {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("GUI","Button 2 pressed" );
                 dispatcher.dispatchMessage(BasicEvents.OPEN.getID());
-
-                return true;
+                return false;
             }
         });
     }

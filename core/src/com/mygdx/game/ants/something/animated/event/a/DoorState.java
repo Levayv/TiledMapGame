@@ -10,7 +10,7 @@ public enum DoorState implements State<Door> {
     OPEN(){
         @Override
         public void enter(Door door) {
-
+            door.animation.setToLastFrame();
         }
 
         @Override
@@ -26,17 +26,17 @@ public enum DoorState implements State<Door> {
         }
 
         @Override
-        public boolean onMessage(Door entity, Telegram telegram) {
+        public boolean onMessage(Door door, Telegram telegram) {
             if (telegram.message==BasicEvents.CLOSE.getID()){
-                entity.stateMachine.changeState(DoorState.CLOSED);
+                door.stateMachine.changeState(DoorState.CLOSING);
             }
-            return true;
+            return false;
         }
     },
     CLOSED(){
         @Override
         public void enter(Door door) {
-
+            door.animation.setToFirstFrame();
         }
 
         @Override
@@ -50,9 +50,9 @@ public enum DoorState implements State<Door> {
         }
 
         @Override
-        public boolean onMessage(Door entity, Telegram telegram) {
+        public boolean onMessage(Door door, Telegram telegram) {
             if (telegram.message==BasicEvents.OPEN.getID()){
-                entity.stateMachine.changeState(DoorState.OPEN);
+                door.stateMachine.changeState(DoorState.OPENING);
             }
             return false;
         }
@@ -60,21 +60,24 @@ public enum DoorState implements State<Door> {
     CLOSING(){
         @Override
         public void enter(Door door) {
-
+            System.out.println("FSM closing enter");
+            door.animation.startAnim(true);
         }
 
         @Override
         public void update(Door door) {
-
+            if (!door.animation.isAlive())
+                door.stateMachine.changeState(DoorState.CLOSED);
         }
 
         @Override
         public void exit(Door door) {
+            System.out.println("FSM closing exit");
 
         }
 
         @Override
-        public boolean onMessage(Door entity, Telegram telegram) {
+        public boolean onMessage(Door door, Telegram telegram) {
             
             return true;
         }
@@ -82,21 +85,23 @@ public enum DoorState implements State<Door> {
     OPENING(){
         @Override
         public void enter(Door door) {
-
+            System.out.println("FSM opening enter");
+            door.animation.startAnim(false);
         }
 
         @Override
         public void update(Door door) {
-
+            if (!door.animation.isAlive())
+                door.stateMachine.changeState(DoorState.OPEN);
         }
 
         @Override
         public void exit(Door door) {
-
+            System.out.println("FSM opening exit");
         }
 
         @Override
-        public boolean onMessage(Door entity, Telegram telegram) {
+        public boolean onMessage(Door door, Telegram telegram) {
             
             return true;
         }

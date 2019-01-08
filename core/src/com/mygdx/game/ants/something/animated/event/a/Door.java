@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
+import com.mygdx.game.WorldResAnimManager;
 import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 
@@ -13,11 +14,17 @@ public class Door extends AnimatedEventSomething implements Telegraph {
     StateMachine<Door, DoorState> stateMachine;
     public Door(Entity entity, EntityAnimation entityAnimation) {
         super(entity, entityAnimation, DoorState.values().length);
-//        this.animationsCount = 2;
         this.entity = Entity.Temp; //todo fix ASAP
-//        System.out.println(Entity.Temp+""+this.entity+"WTF");
 
-        stateMachine = new DefaultStateMachine<Door, DoorState>(this, DoorState.CLOSED);
+    }
+    @Override
+    public void setAnim(WorldResAnimManager animManager){
+        super.setAnim(animManager);
+        animation.setLoopingEndless(false);
+        stateMachine = new DefaultStateMachine<Door, DoorState>(this, DoorState.CLOSING);
+        stateMachine.changeState(DoorState.CLOSED);
+        // test
+        animation.setLoopingEndless(false);
     }
     public void update (/*float delta*/) {
         stateMachine.update();

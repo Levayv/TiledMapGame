@@ -3,7 +3,7 @@ package com.mygdx.game.enums;
 public enum EntityAnimation {
     NONE(0),
     DOOR_OPEN(1),
-    DOOR_CLOSE(2),
+    DOOR_CLOSE_NOT_USED(2),
     PUMPKIN(3),
     SLIME_1(11),
     SLIME_2(12),

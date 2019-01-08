@@ -217,6 +217,9 @@ public class GameScreen implements Screen {
     }
     void shittyMechanics(float delta) {
         worldManager.door1.update();
+        for (int i = 0; i < worldManager.mobCount; i++) {
+            worldManager.doorss[i].update();
+        }
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         float buffer;

@@ -18,7 +18,7 @@ public class NonPlayableCharacter extends AnimatedEventSomething {
     }
     private Path path;
     public NonPlayableCharacter(Entity entity, EntityAnimation entityAnim) {
-        super(entity, entityAnim,1);
+        super(entity, entityAnim,0);
     }
     @Override
     public void act(float delta){

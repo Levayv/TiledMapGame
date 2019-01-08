@@ -41,11 +41,13 @@ class WorldManager {
     Something lever;
 
     Door door1;
-    AnimatedSomething door2;
+    AnimatedSomething boomE;
+
+    Door[]                 doorss;
     NonPlayableCharacter[] slime1;
     NonPlayableCharacter[] slime2;
     NonPlayableCharacter[] slime3;
-    private int slimeCount = 3;
+    public int mobCount = 5;
 
     private int aLayersCount;   // all layers
     private int tLayersCount;   // tile layers
@@ -164,10 +166,11 @@ class WorldManager {
         door1  = new Door(Entity.Temp, EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
 //        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
-        door2 = new AnimatedSomething(Entity.Temp,EntityAnimation.TEMP); // ,"Explosion" , 12
-        slime1 = new NonPlayableCharacter[slimeCount];
-        slime2 = new NonPlayableCharacter[slimeCount];
-        slime3 = new NonPlayableCharacter[slimeCount];
+        boomE = new AnimatedSomething(Entity.Temp,EntityAnimation.EXPLOSION); // ,"Explosion" , 12
+        slime1 = new NonPlayableCharacter[mobCount];
+        slime2 = new NonPlayableCharacter[mobCount];
+        slime3 = new NonPlayableCharacter[mobCount];
+        doorss = new Door[mobCount];
         tower1 = new Something(Entity.Tower);
         tower2 = new Something(Entity.Tower);
         tower3 = new Something(Entity.Tower);
@@ -180,7 +183,7 @@ class WorldManager {
         tower2.set1TexReg(texRegManager);
         tower3.set1TexReg(texRegManager);
         door1.set1TexReg(texRegManager);
-        door2.set1TexReg(texRegManager);
+        boomE.set1TexReg(texRegManager);
 
         tree1.set2World(world);
         tree2.set2World(world);
@@ -190,14 +193,14 @@ class WorldManager {
         tower2.set2World(world);
         tower3.set2World(world);
         door1.set2World(world);
-        door2.set2World(world);
+        boomE.set2World(world);
 
 //        door1.tempINT = 12;
 //        door1.tempString = "Explosion";
 //        door2.tempINT = 12;
 //        door2.tempString = "Explosion";
         door1.setAnim(animManager);
-        door2.setAnim(animManager);
+        boomE.setAnim(animManager);
 
 //        tree1  .entity = Entity.Tree;
 //        tree2  .entity = Entity.Stone;
@@ -221,25 +224,31 @@ class WorldManager {
 
 //        world.addActorAfter(player,door2); //! fix
 
-        for (int i = 0; i < slimeCount; i++) {
+        for (int i = 0; i < mobCount; i++) {
             slime1[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_1);
             slime2[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_2);
             slime3[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_3);
+            doorss[i] = new Door(Entity.Temp,EntityAnimation.DOOR_OPEN);
             slime1[i].set1TexReg(texRegManager);
             slime2[i].set1TexReg(texRegManager);
             slime3[i].set1TexReg(texRegManager);
+            doorss[i].set1TexReg(texRegManager);
             slime1[i].set2World(world);
             slime2[i].set2World(world);
             slime3[i].set2World(world);
+            doorss[i].set2World(world);
             slime1[i].setBorders();
             slime2[i].setBorders();
             slime3[i].setBorders();
+            doorss[i].setBorders();
             slime1[i].setPosition(i*tileSize,1*tileSize);
             slime2[i].setPosition(i*tileSize,6*tileSize);
             slime3[i].setPosition(i*tileSize,9*tileSize);
+            doorss[i].setPosition(i*tileSize,12*tileSize);
             slime1[i].setAnim(animManager);
             slime2[i].setAnim(animManager);
             slime3[i].setAnim(animManager);
+            doorss[i].setAnim(animManager);
 //            world.addActor(slime1[i]);
 //            world.addActor(slime2[i]);
 //            world.addActor(slime3[i]);
@@ -253,7 +262,7 @@ class WorldManager {
         tree3.setBorders();
         lever.setBorders();
         door1.setBorders();
-        door2.setBorders();
+        boomE.setBorders();
         tower1.setBorders();
         tower2.setBorders();
         tower3.setBorders();
@@ -263,12 +272,12 @@ class WorldManager {
         tree3.setPosition(6 *tileSize,6 *tileSize);
         lever.setPosition(12*tileSize,9 *tileSize);
         door1.setPosition(12*tileSize,12*tileSize);
-        door2.setPosition(15*tileSize,12*tileSize);
+        boomE.setPosition(15*tileSize,12*tileSize);
         tower1.setPosition(18 *tileSize,0 *tileSize);
         tower2.setPosition(18 *tileSize,5 *tileSize);
         tower3.setPosition(18 *tileSize,10 *tileSize);
 
-        door2.setLoop(false);
+        boomE.setLoop(false);
 
     }
 

@@ -8,6 +8,7 @@ public enum EntityTex {
     Tree(11),
     Stone(12),
     Ore(13),
+    Door(14),
     Temp(66);
 
     int id;

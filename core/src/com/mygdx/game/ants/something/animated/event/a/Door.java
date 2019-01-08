@@ -13,7 +13,7 @@ public class Door extends AnimatedEventSomething implements Telegraph {
     StateMachine<Door, DoorState> stateMachine;
     public Door(EntityTex entityTex, EntityAnimation entityAnimation) {
         super(entityTex, entityAnimation, DoorState.values().length);
-        this.animationsCount = 2;
+//        this.animationsCount = 2;
         this.entityTex = EntityTex.Temp; //todo fix ASAP
 //        System.out.println(EntityTex.Temp+""+this.entityTex+"WTF");
 

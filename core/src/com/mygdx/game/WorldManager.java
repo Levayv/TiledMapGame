@@ -164,7 +164,7 @@ class WorldManager {
         door1  = new Door(EntityTex.Temp, EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
 //        door1  = new Door(EntityTex.Temp,texRegManager,world, "pumpkin" , 8);
-        door2  = new AnimatedSomething(EntityTex.Temp,EntityAnimation.TEMP); // ,"Explosion" , 12
+        door2 = new AnimatedSomething(EntityTex.Temp,EntityAnimation.TEMP); // ,"Explosion" , 12
         slime1 = new NonPlayableCharacter[slimeCount];
         slime2 = new NonPlayableCharacter[slimeCount];
         slime3 = new NonPlayableCharacter[slimeCount];
@@ -190,7 +190,7 @@ class WorldManager {
         tower2.set2World(world);
         tower3.set2World(world);
         door1.set2World(world);
-        door2 .set2World(world);
+        door2.set2World(world);
 
         door1.tempINT = 12;
         door1.tempString = "Explosion";

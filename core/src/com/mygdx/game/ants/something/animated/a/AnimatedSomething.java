@@ -16,7 +16,7 @@ public class AnimatedSomething extends Something {
     public float animationTime = 0f;
     private float frameDur;
     private int rows;
-    public boolean start;
+//    public boolean start;
     public boolean loopingEndless = true;
     public boolean startAnimCycle = false;
     protected EntityAnimation entityAnim;
@@ -44,7 +44,7 @@ public class AnimatedSomething extends Something {
 //        index = 0;
 //        for (int i = 0; i < FRAME_COLS; i++) { animFrames[i] = buffer[index++];}
 
-//        eventAnimation = new Animation<TextureRegion>(frameDur, animFrames);
+//        coreAnimation = new Animation<TextureRegion>(frameDur, animFrames);
     }
     public void setAnim(WorldResAnimManager animManager){
         eventAnimation = animManager.getAnimationByID(this.entityAnim);

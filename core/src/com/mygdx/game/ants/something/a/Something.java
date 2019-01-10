@@ -11,7 +11,7 @@ public class Something extends coreActor {
     private Rectangle border; // todo Change to dynamic object ?
     private Circle range;
     private Vector2 buffVect2;
-    private int borderXdelta;
+    public int borderXdelta;
     private int borderYdelta;
 
 //    public Something(TextureRegion texReg) { //todo change constructor , only entity enum must be needed

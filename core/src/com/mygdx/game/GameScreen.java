@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.pc.a.Player;
 import com.mygdx.game.debug.tools.PerfCounter;
@@ -101,6 +102,7 @@ public class GameScreen implements Screen {
         TextureRegion texRegTower   = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever   = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
         TextureRegion texRegTemp32  = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
+        TextureRegion texRegGhost  = new TextureRegion(new Texture(Gdx.files.internal("ghost.png")));
 //        TextureRegion texRegDoor0  = new TextureRegion(new Texture(Gdx.files.internal("door0.png")));
 //        TextureRegion texRegDoor1  = new TextureRegion(new Texture(Gdx.files.internal("door1.png")));
         Texture texAnimPumpkin      = new Texture(Gdx.files.internal("animation/pumpkin.png"));
@@ -118,6 +120,7 @@ public class GameScreen implements Screen {
         buffer1.addTexReg(Entity.Tower,texRegTower);
         buffer1.addTexReg(Entity.Temp,texRegTemp32);
         buffer1.addTexReg(Entity.Player,texRegPlayer);
+        buffer1.addTexReg(Entity.Ghost,texRegGhost);
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,44);
@@ -183,9 +186,6 @@ public class GameScreen implements Screen {
 
 //        testing();
     }
-
-
-
     private void testing() {
         System.out.println("Testing LINE START");
 //        for (int i = 0; i < 3; i++) {
@@ -202,6 +202,7 @@ public class GameScreen implements Screen {
 //        System.out.println(tree2.getName() + " " + tree1.getZIndex());
 //        System.out.println(tree3.getName() + " " + tree1.getZIndex());
 //        System.out.println(player.getName() + " " + tree1.getZIndex());
+
         System.out.println("Testing LINE END");
     }
 
@@ -216,18 +217,19 @@ public class GameScreen implements Screen {
         shittyControls(delta);
         shittyRenderer(delta);
     }
+    private Vector2 screenPos = new Vector2(); //Fixed: new object init in render
     void shittyMechanics(float delta) {
         worldManager.door1.update();
         for (int i = 0; i < worldManager.mobCount; i++) {
             worldManager.doorss[i].update();
         }
         //todo builder/destroyer integration
-        if (worldManager.isBuilding){
-            Vector2 screenPos = new Vector2(); // todo vector init each click wrong
+        if (worldManager.factory.isBuilding()){
             screenPos.set(Gdx.input.getX(), Gdx.input.getY());
-            Vector2 pos = stage.screenToStageCoordinates(screenPos);
-            worldManager.tree1.setPosition(pos.x+10,pos.y+10);
+            screenPos = stage.screenToStageCoordinates(screenPos);
+            worldManager.tree1.setPosition(screenPos.x+10,screenPos.y+10);
         }
+        worldManager.factory.test();
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         float buffer;
@@ -276,8 +278,8 @@ public class GameScreen implements Screen {
                     // lastHitSomething.setDebug(true);
                 }else {
                     //todo builder/destroyer integration
-                    if (worldManager.isBuilding)
-                        worldManager.build(1,pos1.x,pos1.y);
+                    if (worldManager.factory.isBuilding())
+                        worldManager.factory.build(1,pos1.x,pos1.y);
                     else
                         System.out.println("Hit: Void");
                 }

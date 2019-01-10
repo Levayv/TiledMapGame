@@ -119,7 +119,7 @@ public class GraphicalUserInterface {
 //                System.out.println("!"+this.getClass().getSimpleName()+"!");
 //                worldManager
                 //FIXME 10.01.2019
-                worldManager.isBuilding = !worldManager.isBuilding;
+                worldManager.factory.swapBuilding();
 //                worldManager.build(1,150,150);
 
                 return true;

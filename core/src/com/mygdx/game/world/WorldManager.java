@@ -64,6 +64,8 @@ public class WorldManager {
     private int[] objY;
     private Rectangle[] objRect;
     private int[] objCountPerLayer;
+
+    public Factory factory;
     private void getMapData(){
         aLayersCount = map.getLayers().getCount(); // get both /sum of both T&O layers
         for (int i = 0; i < aLayersCount; i++) {   // get individual T&O layers count
@@ -283,9 +285,11 @@ public class WorldManager {
 
         boomE.setLoop(false);
 
+        // init factory
+        factory = new Factory(world, texRegManager, animManager);
     }
 
-    private void setPosition(Actor actor , int x, int y){
+    private void setPosition(Actor actor , int x, int y){ // todo usage ?
         actor.setPosition(x*tileSize , y*tileSize);
     }
 
@@ -297,16 +301,17 @@ public class WorldManager {
 
     //todo move build method to Builder class
 
-    public boolean isBuilding;
-    public void build(int id,float x, float y){
-        System.out.println("id="+id);
-        Something tavern = new Something(Entity.Temp);
-        tavern.set1TexReg(texRegManager);
-        tavern.set2World(world);
-        tavern.setBorders();
-        tavern.setPosition(x,y);
-        isBuilding = false;
-    }
+//    public boolean isBuilding;
+//    public void build(int id,float x, float y){
+//        System.out.println("id="+id);
+//        Something tavern = new Something(Entity.Temp);
+//        tavern.set1TexReg(texRegManager);
+//        tavern.set2World(world);
+//        tavern.setBorders();
+//        tavern.setPosition(x,y);
+//
+//        factory.stopBuilding();
+//    }
 
     //        chunks = new Chunk[chunkSize][chunkSize];
 //        for (int i = 0; i < chunkSize; i++) {

@@ -220,6 +220,13 @@ public class GameScreen implements Screen {
         for (int i = 0; i < worldManager.mobCount; i++) {
             worldManager.doorss[i].update();
         }
+        //todo builder/destroyer integration
+        if (worldManager.isBuilding){
+            Vector2 screenPos = new Vector2(); // todo vector init each click wrong
+            screenPos.set(Gdx.input.getX(), Gdx.input.getY());
+            Vector2 pos = stage.screenToStageCoordinates(screenPos);
+            worldManager.tree1.setPosition(pos.x+10,pos.y+10);
+        }
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         float buffer;
@@ -252,6 +259,9 @@ public class GameScreen implements Screen {
                         System.out.print(" EntityName=");
                         System.out.print(lastHitSomething.getEntityName());
                         System.out.println();
+                        //todo builder/destroyer integration
+//                        lastHitSomething.destroy();
+
                     }else {
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");
@@ -264,7 +274,11 @@ public class GameScreen implements Screen {
                     }
                     // lastHitSomething.setDebug(true);
                 }else {
-                    System.out.println("Hit: Void");
+                    //todo builder/destroyer integration
+                    if (worldManager.isBuilding)
+                        worldManager.build(1,pos1.x,pos1.y);
+                    else
+                        System.out.println("Hit: Void");
                 }
             }
             lastHitActor   = null;
@@ -383,14 +397,10 @@ public class GameScreen implements Screen {
 //            points = worldManager.slime1[0].findPath(stage);
 //            worldManager.door1.unhandledSignal = true;
             // todo another test to be removed [EVENTS] or [OBSERVER]
-//            com.mygdx.game.craps.observerTest.Subject subject =
-//                    new com.mygdx.game.craps.observerTest.Subject();
-//            new com.mygdx.game.craps.observerTest.BinaryObserver(subject);
-//            System.out.println("First state change: 15");
-//            subject.setState(15);
-            MessageDispatcher mDispetcher = new MessageDispatcher();
-            mDispetcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
-            mDispetcher.dispatchMessage(BasicEvents.CLOSE.getID());
+//            MessageDispatcher mDispetcher = new MessageDispatcher();
+//            mDispetcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
+//            mDispetcher.dispatchMessage(BasicEvents.CLOSE.getID());
+
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
             // Some action test todo remove this later
@@ -421,11 +431,11 @@ public class GameScreen implements Screen {
             loadGame();
         }
         if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-            randomize(); // for colider testing only
+            randomize(); //todo remove, this is for colider testing only
         }
         if (Gdx.input.isKeyJustPressed(Keys.F2)) {
             game.setScreen(new MainMenuScreen(game));
-            dispose();
+            dispose(); //todo add all textures to dispose
         }
         if (Gdx.input.isKeyJustPressed(Keys.F3)) {
             colliding = !colliding;
@@ -434,6 +444,7 @@ public class GameScreen implements Screen {
             debugging = !debugging;
             if (debugging){
                 stage.setDebugAll(true);
+                stageUI.setDebugAll(true);
                 Gdx.app.setLogLevel(3);
                 System.out.println("Debug: Enabling borders for ["+stage.getActors().size+"] entities");
 //                for (int i = 0; i < actors.size; i++) {
@@ -441,6 +452,7 @@ public class GameScreen implements Screen {
 //                }
             }else{
                 stage.setDebugAll(false);
+                stageUI.setDebugAll(false);
                 Gdx.app.setLogLevel(0);
                 System.out.println("Debug: Disabling borders for ["+stage.getActors().size+"] entities");
 //                for (int i = 0; i < actors.size; i++) {
@@ -634,9 +646,6 @@ public class GameScreen implements Screen {
         dropSound.dispose();
 
         player.texReg.getTexture().dispose();
-        worldManager.tree1.texReg.getTexture().dispose();
-        worldManager.tree2.texReg.getTexture().dispose();
-        worldManager.tree3.texReg.getTexture().dispose();
         // todo dispose atlas
         // todo dispose temp textures
         // todo dispose chunk images

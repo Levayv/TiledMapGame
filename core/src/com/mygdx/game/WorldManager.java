@@ -195,6 +195,16 @@ class WorldManager {
         door1.set2World(world);
         boomE.set2World(world);
 
+        tree1.setBorders();
+        tree2.setBorders();
+        tree3.setBorders();
+        lever.setBorders();
+        door1.setBorders();
+        boomE.setBorders();
+        tower1.setBorders();
+        tower2.setBorders();
+        tower3.setBorders();
+
 //        door1.tempINT = 12;
 //        door1.tempString = "Explosion";
 //        door2.tempINT = 12;
@@ -257,15 +267,6 @@ class WorldManager {
 
 
         // grl
-        tree1.setBorders();
-        tree2.setBorders();
-        tree3.setBorders();
-        lever.setBorders();
-        door1.setBorders();
-        boomE.setBorders();
-        tower1.setBorders();
-        tower2.setBorders();
-        tower3.setBorders();
 
         tree1.setPosition(9 *tileSize,3 *tileSize);
         tree2.setPosition(3 *tileSize,6 *tileSize);
@@ -291,6 +292,18 @@ class WorldManager {
         return map;
     } // for Renderer
 
+    //todo move build method to Builder class
+
+    public boolean isBuilding;
+    public void build(int id,float x, float y){
+        System.out.println("id="+id);
+        Something tavern = new Something(Entity.Temp);
+        tavern.set1TexReg(texRegManager);
+        tavern.set2World(world);
+        tavern.setBorders();
+        tavern.setPosition(x,y);
+        isBuilding = false;
+    }
 
     //        chunks = new Chunk[chunkSize][chunkSize];
 //        for (int i = 0; i < chunkSize; i++) {

@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.mygdx.game.enums.BasicEvents;
 
-public enum DoorState implements State<Door> {
+public enum DoorState implements State<Door> { //todo polish commented prints
     OPEN(){
         @Override
         public void enter(Door door) {
@@ -60,7 +60,7 @@ public enum DoorState implements State<Door> {
     CLOSING(){
         @Override
         public void enter(Door door) {
-            System.out.println("FSM closing enter");
+//            System.out.println("FSM closing enter");
             door.animation.startAnim(true);
         }
 
@@ -72,7 +72,7 @@ public enum DoorState implements State<Door> {
 
         @Override
         public void exit(Door door) {
-            System.out.println("FSM closing exit");
+//            System.out.println(door.getClass().getSimpleName()+"FSM closing exit");
 
         }
 
@@ -85,7 +85,7 @@ public enum DoorState implements State<Door> {
     OPENING(){
         @Override
         public void enter(Door door) {
-            System.out.println("FSM opening enter");
+//            System.out.println(door.getClass().getSimpleName()+"FSM opening enter");
             door.animation.startAnim(false);
         }
 
@@ -97,7 +97,7 @@ public enum DoorState implements State<Door> {
 
         @Override
         public void exit(Door door) {
-            System.out.println("FSM opening exit");
+//            System.out.println("FSM opening exit");
         }
 
         @Override

@@ -20,7 +20,7 @@ public class WorldResAnimManager {
         animationsSize++;
     }
     public Animation getAnimationByID(EntityAnimation entity){
-        System.out.println(entity);
+//        System.out.println(entity);
         animation = animations[entity.GetID()];
         return animation;
     }

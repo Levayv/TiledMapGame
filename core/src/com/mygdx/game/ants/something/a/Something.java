@@ -65,4 +65,13 @@ public class Something extends coreActor {
     public float getBorderH(){ return border.height;}
     public Rectangle getBorder(){ return border;}
     public Circle getRange(){ return range;}
+    public void destroy(){
+        this.remove();
+        this.setVisible(false);
+        texReg = null;
+        border = null;
+        range = null;
+        entity = null;
+
+    }
 }

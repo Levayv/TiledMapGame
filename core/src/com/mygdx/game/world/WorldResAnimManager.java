@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.world;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -10,7 +10,7 @@ public class WorldResAnimManager {
     private Animation animation;
     private int animationsSize = 0;
     private int arrayCap;
-    WorldResAnimManager(int texRegArrayCap){
+    public WorldResAnimManager(int texRegArrayCap){
         this.arrayCap = texRegArrayCap;
         animations = new Animation[arrayCap];
 //        animations = new TextureRegion[arrayCap];

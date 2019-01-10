@@ -1,7 +1,7 @@
 package com.mygdx.game.ants.something.animated.event.a;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.mygdx.game.WorldResAnimManager;
+import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.a.MyAnimation;
 import com.mygdx.game.enums.Entity;

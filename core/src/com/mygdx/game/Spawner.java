@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.Entity;
 
-class Spawner extends Something {
+public class Spawner extends Something {
     public Spawner(Entity entity) {
         super(entity);
     }

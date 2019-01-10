@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.world;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapLayer;
@@ -11,6 +11,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Grid;
+import com.mygdx.game.Pos;
+import com.mygdx.game.Spawner;
 import com.mygdx.game.ants.something.animated.event.npc.a.NonPlayableCharacter;
 import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
 import com.mygdx.game.ants.something.a.Something;
@@ -18,7 +21,7 @@ import com.mygdx.game.ants.something.animated.event.a.Door;
 import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 
-class WorldManager {
+public class WorldManager {
     // WorldManager's knowledge about grid
     private boolean debugging = false; // todo fix debugging boolean in all classes
     private int tileSize;
@@ -32,21 +35,21 @@ class WorldManager {
     private Pos lastPos;
     public Group world;
 
-    Something tree1;
-    Something tree2;
-    Something tree3;
-    Something tower1;
-    Something tower2;
-    Something tower3;
-    Something lever;
+    public Something tree1;
+    public Something tree2;
+    public Something tree3;
+    public Something tower1;
+    public Something tower2;
+    public Something tower3;
+    public Something lever;
 
-    Door door1;
-    AnimatedSomething boomE;
+    public Door door1;
+    public AnimatedSomething boomE;
 
-    Door[]                 doorss;
-    NonPlayableCharacter[] slime1;
-    NonPlayableCharacter[] slime2;
-    NonPlayableCharacter[] slime3;
+    public Door[]                 doorss;
+    public NonPlayableCharacter[] slime1;
+    public NonPlayableCharacter[] slime2;
+    public NonPlayableCharacter[] slime3;
     public int mobCount = 5;
 
     private int aLayersCount;   // all layers
@@ -117,7 +120,7 @@ class WorldManager {
             }
         }
     }
-    WorldManager(Stage stage,
+    public WorldManager(Stage stage,
                  WorldResTexRegManager buffer1,
                  WorldResAnimManager buffer2,
                  TextureRegion texRegLever){

@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
-import com.mygdx.game.WorldResAnimManager;
+import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
 

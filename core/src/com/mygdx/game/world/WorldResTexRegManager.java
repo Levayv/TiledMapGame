@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.world;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.enums.Entity;
@@ -9,7 +9,7 @@ public class WorldResTexRegManager {
     private TextureRegion texReg;
     private int texRegsSize = 0;
     private int arrayCap;
-    WorldResTexRegManager(int texRegArrayCap){
+    public WorldResTexRegManager(int texRegArrayCap){
         this.arrayCap = texRegArrayCap;
         texRegs = new TextureRegion[arrayCap];
     }

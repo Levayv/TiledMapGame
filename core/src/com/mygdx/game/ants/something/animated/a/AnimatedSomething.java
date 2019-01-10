@@ -2,7 +2,7 @@ package com.mygdx.game.ants.something.animated.a;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.WorldResAnimManager;
+import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;

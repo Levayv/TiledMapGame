@@ -33,6 +33,7 @@ import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirParser;
 import com.mygdx.game.enums.Entity;
 import com.mygdx.game.enums.EntityAnimation;
+import com.mygdx.game.hud.GraphicalUserInterface;
 import com.mygdx.game.world.WorldManager;
 import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.world.WorldResTexRegManager;
@@ -227,7 +228,7 @@ public class GameScreen implements Screen {
         if (worldManager.factory.isBuilding()){
             screenPos.set(Gdx.input.getX(), Gdx.input.getY());
             screenPos = stage.screenToStageCoordinates(screenPos);
-            worldManager.tree1.setPosition(screenPos.x+10,screenPos.y+10);
+            worldManager.factory.updateGhostPosition(screenPos.x,screenPos.y);
         }
         worldManager.factory.test();
     }
@@ -246,8 +247,7 @@ public class GameScreen implements Screen {
             lastHitUIActor = stageUI.hit(pos2.x,pos2.y,true);
 
             if (lastHitUIActor!=null){
-//                System.out.println("FUCK");
-
+                // gui must handle this events
             }else{
                 if (lastHitActor!=null){ // todo fix entity vs texReg,
                     if (lastHitActor.getClass() == Something.class || //todo check and remove IF

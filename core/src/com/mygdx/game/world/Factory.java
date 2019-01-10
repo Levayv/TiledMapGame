@@ -1,5 +1,6 @@
 package com.mygdx.game.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.ants.something.a.Something;
@@ -7,7 +8,7 @@ import com.mygdx.game.enums.Entity;
 
 public class Factory {
     private boolean isBuilding;
-    private boolean canBuild;
+    private boolean canBuild = true; // todo canBuild integration
     private Something ghost;
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
@@ -26,8 +27,12 @@ public class Factory {
         ghost.setTouchable(Touchable.disabled);
         ghost.setVisible(false);
     }
+    public void updateGhostPosition(float x, float y){
+        ghost.setPosition((int)(x+10),(int)(y+10));
+    }
     public void build(int id, float x , float y){
-        if (!canBuild){ // todo canBuild integration
+        if (canBuild){
+            Gdx.app.log("Factory", "asd");
             System.out.println("id="+id);
             Something tavern = new Something(Entity.Temp);
             tavern.set1TexReg(texRegManager);
@@ -47,8 +52,23 @@ public class Factory {
     }
 
     public void test(){}
-    public void startBuilding(){isBuilding = true;}
-    public void stopBuilding(){isBuilding = false;}
-    public void swapBuilding(){isBuilding = !isBuilding;}
-    public boolean isBuilding(){return isBuilding;}
+    public void startBuilding(){
+        isBuilding = true;
+        ghost.setVisible(true);
+    }
+    public void stopBuilding(){
+        isBuilding = false;
+        ghost.setVisible(false);
+
+    }
+    public void swapBuilding(){
+        if (isBuilding)
+            stopBuilding();
+        else
+            startBuilding();
+//        isBuilding = !isBuilding;
+    }
+    public boolean isBuilding(){
+        return isBuilding;
+    }
 }

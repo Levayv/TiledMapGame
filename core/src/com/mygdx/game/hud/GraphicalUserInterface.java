@@ -3,12 +3,9 @@ package com.mygdx.game.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -109,29 +106,11 @@ public class GraphicalUserInterface {
                 }
             });
         }
-//        buttons[0].setColor(Color.GREEN);
         buttons[0].addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                buttons[0].setChecked(true);
-//                if(buttons[0].isChecked()) System.out.println("checked");
-//                else System.out.println("not checked");
-////                buttons[0].setChecked(true);
-                //FIXME 10.01.2019
-//                if (buttons[0].isChecked())
-//                    buttons[0].setColor(Color.RED);
-//                else
-//                    buttons[0].setColor(Color.GREEN);
-//
-//                buttons[0].setDisabled(!buttons[0].isDisabled());
-//                buttons[0].setTouchable(Touchable.enabled);
-//                if(buttons[0].isDisabled())
-//                    System.out.println("TEST: button0 disabled");
-//                else
-//                    System.out.println("nTEST: button0 enabled");
-                worldManager.factory.swapBuilding();
-//                worldManager.build(1,150,150);
-
+                worldManager.factory.swapBuildingPhase();
+                Gdx.app.log("GraphicalUserInterface", "worldManager.factory.swapBuildingPhase()");
                 return true;
             }
         });

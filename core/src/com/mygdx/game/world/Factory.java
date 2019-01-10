@@ -31,41 +31,41 @@ public class Factory {
         ghost.setPosition((int)(x+10),(int)(y+10));
     }
     public void build(int id, float x , float y){
-        if (canBuild){
-            Gdx.app.log("Factory", "asd");
-            System.out.println("id="+id);
-            Something tavern = new Something(Entity.Temp);
-            tavern.set1TexReg(texRegManager);
-            tavern.set2World(worldGroup);
-            tavern.setBorders();
-            tavern.setPosition(x,y);
-            stopBuilding();
+        if (isBuilding){
+            if (canBuild){
+                Gdx.app.log("Factory", "Building sh*t at posx posy fixme! "); //todo add x y
+                System.out.println("id="+id); // todo remove this
+                Something tavern = new Something(Entity.Temp);
+                tavern.set1TexReg(texRegManager);
+                tavern.set2World(worldGroup);
+                tavern.setBorders();
+                tavern.setPosition(x,y);
+                tavern.setName("Tavern");
+                stopBuildingPhase();
+            }
         }
     }
     public void update(float x, float y){
-        if (isBuilding){
-            ghost.setVisible(true);
-            ghost.setPosition(x+10,y+10);
-        }else {
-            ghost.setVisible(false);
+        if (this.isBuilding()){
+            this.updateGhostPosition(x,y);
         }
     }
 
-    public void test(){}
-    public void startBuilding(){
+
+    public void startBuildingPhase(){
         isBuilding = true;
         ghost.setVisible(true);
     }
-    public void stopBuilding(){
+    public void stopBuildingPhase(){
         isBuilding = false;
         ghost.setVisible(false);
 
     }
-    public void swapBuilding(){
+    public void swapBuildingPhase(){
         if (isBuilding)
-            stopBuilding();
+            stopBuildingPhase();
         else
-            startBuilding();
+            startBuildingPhase();
 //        isBuilding = !isBuilding;
     }
     public boolean isBuilding(){

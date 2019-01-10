@@ -74,6 +74,13 @@ public class GameScreen implements Screen {
 
     TiledMapRenderer tiledMapRenderer;
 
+    // Render
+    private Vector2 screenPos1 = new Vector2(); //for stage
+    private Vector2 screenPos2 = new Vector2(); //for stageUI
+    private Vector2 stagePos1 = new Vector2();
+    private Vector2 stagePos2 = new Vector2();
+    private int lastInputX;
+    private int lastInputY;
 
     // Save Load
     private FileHandle saveLoadFile;
@@ -214,42 +221,41 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        shittyMechanics(delta);
         shittyControls(delta);
+        shittyMechanics(delta);
         shittyRenderer(delta);
     }
-    private Vector2 screenPos = new Vector2(); //Fixed: new object init in render
     void shittyMechanics(float delta) {
         worldManager.door1.update();
         for (int i = 0; i < worldManager.mobCount; i++) {
             worldManager.doorss[i].update();
         }
         //todo builder/destroyer integration
-        if (worldManager.factory.isBuilding()){
-            screenPos.set(Gdx.input.getX(), Gdx.input.getY());
-            screenPos = stage.screenToStageCoordinates(screenPos);
-            worldManager.factory.updateGhostPosition(screenPos.x,screenPos.y);
-        }
-        worldManager.factory.test();
+        lastInputX = Gdx.input.getX();
+        lastInputY = Gdx.input.getX();
+        screenPos1.set(Gdx.input.getX(), Gdx.input.getY());
+        screenPos2.set(Gdx.input.getX(), Gdx.input.getY());
+        stagePos1 =   stage.screenToStageCoordinates(screenPos1);
+        stagePos2 = stageUI.screenToStageCoordinates(screenPos2);
+        worldManager.factory.update(stagePos1.x,stagePos1.y);
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
-        float buffer;
         // process user input ------------------------------------------
         if (Gdx.input.justTouched()) {
-            Vector2 screenPos1 = new Vector2(); // todo vector init each click wrong
-            Vector2 screenPos2 = new Vector2(); // todo vector init each click wrong
-            screenPos1.set(Gdx.input.getX(), Gdx.input.getY());
-            screenPos2.set(Gdx.input.getX(), Gdx.input.getY());
-            Vector2 pos1 = stage.screenToStageCoordinates(screenPos1);
-            Vector2 pos2 = stageUI.screenToStageCoordinates(screenPos2);
+//            Vector2 screenPos1 = new Vector2(); // todo vector init each click wrong
+//            Vector2 screenPos2 = new Vector2(); // todo vector init each click wrong
+//            screenPos1.set(Gdx.input.getX(), Gdx.input.getY());
+//            screenPos2.set(Gdx.input.getX(), Gdx.input.getY());
+//            Vector2 pos1 = stage.screenToStageCoordinates(screenPos1);
+//            Vector2 pos2 = stageUI.screenToStageCoordinates(screenPos2);
 
-            lastHitActor   = stage  .hit(pos1.x,pos1.y,true);
-            lastHitUIActor = stageUI.hit(pos2.x,pos2.y,true);
+            lastHitActor   = stage  .hit(stagePos1.x,stagePos1.y,true);
+            lastHitUIActor = stageUI.hit(stagePos2.x,stagePos2.y,true);
 
-            if (lastHitUIActor!=null){
+            if (lastHitUIActor!=null){ // hit on stageUI
                 // gui must handle this events
-            }else{
-                if (lastHitActor!=null){ // todo fix entity vs texReg,
+            }else{ // no hit on stageUI
+                if (lastHitActor!=null){ // no hit on stageUI, hit on stage
                     if (lastHitActor.getClass() == Something.class || //todo check and remove IF
                             lastHitActor.getClass() == Player.class ||
                             lastHitActor.getClass() == Spawner.class ||
@@ -275,13 +281,9 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getEntityName());
                         System.out.println();
                     }
-                    // lastHitSomething.setDebug(true);
-                }else {
-                    //todo builder/destroyer integration
-                    if (worldManager.factory.isBuilding())
-                        worldManager.factory.build(1,pos1.x,pos1.y);
-                    else
-                        System.out.println("Hit: Void");
+                }else { // no hit on stageUI, no hit on stage
+                    System.out.println("Hit: Void");
+                    worldManager.factory.build(1,stagePos1.x,stagePos1.y);
                 }
             }
             lastHitActor   = null;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.world.WorldResTexRegManager;
 import com.mygdx.game.enums.Entity;
 
@@ -12,6 +13,8 @@ public class coreActor extends Actor {
     public TextureRegion texReg;
     protected Entity entity;
     private Color color;
+    private Data data = new Data();
+
 
 //    public coreActor (TextureRegion texReg) {
 ////        texReg = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
@@ -22,6 +25,7 @@ public class coreActor extends Actor {
     protected coreActor(Entity entity){
         this.entity = entity;
     }
+    public void set0Entity(Entity entity){this.entity = entity;}
     public void set1TexReg(WorldResTexRegManager texRegManager){
         texReg = texRegManager.getTexRegByID(entity);
         setBounds(texReg.getRegionX(), texReg.getRegionY(),
@@ -29,6 +33,7 @@ public class coreActor extends Actor {
     }
     public void set2World(Group world){
         world.addActor(this);
+        setUserObject(data);
     }
     @Override
     public void draw (Batch batch, float parentAlpha) {
@@ -42,5 +47,12 @@ public class coreActor extends Actor {
     }
     public String getEntityName(){
         return entity.name();
+    }
+
+    public void setIndexID(int indexID) {
+        data.indexID = indexID;
+    }
+        public int getIndexID() {
+        return ((Data)getUserObject()).indexID;
     }
 }

@@ -111,8 +111,11 @@ public class GraphicalUserInterface {
         buttons[0].addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("GUI",event.getListenerActor().getName()+"  pressed");
                 worldManager.factory.swapBuildingPhase();
-//                if (worldManager.factory.isBuilding()) //todo add reverse color change mechanism
+                worldManager.factory.stopDestroyingPhase();
+                //todo add reverse color change mechanism
+//                if (worldManager.factory.isBuilding())
 //                    buttons[0].setColor(Color.GREEN);
 //                else
 //                    buttons[0].setColor(Color.WHITE);
@@ -122,7 +125,9 @@ public class GraphicalUserInterface {
         buttons[1].addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.log("GUI",event.getListenerActor().getName()+"  pressed");
                 worldManager.factory.swapDestroyingPhase();
+                worldManager.factory.stopBuildingPhase();
                 return true;
             }
         });

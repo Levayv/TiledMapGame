@@ -9,6 +9,9 @@ import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.pc.a.Player;
 import com.mygdx.game.enums.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Factory {
     private DeadPool deadPool;
     private CoreTileData coreTileData;
@@ -23,9 +26,7 @@ public class Factory {
     private Group worldGroup;
     private WorldPositionManager positionManager;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
-    private int tileX;
-    private int tileY;
-    private int playerIndex;
+    private List<Something> somethingsOnDuty;
     Factory (Group worldGroup,
              WorldResTexRegManager texRegManager,
              WorldResAnimManager animManager,
@@ -49,20 +50,21 @@ public class Factory {
         ghostDestroy.setPosition(nullVector.x, nullVector.y);
         ghostDestroy.setTouchable(Touchable.disabled);
         ghostDestroy.setVisible(false);
-        positionManager = new WorldPositionManager(32);
+        positionManager = new WorldPositionManager(tileSize);
         coreTileData = new CoreTileData(mapWidth,mapHeight);
-        deadPool = new DeadPool(10);
+        deadPool = new DeadPool();
+        somethingsOnDuty = new ArrayList<Something>();
     }
-    public void updateBuildGhostPosition(Vector2 pos){
+    private void updateBuildGhostPosition(Vector2 pos){
         positionManager.toTile(pos);
         if (coreTileData.canBuildHere(positionManager.getTileX(),positionManager.getTileY())){
             ghostBuild.setPosition(positionManager.getPosX(),positionManager.getPosY());
             canBuild = true;
         }
     }
-    public void updateDestroyGhostPosition(Vector2 pos){
+    private void updateDestroyGhostPosition(Vector2 pos){
         positionManager.toTile(pos);
-        if (!coreTileData.canBuildHere(positionManager.getTileX(),positionManager.getTileY())){
+        if (coreTileData.canDestroyThis(positionManager.getTileX(),positionManager.getTileY())){
             ghostDestroy.setPosition(positionManager.getPosX(),positionManager.getPosY());
             canDestroy = true;
         }
@@ -74,24 +76,49 @@ public class Factory {
                 Gdx.app.log("Factory", "Building sh*t at posx posy fixme! ");
                 //todo add x y, id >> convert entity
                 Something tavern = deadPool.createSomething(entity);
+                somethingsOnDuty.add(tavern);
+                System.out.println("!!!b"+(somethingsOnDuty.size()-1));
+                tavern.set0Entity(entity);
+                tavern.setIndexID(somethingsOnDuty.size()-1);
                 tavern.set1TexReg(texRegManager);
                 tavern.set2World(worldGroup);
                 tavern.setBorders();
+                tavern.setVisible(true);
                 tavern.setPosition(ghostBuild.getX(),ghostBuild.getY());
                 tavern.setName("Tavern");
-                stopBuildingPhase();
+//                stopBuildingPhase();
+                System.out.println("!pos B ="+positionManager.getTileX()+" / "+positionManager.getTileY());
                 coreTileData.buildingHere(positionManager.getTileX(),positionManager.getTileY());
+                ghostBuild.setPosition(nullVector.x, nullVector.y);
             }
         }
     }
-    public void destroy(Something something, float x , float y){
+    public void destroy(int indexID, float x , float y){
         if (isDestroying){
             if (canDestroy){
-                Gdx.app.log("Factory", "Destroying sh*t at posx posy fixme! "); //todo add x y
-                deadPool.burrySomething(new Something(Entity.Temp));
-//                something.setVisible(false);
-//                something.setPosition(nullVector.x, nullVector.y);
-//                worldGroup.removeActor(something);
+                Gdx.app.log("Factory", "Destroying Something at "+x+"/"+y);
+                Gdx.app.debug("Debug: Factory", "destroy() method *START* ------------"+
+                        " ------------ ------------ ------------ ------------ ------------");
+                Gdx.app.debug("Debug: Factory", "arg indexID="+indexID);
+                Gdx.app.debug("Debug: Factory", "arg x/y="+x+"/"+y);
+                Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty);
+                Gdx.app.debug("Debug: Factory", "");
+                // tear off ... from ...onDuty , and store in DeadPool
+                deadPool.burySomething(somethingsOnDuty.remove(indexID));
+                // iterate threw ...onDuty , to fix shifted ID's
+                for (int i = indexID; i < somethingsOnDuty.size() ; i++) { // -1 ?
+                    Gdx.app.debug("Debug: Factory", "for i="+i);
+                    Gdx.app.debug("Debug: Factory", "for onDutySize="+somethingsOnDuty.size());
+                    Gdx.app.debug("Debug: Factory", "duty ID [BUGGY]="+somethingsOnDuty.get(i).getIndexID());
+                    // shifting ID to right in Actor's container via getIndexID & getIndexID
+                    somethingsOnDuty.get(i).setIndexID(somethingsOnDuty.get(i).getIndexID()-1);
+                    Gdx.app.debug("Debug: Factory", "duty ID [FIXED]="+somethingsOnDuty.get(i).getIndexID());
+                }
+                System.out.println("!pos D ="+positionManager.getTileX()+" / "+positionManager.getTileY());
+                coreTileData.destroyingThis(positionManager.getTileX(),positionManager.getTileY());
+                ghostDestroy.setPosition(nullVector.x,nullVector.y);
+                Gdx.app.debug("Debug: Factory", "destroy() method  *END*  ------------"+
+                        " ------------ ------------ ------------ ------------ ------------");
             }
         }
     }
@@ -103,17 +130,16 @@ public class Factory {
             this.updateDestroyGhostPosition(pos);
         }
     }
-    private void startBuildingPhase(){
-        Gdx.app.log("Factory", "startBuildingPhase");
+    public void startBuildingPhase(){
+        Gdx.app.log("Factory", "start Building Phase");
         isBuilding = true;
         ghostBuild.setVisible(true);
-        worldGroup.setColor(Color.GREEN);
     }
     public void stopBuildingPhase(){
-        Gdx.app.log("Factory", "stopBuildingPhase");
+        Gdx.app.log("Factory", "stop Building Phase");
         isBuilding = false;
         ghostBuild.setVisible(false);
-        ghostBuild.setPosition(-1000,-1000);
+        ghostBuild.setPosition(nullVector.x, nullVector.y);
     }
     public void swapBuildingPhase(){
         if (isBuilding)
@@ -121,24 +147,27 @@ public class Factory {
         else
             startBuildingPhase();
     }
-    public boolean isBuilding(){
-        return isBuilding;
-    }
-    private void startDestroyingPhase(){
-        Gdx.app.log("Factory", "startDestroyingPhase");
+    public void startDestroyingPhase(){
+        Gdx.app.log("Factory", "start Destroying Phase");
         isDestroying = true;
         ghostDestroy.setVisible(true);
     }
     public void stopDestroyingPhase(){
-        Gdx.app.log("Factory", "stopDestroyingPhase");
+        Gdx.app.log("Factory", "stop Destroying Phase");
         isDestroying = false;
         ghostDestroy.setVisible(false);
-        ghostDestroy.setPosition(-1000,-1000);
+        ghostDestroy.setPosition(nullVector.x, nullVector.y);
     }
     public void swapDestroyingPhase(){
         if (isDestroying)
             stopDestroyingPhase();
         else
             startDestroyingPhase();
+    }
+    public boolean isBuilding(){
+        return isBuilding;
+    }
+    public boolean isDestroying(){
+        return isDestroying;
     }
 }

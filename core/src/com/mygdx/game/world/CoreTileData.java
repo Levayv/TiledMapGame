@@ -2,6 +2,7 @@ package com.mygdx.game.world;
 
 class CoreTileData {
     public boolean[][] isOccupied;
+    public boolean[][] isDestructible;
     private boolean buffer;
     private int w;
     private int h;
@@ -9,6 +10,7 @@ class CoreTileData {
         this.w = w;
         this.h = h;
         isOccupied = new boolean[this.w][this.h];
+        isDestructible = new boolean[this.w][this.h];
     }
     public boolean canBuildHere(int x, int y){
         if (x>=0 && y>=0 && x<=w && x<=h){
@@ -20,6 +22,24 @@ class CoreTileData {
     public void buildingHere(int x, int y){
         if (x>=0 && y>=0 && x<=w && x<=h){
             isOccupied[x][y] = true;
+            isDestructible[x][y] = true;
         }
     }
+    public boolean canDestroyThis(int x, int y){
+        if (x>=0 && y>=0 && x<=w && x<=h){
+            buffer = isDestructible[x][y];
+        }else
+            buffer = false;
+        return buffer;
+    }
+    public void destroyingThis(int x, int y){
+        if (x>=0 && y>=0 && x<=w && x<=h){
+            isOccupied[x][y] = false;
+            isDestructible[x][y]= false;
+        }
+    }
+
+
+
+
 }

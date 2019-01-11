@@ -13,8 +13,10 @@ public class Something extends coreActor {
     private Vector2 buffVect2;
     public int borderXdelta;
     private int borderYdelta;
+    private final Vector2 nullVector = new Vector2(-1000,-1000);
 
-//    public Something(TextureRegion texReg) { //todo change constructor , only entity enum must be needed
+
+    //    public Something(TextureRegion texReg) { //todo change constructor , only entity enum must be needed
 //        super(texReg);
 //        border = new Rectangle();
 //        range = new Circle();
@@ -68,10 +70,10 @@ public class Something extends coreActor {
     public void destroy(){
         this.remove();
         this.setVisible(false);
-        texReg = null;
-        border = null;
-        range = null;
-        entity = null;
-
+        this.setPosition(nullVector.x, nullVector.y);
+//        texReg = null;
+//        border = null;
+//        range = null;
+        entity = Entity.None;
     }
 }

@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class DeadPool {
-    // my shitty pool
-    private int graveSize;
     private List<Something> graveOfSomething;
-    DeadPool(int graveSize){
-        this.graveSize = graveSize;
+    DeadPool(){
         graveOfSomething = new ArrayList<Something>();
     }
     public Something createSomething(Entity entity){
@@ -26,8 +23,9 @@ class DeadPool {
             return graveOfSomething.remove(graveOfSomething.size()-1);
         }
     }
-    public void burrySomething(Something something){
+    public void burySomething(Something something){
         Gdx.app.log("DeadPool", "burying Something, total:"+(graveOfSomething.size()+1));
+        something.destroy();
         graveOfSomething.add(something);
     }
 }

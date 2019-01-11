@@ -164,7 +164,9 @@ public class WorldManager {
         spawner.setPosition(objX[0],objY[0]);
 //        spawner.create(world);
 
-
+        // Factory init and build
+        factory = new Factory(world, texRegManager, animManager,
+                tileSize,mapWidth,mapHeight);
 
         tree1  = new Something(Entity.Tree  );
         tree2  = new Something(Entity.Stone );
@@ -288,8 +290,7 @@ public class WorldManager {
         boomE.setLoop(false);
 
         // init factory
-        factory = new Factory(world, texRegManager, animManager,
-                tileSize,mapWidth,mapHeight);
+
     }
 
     private void setPosition(Actor actor , int x, int y){ // todo usage ?

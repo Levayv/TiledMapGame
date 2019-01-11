@@ -203,6 +203,8 @@ public class GameScreen implements Screen {
     }
     private void testing() {
         System.out.println("Testing LINE START");
+        System.out.println("!"+worldManager.world.getChildren().size);
+
 //        for (int i = 0; i < 3; i++) {
 //            for (int j = 0; j < 3; j++) {
 //                worldManager.chunks[i][j].setName("CHUNK" + i + "" +j);
@@ -229,7 +231,7 @@ public class GameScreen implements Screen {
 //        System.out.println("o1.x="+list.get(0).x);
 //        list.remove(o1);
 //        System.out.println("o1.x="+list.get(0).x);
-//        System.out.println("Testing LINE END");
+        System.out.println("Testing LINE END");
     }
 
     void animationCreate(){
@@ -273,7 +275,6 @@ public class GameScreen implements Screen {
 
             lastHitActor   = stage  .hit(stagePos1.x,stagePos1.y,true);
             lastHitUIActor = stageUI.hit(stagePos2.x,stagePos2.y,true);
-
             if (lastHitUIActor==null){ // no hit on stageUI
                 worldManager.factory.build(Entity.Temp,stagePos1.x,stagePos1.y);
                 if (lastHitActor!=null){ // no hit on stageUI, hit on stage
@@ -289,9 +290,11 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getEntityID());
                         System.out.print(" EntityName=");
                         System.out.print(lastHitSomething.getEntityName());
+                        System.out.print(" IndexID=");
+                        System.out.print(lastHitSomething.getIndexID());
                         System.out.println();
                         //todo builder/destroyer integration
-                        worldManager.factory.destroy(lastHitSomething,stagePos1.x,stagePos1.y);
+                        worldManager.factory.destroy(lastHitSomething.getIndexID(),stagePos1.x,stagePos1.y);
                     }else {
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");
@@ -392,8 +395,9 @@ public class GameScreen implements Screen {
             // todo open close menu
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
-//            stage.getBatch().setColor(Color.BLUE);
 
+            Something s1 = worldManager.tree1;
+            Something s2 = worldManager.tree1;
 
             // Some action test todo remove ALL OF THIS later
             // todo try toggling AnimatedSomething animation
@@ -510,10 +514,14 @@ public class GameScreen implements Screen {
         tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
         tiledMapRenderer.render();
         stage.act(delta);
-        if (worldManager.factory.isBuilding())
-            stage.getBatch().setColor(Color.BLUE);
-        else
+        if (worldManager.factory.isBuilding()||worldManager.factory.isDestroying()){
+            if (worldManager.factory.isBuilding())
+                stage.getBatch().setColor(Color.GREEN);
+            if (worldManager.factory.isDestroying())
+                stage.getBatch().setColor(Color.RED);
+        }else {
             stage.getBatch().setColor(Color.WHITE);
+        }
         stage.draw();
         stageUI.act(delta);
         stageUI.draw();

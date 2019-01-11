@@ -81,6 +81,8 @@ public class GameScreen implements Screen {
     private Vector2 stagePos2 = new Vector2();
     private int lastInputX;
     private int lastInputY;
+    private int lastInputTileX;
+    private int lastInputTileY;
 
     // Save Load
     private FileHandle saveLoadFile;
@@ -182,9 +184,9 @@ public class GameScreen implements Screen {
         //Colider init
         colCheck = new Collider(3);
         colCheck.add(player.getBorder());
-        colCheck.add(worldManager.tree1. getBorder());
-        colCheck.add(worldManager.tree2. getBorder());
-        colCheck.add(worldManager.tree3. getBorder());
+        colCheck.add(worldManager.tree1.getBorder());
+        colCheck.add(worldManager.tree2.getBorder());
+        colCheck.add(worldManager.tree3.getBorder());
 
         // UI init
         ui = new GraphicalUserInterface(stageUI,worldManager);
@@ -237,7 +239,11 @@ public class GameScreen implements Screen {
         screenPos2.set(Gdx.input.getX(), Gdx.input.getY());
         stagePos1 =   stage.screenToStageCoordinates(screenPos1);
         stagePos2 = stageUI.screenToStageCoordinates(screenPos2);
-        worldManager.factory.update(stagePos1.x,stagePos1.y);
+        worldManager.factory.update(stagePos1);
+        // worldManager.posManager testing
+        //worldManager.posManager.convertPointerToTile(stagePos1);
+        //lastInputTileX = worldManager.posManager.getTileX();
+        //lastInputTileY = worldManager.posManager.getTileY();
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         // process user input ------------------------------------------
@@ -507,10 +513,12 @@ public class GameScreen implements Screen {
             game.font.draw(game.batch, "Player Coordinates: "
                             + (int) player.getX() + ":" + (int) player.getY() ,
                     stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-20);
-            game.font.draw(game.batch, "Camera Coordinates: "
-                            + (int) stageUI.getCamera().position.x + ":" + (int) stageUI.getCamera().position.y ,
+            game.font.draw(game.batch, "Mouse Coordinates: "
+                            + stagePos1.x + ":" + stagePos1.y + " / " + lastInputTileX + ":" + lastInputTileY,
                     stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-40);
-//            animationRender();
+//            game.font.draw(game.batch, "Camera Coordinates: "
+//                            + (int) stageUI.getCamera().position.x + ":" + (int) stageUI.getCamera().position.y ,
+//                    stageUI.getCamera().position.x-screen_width/2, stageUI.getCamera().position.y+screen_height/2-40);
             game.batch.end();
 
             ShapeRenderer shape = new ShapeRenderer();

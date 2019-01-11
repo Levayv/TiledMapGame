@@ -31,6 +31,7 @@ public class WorldManager {
     private Grid grid;
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
+    public WorldPositionManager posManager;
 
     private Pos lastPos;
     public Group world;
@@ -131,9 +132,6 @@ public class WorldManager {
 
         TextureRegion texRegTree; //todo wtf is this ?
 
-        // Texture Handler
-        texRegManager = buffer1;
-        animManager   = buffer2;
 
 
         // load map , get props
@@ -142,6 +140,10 @@ public class WorldManager {
         mapWidth = prop.get("width", Integer.class);
         mapHeight = prop.get("height", Integer.class);
         tileSize = prop.get("tilewidth", Integer.class);
+        // Texture Handler, helper classes
+        texRegManager = buffer1;
+        animManager   = buffer2;
+        posManager = new WorldPositionManager(tileSize);
         // Grid init
         grid = new Grid(mapWidth , mapHeight);
 
@@ -286,7 +288,8 @@ public class WorldManager {
         boomE.setLoop(false);
 
         // init factory
-        factory = new Factory(world, texRegManager, animManager);
+        factory = new Factory(world, texRegManager, animManager,
+                tileSize,mapWidth,mapHeight);
     }
 
     private void setPosition(Actor actor , int x, int y){ // todo usage ?

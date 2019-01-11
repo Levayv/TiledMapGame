@@ -3,6 +3,7 @@ package com.mygdx.game.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -97,11 +98,12 @@ public class GraphicalUserInterface {
             dispatcher.addListener(worldManager.doorss[i] , BasicEvents.OPEN.getID());
             dispatcher.addListener(worldManager.doorss[i] , BasicEvents.CLOSE.getID());
         }
-        for (int i = 1; i < size; i++) {
+        for (int i = 2; i < size; i++) {
             buttons[i].addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                    Gdx.app.log("GUI","Button "+event.getListenerActor().getName()+" pressed");
+                    Gdx.app.log("GUI","Button "+
+                            event.getListenerActor().getName()+" pressed");
                     return true;
                 }
             });
@@ -110,7 +112,17 @@ public class GraphicalUserInterface {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 worldManager.factory.swapBuildingPhase();
-                Gdx.app.log("GraphicalUserInterface", "worldManager.factory.swapBuildingPhase()");
+//                if (worldManager.factory.isBuilding()) //todo add reverse color change mechanism
+//                    buttons[0].setColor(Color.GREEN);
+//                else
+//                    buttons[0].setColor(Color.WHITE);
+                return true;
+            }
+        });
+        buttons[1].addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                worldManager.factory.swapDestroyingPhase();
                 return true;
             }
         });

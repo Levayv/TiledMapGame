@@ -9,7 +9,8 @@ public enum Entity {
     Stone(12),
     Ore(13),
     Door(14),
-    Ghost(15),
+    Ghost1(15),
+    Ghost2(16),
     Temp(66);
 
     int id;

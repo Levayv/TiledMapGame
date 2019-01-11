@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -21,6 +23,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -112,7 +115,8 @@ public class GameScreen implements Screen {
         TextureRegion texRegTower   = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
         TextureRegion texRegLever   = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
         TextureRegion texRegTemp32  = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
-        TextureRegion texRegGhost  = new TextureRegion(new Texture(Gdx.files.internal("ghost.png")));
+        TextureRegion texRegGhost1  = new TextureRegion(new Texture(Gdx.files.internal("ghost1.png")));
+        TextureRegion texRegGhost2  = new TextureRegion(new Texture(Gdx.files.internal("ghost2.png")));
 //        TextureRegion texRegDoor0  = new TextureRegion(new Texture(Gdx.files.internal("door0.png")));
 //        TextureRegion texRegDoor1  = new TextureRegion(new Texture(Gdx.files.internal("door1.png")));
         Texture texAnimPumpkin      = new Texture(Gdx.files.internal("animation/pumpkin.png"));
@@ -130,7 +134,8 @@ public class GameScreen implements Screen {
         buffer1.addTexReg(Entity.Tower,texRegTower);
         buffer1.addTexReg(Entity.Temp,texRegTemp32);
         buffer1.addTexReg(Entity.Player,texRegPlayer);
-        buffer1.addTexReg(Entity.Ghost,texRegGhost);
+        buffer1.addTexReg(Entity.Ghost1,texRegGhost1);
+        buffer1.addTexReg(Entity.Ghost2,texRegGhost2);
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,44);
@@ -194,7 +199,7 @@ public class GameScreen implements Screen {
         //animation
         animationCreate();
 
-//        testing();
+        testing();
     }
     private void testing() {
         System.out.println("Testing LINE START");
@@ -213,7 +218,18 @@ public class GameScreen implements Screen {
 //        System.out.println(tree3.getName() + " " + tree1.getZIndex());
 //        System.out.println(player.getName() + " " + tree1.getZIndex());
 
-        System.out.println("Testing LINE END");
+//        Obj o1 = new Obj();
+//        Obj o2 = new Obj();
+//        Obj o3 = new Obj();
+//        o1.x = 1;
+//        o2.x = 2;
+//        o3.x = 3;
+//        List<Obj> list = new ArrayList<Obj>();
+//        list.add(o1);
+//        System.out.println("o1.x="+list.get(0).x);
+//        list.remove(o1);
+//        System.out.println("o1.x="+list.get(0).x);
+//        System.out.println("Testing LINE END");
     }
 
     void animationCreate(){
@@ -232,6 +248,7 @@ public class GameScreen implements Screen {
         for (int i = 0; i < worldManager.mobCount; i++) {
             worldManager.doorss[i].update();
         }
+
         //todo builder/destroyer integration
         lastInputX = Gdx.input.getX();
         lastInputY = Gdx.input.getX();
@@ -246,7 +263,6 @@ public class GameScreen implements Screen {
         //lastInputTileY = worldManager.posManager.getTileY();
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
-        // process user input ------------------------------------------
         if (Gdx.input.justTouched()) {
 //            Vector2 screenPos1 = new Vector2(); // todo vector init each click wrong
 //            Vector2 screenPos2 = new Vector2(); // todo vector init each click wrong
@@ -258,14 +274,14 @@ public class GameScreen implements Screen {
             lastHitActor   = stage  .hit(stagePos1.x,stagePos1.y,true);
             lastHitUIActor = stageUI.hit(stagePos2.x,stagePos2.y,true);
 
-            if (lastHitUIActor!=null){ // hit on stageUI
-                // gui must handle this events
-            }else{ // no hit on stageUI
+            if (lastHitUIActor==null){ // no hit on stageUI
+                worldManager.factory.build(Entity.Temp,stagePos1.x,stagePos1.y);
                 if (lastHitActor!=null){ // no hit on stageUI, hit on stage
-                    if (lastHitActor.getClass() == Something.class || //todo check and remove IF
-                            lastHitActor.getClass() == Player.class ||
-                            lastHitActor.getClass() == Spawner.class ||
-                            lastHitActor.getClass() == Something.class ){
+                    if (lastHitActor.getClass() == Something.class //todo check and remove IF
+//                            || lastHitActor.getClass() == Player.class
+//                            || lastHitActor.getClass() == Spawner.class
+//                            || lastHitActor.getClass() == Something.class
+                            ){
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");
                         System.out.print(lastHitSomething.getName());
@@ -275,8 +291,7 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getEntityName());
                         System.out.println();
                         //todo builder/destroyer integration
-//                        lastHitSomething.destroy();
-
+                        worldManager.factory.destroy(lastHitSomething,stagePos1.x,stagePos1.y);
                     }else {
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");
@@ -289,8 +304,10 @@ public class GameScreen implements Screen {
                     }
                 }else { // no hit on stageUI, no hit on stage
                     System.out.println("Hit: Void");
-                    worldManager.factory.build(1,stagePos1.x,stagePos1.y);
                 }
+            }else{
+//                worldManager.factory.stopBuildingPhase();
+//                worldManager.factory.stopDestroyingPhase();
             }
             lastHitActor   = null;
             lastHitUIActor = null;
@@ -375,6 +392,9 @@ public class GameScreen implements Screen {
             // todo open close menu
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
+//            stage.getBatch().setColor(Color.BLUE);
+
+
             // Some action test todo remove ALL OF THIS later
             // todo try toggling AnimatedSomething animation
 //            worldManager.door2.setName("exp");
@@ -411,7 +431,7 @@ public class GameScreen implements Screen {
 //            MessageDispatcher mDispetcher = new MessageDispatcher();
 //            mDispetcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
 //            mDispetcher.dispatchMessage(BasicEvents.CLOSE.getID());
-
+//            worldManager.factory.ghost.setColor(Color.RED);
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
             // Some action test todo remove this later
@@ -490,6 +510,10 @@ public class GameScreen implements Screen {
         tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
         tiledMapRenderer.render();
         stage.act(delta);
+        if (worldManager.factory.isBuilding())
+            stage.getBatch().setColor(Color.BLUE);
+        else
+            stage.getBatch().setColor(Color.WHITE);
         stage.draw();
         stageUI.act(delta);
         stageUI.draw();

@@ -32,8 +32,8 @@ public class coreActor extends Actor {
     }
     @Override
     public void draw (Batch batch, float parentAlpha) {
-        color = getColor();
-        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+//        color = getColor();
+//        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
         batch.draw(texReg, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }

@@ -3,16 +3,18 @@ package com.mygdx.game.ants.something.a;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.ants.a.JsonSerialization;
 import com.mygdx.game.ants.a.coreActor;
 import com.mygdx.game.enums.entity.Entity;
 
-public class Something extends coreActor {
+public class Something extends coreActor{
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object ?
     private Circle range;
     private Vector2 buffVect2;
     public int borderXdelta;
     private int borderYdelta;
+    private SomethingData data;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
 
 
@@ -77,4 +79,7 @@ public class Something extends coreActor {
         entity = Entity.None;
         set3IndexID(-1);
     }
+//    public void setData(SomethingData data) {
+//        this.data = data;
+//    }
 }

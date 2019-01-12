@@ -37,15 +37,30 @@ public class MainMenuScreen implements Screen {
         game.batch.begin();
         game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
         game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
+        game.font.draw(game.batch, "Log Level:"+Gdx.app.getLogLevel(), 100, 50);
         game.batch.end();
 
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.justTouched()) {
             game.setScreen(new GameScreen(game));
             dispose();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             game.setScreen(new GameScreen(game));
             dispose();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F4)) {
+            if (Gdx.app.getLogLevel() == 0){
+                Gdx.app.setLogLevel(2);
+            }else{
+                if (Gdx.app.getLogLevel() == 2){
+                    Gdx.app.setLogLevel(3);
+                }else {
+                    if (Gdx.app.getLogLevel() == 3){
+                        Gdx.app.setLogLevel(0);
+                    }
+                }
+            }
+
         }
     }
 

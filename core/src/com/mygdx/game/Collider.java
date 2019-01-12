@@ -46,7 +46,7 @@ public class Collider {
         upLock    = upLockFinal    = false; // unlock all dir moves
         downLock  = downLockFinal  = false; // unlock all dir moves
 
-        if (false){
+        if (true){
             for (int i = 1; i < max + 1; i++) {
                 if (rectangles[0].overlaps(rectangles[i])) {
                     intersection = new Rectangle();

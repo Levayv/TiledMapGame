@@ -11,9 +11,8 @@ import com.mygdx.game.enums.entity.Entity;
 public class coreActor extends Actor {
     public TextureRegion texReg;
     private Color color;
-    private Data data = new Data();
+    private InternalActorData data = new InternalActorData();
     protected Entity entity;
-    protected boolean collision;
 
 
 //    public coreActor (TextureRegion texReg) {
@@ -53,15 +52,18 @@ public class coreActor extends Actor {
         data.indexID = indexID;
     }
     public int getIndexID() {
-        return ((Data)getUserObject()).indexID;
+        return ((InternalActorData)getUserObject()).indexID;
     }
 
 
-    public boolean getColision() {
-        return collision;
-    }
 
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
+//    public boolean getColision() {
+//        return collision;
+//    }
+//
+//    public void setCollision(boolean collision) {
+//        this.collision = collision;
+//    }
+
+
 }

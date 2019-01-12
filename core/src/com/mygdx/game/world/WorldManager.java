@@ -16,13 +16,14 @@ import com.mygdx.game.Collider;
 import com.mygdx.game.Grid;
 import com.mygdx.game.Pos;
 import com.mygdx.game.Spawner;
+import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.NonPlayableCharacter;
 import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
 import com.mygdx.game.enums.entity.Entity;
 import com.mygdx.game.enums.entity.EntityAnimation;
-import com.mygdx.game.enums.entity.myJson;
+import com.mygdx.game.enums.entity.jsonDataLoaderForEntities;
 
 public class WorldManager {
     // WorldManager's knowledge about grid
@@ -36,7 +37,7 @@ public class WorldManager {
     private WorldResAnimManager animManager;
     public WorldPositionManager posManager;
     private Collider collider;
-
+    private AllData allData;
     private Pos lastPos;
     public Group world;
 
@@ -171,8 +172,13 @@ public class WorldManager {
         spawner.setPosition(objX[0],objY[0]);
 //        spawner.create(world);
 
+        // Read Game Object Data from File //todo also texture and animation
+        jsonDataLoaderForEntities jsonLoader = new jsonDataLoaderForEntities();
+        allData = jsonLoader.getAllData();
+        System.out.println("!"+allData.getSomethingDataByIndex(4).entityName);
+
         // Factory init and build
-        factory = new Factory(world, texRegManager, animManager,
+        factory = new Factory(world, texRegManager, animManager, allData,
                 tileSize,mapWidth,mapHeight);
         Vector2 pos = new Vector2();
         factory.buildOnEvent(Entity.Tree,  pos.set( 9*tileSize , 3*tileSize ));
@@ -180,7 +186,14 @@ public class WorldManager {
         factory.buildOnEvent(Entity.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         //todo how to manipulate objects ?
 
-        myJson o = new myJson();
+//          add colliders
+
+
+        collider.add(factory.somethingsOnDuty.get(0).getBorder());
+        collider.add(factory.somethingsOnDuty.get(1).getBorder());
+        collider.add(factory.somethingsOnDuty.get(2).getBorder());
+
+
 
 
 
@@ -307,11 +320,7 @@ public class WorldManager {
 
 
 
-        // add colliders
 
-//        collider.add(tree1.getBorder());
-//        collider.add(tree2.getBorder());
-//        collider.add(tree3.getBorder());
     }
 
     private void setPosition(Actor actor , int x, int y){ // todo usage ?

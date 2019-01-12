@@ -4,10 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class WorldPositionManager {
     private int tileSize; // set only once
-    private int tileX;
-    private int tileY;
-    private int posX;
-    private int posY;
+    private int tileX; // for arrays[][]
+    private int tileY; // for arrays[][]
+    private int posX;  // for tile՛s texReg left bottom corner
+    private int posY;  // for tile՛s texReg left bottom corner
     private int buffer;
     private int count;
     private Vector2 bufferVector = new Vector2();
@@ -16,7 +16,7 @@ public class WorldPositionManager {
         this.tileSize = tileSize;
     }
 
-    private void convertVectorToTile(Vector2 pos){
+    private void convertVectorToTile(Vector2 pos){ // during render
         posX = (int) pos.x;
         posY = (int) pos.y;
         if (posX>=0 && posY>=0){
@@ -48,7 +48,7 @@ public class WorldPositionManager {
 //        pos.x = x * 32;
 //        pos.y = y * 32;
 //    }
-    public void update(Vector2 pos){ //
+    public void update(Vector2 pos){ // during render
         convertVectorToTile(pos);
         if (posX>0)
             posX = tileX*32;

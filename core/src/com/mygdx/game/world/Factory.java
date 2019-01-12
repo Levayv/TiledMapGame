@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.entity.Entity;
 
@@ -24,7 +25,8 @@ public class Factory {
     private Group worldGroup;
     private WorldPositionManager posManager;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
-    private List<Something> somethingsOnDuty;
+    public List<Something> somethingsOnDuty; //todo make private
+    private AllData allData;
     // for debug only
     private int x;
     private int y;
@@ -32,12 +34,15 @@ public class Factory {
     Factory (Group worldGroup,
              WorldResTexRegManager texRegManager,
              WorldResAnimManager animManager,
+             AllData allData,
              int tileSize,
              int mapWidth,
              int mapHeight){
         this.worldGroup = worldGroup;
         this.texRegManager = texRegManager;
         this.animManager = animManager;
+        this.allData = allData;
+        // init 2 ghosts for build and destroy
         ghostBuild = new Something(Entity.Ghost1);
         ghostBuild.set1TexReg(texRegManager);
         ghostBuild.set2World(worldGroup);
@@ -52,9 +57,12 @@ public class Factory {
         ghostDestroy.setPosition(nullVector.x, nullVector.y);
         ghostDestroy.setTouchable(Touchable.disabled);
         ghostDestroy.setVisible(false);
+        // position helpers , actual to tile[i][j] and tile corner
         posManager = new WorldPositionManager(tileSize);
         coreTileData = new CoreTileData(mapWidth,mapHeight);
+        // destroyed entities goes to DeadPool
         deadPool = new DeadPool();
+        // active entities goes onDuty
         somethingsOnDuty = new ArrayList<Something>();
     }
     // Building / Destroying
@@ -84,7 +92,7 @@ public class Factory {
         this.isDestroying = false;
         this.canDestroy = false;
     }
-    private void build(Entity entity){ //todo event based
+    private void build(Entity entity){
         if (isBuilding){
             if (canBuild){
                 // worldGroup.swapActor()
@@ -152,12 +160,12 @@ public class Factory {
     }
     // Building / Destroying Phase changes
     public void startBuildingPhase(){
-        Gdx.app.log("Factory", "start Building Phase");
+        Gdx.app.debug("Factory", "start Building Phase");
         isBuilding = true;
         ghostBuild.setVisible(true);
     }
     public void stopBuildingPhase(){
-        Gdx.app.log("Factory", "stop Building Phase");
+        Gdx.app.debug("Factory", "stop Building Phase");
         isBuilding = false;
         ghostBuild.setVisible(false);
         ghostBuild.setPosition(nullVector.x, nullVector.y);
@@ -169,12 +177,12 @@ public class Factory {
             startBuildingPhase();
     }
     public void startDestroyingPhase(){
-        Gdx.app.log("Factory", "start Destroying Phase");
+        Gdx.app.debug("Factory", "start Destroying Phase");
         isDestroying = true;
         ghostDestroy.setVisible(true);
     }
     public void stopDestroyingPhase(){
-        Gdx.app.log("Factory", "stop Destroying Phase");
+        Gdx.app.debug("Factory", "stop Destroying Phase");
         isDestroying = false;
         ghostDestroy.setVisible(false);
         ghostDestroy.setPosition(nullVector.x, nullVector.y);

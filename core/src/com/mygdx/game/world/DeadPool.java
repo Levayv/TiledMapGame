@@ -14,16 +14,16 @@ class DeadPool {
     }
     public Something createSomething(Entity entity){
         if (graveOfSomething.size()==0){
-            Gdx.app.log("DeadPool", "no dead Something left");
+            Gdx.app.debug("DeadPool", "no dead Something left");
             graveOfSomething.add(new Something(entity));
             return graveOfSomething.remove(0);
         }else {
-            Gdx.app.log("DeadPool", "reviving Something, left:"+ graveOfSomething.size());
+            Gdx.app.debug("DeadPool", "reviving Something, left:"+ graveOfSomething.size());
             return graveOfSomething.remove(graveOfSomething.size()-1);
         }
     }
     public void burySomething(Something something){
-        Gdx.app.log("DeadPool", "burying Something, total:"+(graveOfSomething.size()+1));
+        Gdx.app.debug("DeadPool", "burying Something, total:"+(graveOfSomething.size()+1));
         something.destroy();
         graveOfSomething.add(something);
     }

@@ -1,9 +1,8 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.Gdx;
-import com.mygdx.game.ants.a.coreActor;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

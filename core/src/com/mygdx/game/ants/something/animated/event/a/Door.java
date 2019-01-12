@@ -7,8 +7,8 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.mygdx.game.world.WorldResAnimManager;
-import com.mygdx.game.enums.Entity;
-import com.mygdx.game.enums.EntityAnimation;
+import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityAnimation;
 
 public class Door extends AnimatedEventSomething implements Telegraph {
     StateMachine<Door, DoorState> stateMachine;

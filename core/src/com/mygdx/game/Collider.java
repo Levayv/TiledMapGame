@@ -26,7 +26,7 @@ public class Collider {
 
     }
 
-    void add(Rectangle newRect) {
+    public void add(Rectangle newRect) {
 //        System.out.println(newRect.getX());
 //        System.out.println(newRect.getY());
 //        System.out.println(newRect.getWidth());
@@ -45,10 +45,12 @@ public class Collider {
         rightLock = rightLockFinal = false; // unlock all dir moves
         upLock    = upLockFinal    = false; // unlock all dir moves
         downLock  = downLockFinal  = false; // unlock all dir moves
-        for (int i = 1; i < max + 1; i++) {
-            if (rectangles[0].overlaps(rectangles[i])) {
-                intersection = new Rectangle();
-                Intersector.intersectRectangles(rectangles[0], rectangles[i], intersection);
+
+        if (false){
+            for (int i = 1; i < max + 1; i++) {
+                if (rectangles[0].overlaps(rectangles[i])) {
+                    intersection = new Rectangle();
+                    Intersector.intersectRectangles(rectangles[0], rectangles[i], intersection);
 //System.out.println("tree X" + i + " = " + rectangles[i].getX());
 //System.out.println("tree Y" + i + " = " + rectangles[i].getY());
 //System.out.println("tree W" + i + " = " + rectangles[i].getWidth());
@@ -62,63 +64,65 @@ public class Collider {
 //System.out.println("inter" + 7 + " = " + intersection.getWidth());
 //System.out.println("inter" + 7 + " = " + intersection.getHeight());
 //System.out.println("overlaps"+rectangles[i].x+"-"+rectangles[i].y);
-                if (intersection.x > rectangles[0].x) {
-                    rightLock = true;
-                }
-                if (intersection.y > rectangles[0].y) {
-                    upLock = true;
-                }
-                if (intersection.x + intersection.width < rectangles[0].x + rectangles[0].width) {
-                    leftLock = true;
-                }
-                if (intersection.y + intersection.height < rectangles[0].y + rectangles[0].height) {
-                    downLock = true;
-
-                }
-                if (intersection.width < 1 || intersection.height < 1)
-                    leftLock = rightLock = upLock = downLock = false;
-
-                if (intersection.width > intersection.height) {
-                    leftLock = false;
-                    rightLock = false;
-                } else {
-                    upLock = false;
-                    downLock = false;
-                }
-                // correct over border collision cases & limit speed
-                if (leftLock){
-                    if (intersection.height >= 1){
-                        player.setX(player.getX()+intersection.width-1);
-                        player.moveSpeedL = 50;
+                    if (intersection.x > rectangles[0].x) {
+                        rightLock = true;
                     }
-                }
-                if (rightLock){
-                    if (intersection.height >= 1){
-                        player.setX(player.getX()-intersection.width+1);
-                        player.moveSpeedR = 50;
+                    if (intersection.y > rectangles[0].y) {
+                        upLock = true;
                     }
-                }
-                if (upLock){
-                    if (intersection.height >= 1){
-                        player.setY(player.getY()-intersection.height+1);
-                        player.moveSpeedU = 50;
+                    if (intersection.x + intersection.width < rectangles[0].x + rectangles[0].width) {
+                        leftLock = true;
                     }
-                }
-                if (downLock){
-                    if (intersection.height >= 1){
-                        player.setY(player.getY()+intersection.height-1);
-                        player.moveSpeedD = 50;
+                    if (intersection.y + intersection.height < rectangles[0].y + rectangles[0].height) {
+                        downLock = true;
+
                     }
-                }
-                leftLockFinal  = leftLock  || leftLockFinal  ;
-                rightLockFinal = rightLock || rightLockFinal ;
-                upLockFinal    = upLock    || upLockFinal    ;
-                downLockFinal  = downLock  || downLockFinal  ;
+                    if (intersection.width < 1 || intersection.height < 1)
+                        leftLock = rightLock = upLock = downLock = false;
+
+                    if (intersection.width > intersection.height) {
+                        leftLock = false;
+                        rightLock = false;
+                    } else {
+                        upLock = false;
+                        downLock = false;
+                    }
+                    // correct over border collision cases & limit speed
+                    if (leftLock){
+                        if (intersection.height >= 1){
+                            player.setX(player.getX()+intersection.width-1);
+                            player.moveSpeedL = 50;
+                        }
+                    }
+                    if (rightLock){
+                        if (intersection.height >= 1){
+                            player.setX(player.getX()-intersection.width+1);
+                            player.moveSpeedR = 50;
+                        }
+                    }
+                    if (upLock){
+                        if (intersection.height >= 1){
+                            player.setY(player.getY()-intersection.height+1);
+                            player.moveSpeedU = 50;
+                        }
+                    }
+                    if (downLock){
+                        if (intersection.height >= 1){
+                            player.setY(player.getY()+intersection.height-1);
+                            player.moveSpeedD = 50;
+                        }
+                    }
+                    leftLockFinal  = leftLock  || leftLockFinal  ;
+                    rightLockFinal = rightLock || rightLockFinal ;
+                    upLockFinal    = upLock    || upLockFinal    ;
+                    downLockFinal  = downLock  || downLockFinal  ;
 
 
 
+                }
             }
         }
+
         player.setLeftLock(leftLockFinal   ) ;
         player.setRightLock(rightLockFinal  ) ;
         player.setUpLock(upLockFinal     ) ;

@@ -19,7 +19,7 @@ public class MyGdxGame extends Game {
     }
 
     public void render() {
-        super.render(); //important!
+        super.render(); //important! passing delta time as arg
     }
 
     public void dispose() {

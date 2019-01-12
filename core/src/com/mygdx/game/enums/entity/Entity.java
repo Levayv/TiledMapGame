@@ -1,4 +1,4 @@
-package com.mygdx.game.enums;
+package com.mygdx.game.enums.entity;
 
 public enum Entity {
     None(0),

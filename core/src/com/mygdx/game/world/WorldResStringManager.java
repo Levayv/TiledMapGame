@@ -1,6 +1,6 @@
 package com.mygdx.game.world;
 
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.entity.Entity;
 
 public class WorldResStringManager { //todo integrate [unused class]
     private String[] strings;

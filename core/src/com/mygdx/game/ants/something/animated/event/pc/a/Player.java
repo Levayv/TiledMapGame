@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.enums.DirConst4;
-import com.mygdx.game.enums.Entity;
-import com.mygdx.game.enums.EntityAnimation;
+import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityAnimation;
 
 
 public class Player extends PlayableCharacter { // todo future refactor to main player or ?

@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Collider;
 import com.mygdx.game.Grid;
 import com.mygdx.game.Pos;
 import com.mygdx.game.Spawner;
@@ -18,8 +19,8 @@ import com.mygdx.game.ants.something.animated.event.npc.a.NonPlayableCharacter;
 import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
-import com.mygdx.game.enums.Entity;
-import com.mygdx.game.enums.EntityAnimation;
+import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityAnimation;
 
 public class WorldManager {
     // WorldManager's knowledge about grid
@@ -32,13 +33,14 @@ public class WorldManager {
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
     public WorldPositionManager posManager;
+    private Collider collider;
 
     private Pos lastPos;
     public Group world;
 
-    public Something tree1;
-    public Something tree2;
-    public Something tree3;
+//    public Something tree1;
+//    public Something tree2;
+//    public Something tree3;
     public Something tower1;
     public Something tower2;
     public Something tower3;
@@ -124,9 +126,11 @@ public class WorldManager {
         }
     }
     public WorldManager(Stage stage,
-                 WorldResTexRegManager buffer1,
-                 WorldResAnimManager buffer2,
-                 TextureRegion texRegLever){
+                        WorldResTexRegManager buffer1,
+                        WorldResAnimManager buffer2,
+                        TextureRegion texRegLever,
+                        Collider buffer3
+    ){
         world = new Group();
         stage.addActor(world);
 
@@ -144,6 +148,7 @@ public class WorldManager {
         texRegManager = buffer1;
         animManager   = buffer2;
         posManager = new WorldPositionManager(tileSize);
+        collider = buffer3;
         // Grid init
         grid = new Grid(mapWidth , mapHeight);
 
@@ -167,10 +172,17 @@ public class WorldManager {
         // Factory init and build
         factory = new Factory(world, texRegManager, animManager,
                 tileSize,mapWidth,mapHeight);
+        factory.buildOnEvent(Entity.Tree,   9 *tileSize,3 *tileSize);
+        factory.buildOnEvent(Entity.Stone,  3 *tileSize,6 *tileSize);
+        factory.buildOnEvent(Entity.Ore,    6 *tileSize,6 *tileSize);
+        //todo how to manipulate objects ?
 
-        tree1  = new Something(Entity.Tree  );
-        tree2  = new Something(Entity.Stone );
-        tree3  = new Something(Entity.Ore   );
+
+
+
+//        tree1  = new Something(Entity.Tree  );
+//        tree2  = new Something(Entity.Stone );
+//        tree3  = new Something(Entity.Ore   );
         lever  = new Something(Entity.Temp  );
         door1  = new Door(Entity.Temp, EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
@@ -184,9 +196,9 @@ public class WorldManager {
         tower2 = new Something(Entity.Tower);
         tower3 = new Something(Entity.Tower);
 
-        tree1.set1TexReg(texRegManager);
-        tree2.set1TexReg(texRegManager);
-        tree3.set1TexReg(texRegManager);
+//        tree1.set1TexReg(texRegManager);
+//        tree2.set1TexReg(texRegManager);
+//        tree3.set1TexReg(texRegManager);
         lever.set1TexReg(texRegManager);
         tower1.set1TexReg(texRegManager);
         tower2.set1TexReg(texRegManager);
@@ -194,9 +206,9 @@ public class WorldManager {
         door1.set1TexReg(texRegManager);
         boomE.set1TexReg(texRegManager);
 
-        tree1.set2World(world);
-        tree2.set2World(world);
-        tree3.set2World(world);
+//        tree1.set2World(world);
+//        tree2.set2World(world);
+//        tree3.set2World(world);
         lever.set2World(world);
         tower1.set2World(world);
         tower2.set2World(world);
@@ -204,9 +216,9 @@ public class WorldManager {
         door1.set2World(world);
         boomE.set2World(world);
 
-        tree1.setBorders();
-        tree2.setBorders();
-        tree3.setBorders();
+//        tree1.setBorders();
+//        tree2.setBorders();
+//        tree3.setBorders();
         lever.setBorders();
         door1.setBorders();
         boomE.setBorders();
@@ -277,9 +289,9 @@ public class WorldManager {
 
         // grl
 
-        tree1.setPosition(9 *tileSize,3 *tileSize);
-        tree2.setPosition(3 *tileSize,6 *tileSize);
-        tree3.setPosition(6 *tileSize,6 *tileSize);
+//        tree1.setPosition(9 *tileSize,3 *tileSize);
+//        tree2.setPosition(3 *tileSize,6 *tileSize);
+//        tree3.setPosition(6 *tileSize,6 *tileSize);
         lever.setPosition(12*tileSize,9 *tileSize);
         door1.setPosition(12*tileSize,12*tileSize);
         boomE.setPosition(15*tileSize,12*tileSize);
@@ -289,8 +301,13 @@ public class WorldManager {
 
         boomE.setLoop(false);
 
-        // init factory
 
+
+        // add colliders
+
+//        collider.add(tree1.getBorder());
+//        collider.add(tree2.getBorder());
+//        collider.add(tree3.getBorder());
     }
 
     private void setPosition(Actor actor , int x, int y){ // todo usage ?

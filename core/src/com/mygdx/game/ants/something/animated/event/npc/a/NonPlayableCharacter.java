@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
-import com.mygdx.game.enums.Entity;
-import com.mygdx.game.enums.EntityAnimation;
+import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityAnimation;
 
 public class NonPlayableCharacter extends AnimatedEventSomething {
 

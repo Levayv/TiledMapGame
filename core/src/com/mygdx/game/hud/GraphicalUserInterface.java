@@ -74,7 +74,7 @@ public class GraphicalUserInterface {
 
         // inventory table init
         Table leftPanelInventory = new Table();
-        int size = 10;
+        int size = 5;
         final TextButton[] buttons = new TextButton[size];
         for (int i = 0; i < size; i++) {
             buttons[i] = new TextButton("B"+i, skin, "default");
@@ -83,8 +83,8 @@ public class GraphicalUserInterface {
             buttons[i].setHeight(10);
 //            buttons[i].set
             leftPanelInventory.add(buttons[i]).center();
-            if (i==4)
-                leftPanelInventory.row();
+//            if (i==4)
+//                leftPanelInventory.row();
         }
 
         tableRoot.add(leftPanelInventory).expand().bottom().left();
@@ -108,6 +108,9 @@ public class GraphicalUserInterface {
                 }
             });
         }
+        buttons[0].setText("Build");
+        buttons[1].setText("Destroy");
+
         buttons[0].addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

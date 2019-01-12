@@ -3,7 +3,7 @@ package com.mygdx.game.world;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.enums.EntityAnimation;
+import com.mygdx.game.enums.entity.EntityAnimation;
 
 public class WorldResAnimManager {
     private Animation[] animations;

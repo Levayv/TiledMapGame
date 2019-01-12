@@ -1,7 +1,7 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.entity.Entity;
 
 public class WorldResTexRegManager {
 

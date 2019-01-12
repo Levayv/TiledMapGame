@@ -1,13 +1,11 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.ants.something.animated.event.pc.a.Player;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +25,13 @@ public class Factory {
     private WorldPositionManager positionManager;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
     private List<Something> somethingsOnDuty;
+    //todo make Factory singleton or not ?
     Factory (Group worldGroup,
              WorldResTexRegManager texRegManager,
              WorldResAnimManager animManager,
              int tileSize,
              int mapWidth,
-             int mapHeight){ //todo make Factory singleton or not ?
+             int mapHeight){
         this.worldGroup = worldGroup;
         this.texRegManager = texRegManager;
         this.animManager = animManager;
@@ -56,20 +55,40 @@ public class Factory {
         somethingsOnDuty = new ArrayList<Something>();
     }
     private void updateBuildGhostPosition(Vector2 pos){
-        positionManager.toTile(pos);
-        if (coreTileData.canBuildHere(positionManager.getTileX(),positionManager.getTileY())){
+        if (canBuildQ(pos)){
             ghostBuild.setPosition(positionManager.getPosX(),positionManager.getPosY());
             canBuild = true;
+        }else {
+            canBuild = false;
         }
     }
     private void updateDestroyGhostPosition(Vector2 pos){
-        positionManager.toTile(pos);
-        if (coreTileData.canDestroyThis(positionManager.getTileX(),positionManager.getTileY())){
+        if (canDestroyQ(pos)){
             ghostDestroy.setPosition(positionManager.getPosX(),positionManager.getPosY());
             canDestroy = true;
+        }else {
+            canDestroy = false;
         }
     }
-    public void build(Entity entity, float x , float y){ //todo event based
+    public boolean canBuildQ(Vector2 pos){
+        positionManager.toTile(pos);
+        return coreTileData.canBuildHere(positionManager.getTileX(),positionManager.getTileY());
+    }
+    public boolean canDestroyQ(Vector2 pos){
+        positionManager.toTile(pos);
+        return coreTileData.canDestroyThis(positionManager.getTileX(),positionManager.getTileY());
+    }
+    public void buildOnClick(Entity entity){
+        this.build(entity);
+    }
+    public void buildOnEvent(Entity entity, float x , float y){
+        this.isBuilding = true;
+        canBuildQ(new Vector2(x,y));
+        this.build(entity);
+        this.isBuilding = false;
+        this.canBuild = false;
+    }
+    private void build(Entity entity){ //todo event based
         if (isBuilding){
             if (canBuild){
 //                worldGroup.swapActor() //todo make ghost always on foreground
@@ -84,7 +103,7 @@ public class Factory {
                 tavern.set2World(worldGroup);
                 tavern.setBorders();
                 tavern.setVisible(true);
-                tavern.setPosition(ghostBuild.getX(),ghostBuild.getY());
+                tavern.setPosition(positionManager.getPosX(),positionManager.getPosY()); //todo fix
                 tavern.setName("Tavern");
 //                stopBuildingPhase();
                 System.out.println("!pos B ="+positionManager.getTileX()+" / "+positionManager.getTileY());
@@ -93,7 +112,17 @@ public class Factory {
             }
         }
     }
-    public void destroy(int indexID, float x , float y){
+    public void destroyOnClick(int indexID, float x , float y){
+        this.destroy(indexID,x ,y);
+    }
+    public void destroyOnEvent(int indexID, float x , float y){
+        this.isDestroying = true;
+        canDestroyQ(new Vector2(x,y));
+        this.destroy(indexID,x ,y);
+        this.isDestroying = false;
+        this.canDestroy = false;
+    }
+    private void destroy(int indexID, float x , float y){
         if (isDestroying){
             if (canDestroy){
                 Gdx.app.log("Factory", "Destroying Something at "+x+"/"+y);

@@ -5,15 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.world.WorldResTexRegManager;
-import com.mygdx.game.enums.Entity;
+import com.mygdx.game.enums.entity.Entity;
 
 public class coreActor extends Actor {
     public TextureRegion texReg;
-    protected Entity entity;
     private Color color;
     private Data data = new Data();
+    protected Entity entity;
+    protected boolean collision;
 
 
 //    public coreActor (TextureRegion texReg) {
@@ -52,7 +52,16 @@ public class coreActor extends Actor {
     public void setIndexID(int indexID) {
         data.indexID = indexID;
     }
-        public int getIndexID() {
+    public int getIndexID() {
         return ((Data)getUserObject()).indexID;
+    }
+
+
+    public boolean getColision() {
+        return collision;
+    }
+
+    public void setCollision(boolean collision) {
+        this.collision = collision;
     }
 }

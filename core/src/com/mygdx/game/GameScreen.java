@@ -291,7 +291,7 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getIndexID());
                         System.out.println();
                         //todo builder/destroyer integration
-                        worldManager.factory.destroyOnClick(lastHitSomething.getIndexID(),stagePos1.x,stagePos1.y);
+                        worldManager.factory.destroyOnClick(lastHitSomething.getIndexID());
                     }else {
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");

@@ -49,7 +49,7 @@ public class coreActor extends Actor {
         return entity.name();
     }
 
-    public void setIndexID(int indexID) {
+    public void set3IndexID(int indexID) {
         data.indexID = indexID;
     }
     public int getIndexID() {

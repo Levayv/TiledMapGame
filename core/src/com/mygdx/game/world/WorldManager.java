@@ -22,6 +22,7 @@ import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
 import com.mygdx.game.enums.entity.Entity;
 import com.mygdx.game.enums.entity.EntityAnimation;
+import com.mygdx.game.enums.entity.myJson;
 
 public class WorldManager {
     // WorldManager's knowledge about grid
@@ -179,6 +180,7 @@ public class WorldManager {
         factory.buildOnEvent(Entity.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         //todo how to manipulate objects ?
 
+        myJson o = new myJson();
 
 
 

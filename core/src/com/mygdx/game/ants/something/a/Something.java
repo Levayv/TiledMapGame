@@ -75,5 +75,6 @@ public class Something extends coreActor {
 //        border = null;
 //        range = null;
         entity = Entity.None;
+        set3IndexID(-1);
     }
 }

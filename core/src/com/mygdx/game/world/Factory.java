@@ -22,7 +22,7 @@ public class Factory {
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
     private Group worldGroup;
-    private WorldPositionManager positionManager;
+    private WorldPositionManager posManager;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
     private List<Something> somethingsOnDuty;
     //todo make Factory singleton or not ?
@@ -49,44 +49,34 @@ public class Factory {
         ghostDestroy.setPosition(nullVector.x, nullVector.y);
         ghostDestroy.setTouchable(Touchable.disabled);
         ghostDestroy.setVisible(false);
-        positionManager = new WorldPositionManager(tileSize);
+        posManager = new WorldPositionManager(tileSize);
         coreTileData = new CoreTileData(mapWidth,mapHeight);
         deadPool = new DeadPool();
         somethingsOnDuty = new ArrayList<Something>();
     }
-    private void updateBuildGhostPosition(Vector2 pos){
-        if (canBuildQ(pos)){
-            ghostBuild.setPosition(positionManager.getPosX(),positionManager.getPosY());
-            canBuild = true;
-        }else {
-            canBuild = false;
-        }
-    }
-    private void updateDestroyGhostPosition(Vector2 pos){
-        if (canDestroyQ(pos)){
-            ghostDestroy.setPosition(positionManager.getPosX(),positionManager.getPosY());
-            canDestroy = true;
-        }else {
-            canDestroy = false;
-        }
-    }
-    public boolean canBuildQ(Vector2 pos){
-        positionManager.toTile(pos);
-        return coreTileData.canBuildHere(positionManager.getTileX(),positionManager.getTileY());
-    }
-    public boolean canDestroyQ(Vector2 pos){
-        positionManager.toTile(pos);
-        return coreTileData.canDestroyThis(positionManager.getTileX(),positionManager.getTileY());
-    }
+
+
+    // Building / Destroying
     public void buildOnClick(Entity entity){
         this.build(entity);
     }
-    public void buildOnEvent(Entity entity, float x , float y){
+    public void destroyOnClick(int indexID, float x , float y){
+        this.destroy(indexID,x ,y);
+    }
+    public void buildOnEvent(Entity entity, Vector2 pos){
         this.isBuilding = true;
-        canBuildQ(new Vector2(x,y));
+        this.canBuild = true;
+        posManager.update(pos);
         this.build(entity);
         this.isBuilding = false;
         this.canBuild = false;
+    }
+    public void destroyOnEvent(int indexID, float x , float y){
+        this.isDestroying = true;
+        canDestroyQ(new Vector2(x,y));
+        this.destroy(indexID,x ,y);
+        this.isDestroying = false;
+        this.canDestroy = false;
     }
     private void build(Entity entity){ //todo event based
         if (isBuilding){
@@ -103,24 +93,14 @@ public class Factory {
                 tavern.set2World(worldGroup);
                 tavern.setBorders();
                 tavern.setVisible(true);
-                tavern.setPosition(positionManager.getPosX(),positionManager.getPosY()); //todo fix
+                tavern.setPosition(posManager.getPosX(), posManager.getPosY()); //todo fix
                 tavern.setName("Tavern");
 //                stopBuildingPhase();
-                System.out.println("!pos B ="+positionManager.getTileX()+" / "+positionManager.getTileY());
-                coreTileData.buildingHere(positionManager.getTileX(),positionManager.getTileY());
+                System.out.println("!pos B ="+ posManager.getTileX()+" / "+ posManager.getTileY());
+                coreTileData.buildingHere(posManager.getTileX(), posManager.getTileY());
                 ghostBuild.setPosition(nullVector.x, nullVector.y);
             }
         }
-    }
-    public void destroyOnClick(int indexID, float x , float y){
-        this.destroy(indexID,x ,y);
-    }
-    public void destroyOnEvent(int indexID, float x , float y){
-        this.isDestroying = true;
-        canDestroyQ(new Vector2(x,y));
-        this.destroy(indexID,x ,y);
-        this.isDestroying = false;
-        this.canDestroy = false;
     }
     private void destroy(int indexID, float x , float y){
         if (isDestroying){
@@ -143,22 +123,15 @@ public class Factory {
                     somethingsOnDuty.get(i).setIndexID(somethingsOnDuty.get(i).getIndexID()-1);
                     Gdx.app.debug("Debug: Factory", "duty ID [FIXED]="+somethingsOnDuty.get(i).getIndexID());
                 }
-                System.out.println("!pos D ="+positionManager.getTileX()+" / "+positionManager.getTileY());
-                coreTileData.destroyingThis(positionManager.getTileX(),positionManager.getTileY());
+                System.out.println("!pos D ="+ posManager.getTileX()+" / "+ posManager.getTileY());
+                coreTileData.destroyingThis(posManager.getTileX(), posManager.getTileY());
                 ghostDestroy.setPosition(nullVector.x,nullVector.y);
                 Gdx.app.debug("Debug: Factory", "destroy() method  *END*  ------------"+
                         " ------------ ------------ ------------ ------------ ------------");
             }
         }
     }
-    public void update(Vector2 pos){
-        if (this.isBuilding){
-            this.updateBuildGhostPosition(pos);
-        }
-        if (this.isDestroying){
-            this.updateDestroyGhostPosition(pos);
-        }
-    }
+    // Building / Destroying Phase changes
     public void startBuildingPhase(){
         Gdx.app.log("Factory", "start Building Phase");
         isBuilding = true;
@@ -198,5 +171,38 @@ public class Factory {
     }
     public boolean isDestroying(){
         return isDestroying;
+    }
+    // Updates during render, must be highly optimal
+    public void update(Vector2 pos){ // arg = stage pos
+        if (this.isBuilding){ // only during build phase
+            this.updateBuildGhostPosition(pos);
+        }
+        if (this.isDestroying){ // only during destroy phase
+            this.updateDestroyGhostPosition(pos);
+        }
+    }
+    private void updateBuildGhostPosition(Vector2 pos){ // arg = stage pos
+        if (canBuildQ(pos)){
+            ghostBuild.setPosition(posManager.getPosX(), posManager.getPosY());
+            canBuild = true;
+        }else {
+            canBuild = false;
+        }
+    }
+    private void updateDestroyGhostPosition(Vector2 pos){ // arg = stage pos
+        if (canDestroyQ(pos)){
+            ghostDestroy.setPosition(posManager.getPosX(), posManager.getPosY());
+            canDestroy = true;
+        }else {
+            canDestroy = false;
+        }
+    }
+    public boolean canBuildQ(Vector2 pos){ // arg = stage pos
+        posManager.update(pos); // find tileX,tileY for boolean[][], posX,poxY for Actors
+        return coreTileData.canBuildHere(posManager.getTileX(), posManager.getTileY());
+    }
+    public boolean canDestroyQ(Vector2 pos){ // arg = stage pos
+        posManager.update(pos); // find tileX,tileY for boolean[][], posX,poxY for Actor
+        return coreTileData.canDestroyThis(posManager.getTileX(), posManager.getTileY());
     }
 }

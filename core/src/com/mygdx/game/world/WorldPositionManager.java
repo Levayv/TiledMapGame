@@ -3,7 +3,7 @@ package com.mygdx.game.world;
 import com.badlogic.gdx.math.Vector2;
 
 public class WorldPositionManager {
-    private int tileSize;
+    private int tileSize; // set only once
     private int tileX;
     private int tileY;
     private int posX;
@@ -16,7 +16,7 @@ public class WorldPositionManager {
         this.tileSize = tileSize;
     }
 
-    public void convertPointerToTile(Vector2 pos){
+    private void convertVectorToTile(Vector2 pos){
         posX = (int) pos.x;
         posY = (int) pos.y;
         if (posX>=0 && posY>=0){
@@ -42,18 +42,14 @@ public class WorldPositionManager {
             tileY = -1;
         }
     }
-    public void convertTileToVector(int x, int y, Vector2 pos){
-        x = (int) pos.x;
-        y = (int) pos.y;
-        pos.x = x * 32;
-        pos.y = y * 32;
-    }
-//    public void toTile(int x, int y){
-//        bufferVector.set(x,y);
-//        toTile(bufferVector);
+//    public void convertTileToVector(int x, int y, Vector2 pos){
+//        x = (int) pos.x;
+//        y = (int) pos.y;
+//        pos.x = x * 32;
+//        pos.y = y * 32;
 //    }
-    public void toTile(Vector2 pos){
-        convertPointerToTile(pos);
+    public void update(Vector2 pos){ //
+        convertVectorToTile(pos);
         if (posX>0)
             posX = tileX*32;
         else
@@ -74,5 +70,9 @@ public class WorldPositionManager {
     }
     public int getTileY() {
         return tileY;
+    }
+    public Vector2 getPosXYviaVector(){
+        bufferVector.set(posX,posY);
+        return bufferVector;
     }
 }

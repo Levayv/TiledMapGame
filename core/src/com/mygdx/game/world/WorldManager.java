@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -172,9 +173,10 @@ public class WorldManager {
         // Factory init and build
         factory = new Factory(world, texRegManager, animManager,
                 tileSize,mapWidth,mapHeight);
-        factory.buildOnEvent(Entity.Tree,   9 *tileSize,3 *tileSize);
-        factory.buildOnEvent(Entity.Stone,  3 *tileSize,6 *tileSize);
-        factory.buildOnEvent(Entity.Ore,    6 *tileSize,6 *tileSize);
+        Vector2 pos = new Vector2();
+        factory.buildOnEvent(Entity.Tree,  pos.set( 9*tileSize , 3*tileSize ));
+        factory.buildOnEvent(Entity.Stone, pos.set( 3*tileSize , 6*tileSize ));
+        factory.buildOnEvent(Entity.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         //todo how to manipulate objects ?
 
 

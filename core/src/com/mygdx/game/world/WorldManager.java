@@ -47,7 +47,7 @@ public class WorldManager {
     public Something tower1;
     public Something tower2;
     public Something tower3;
-    public Something lever;
+//    public Something lever;
 
     public Door door1;
     public AnimatedSomething boomE;
@@ -175,32 +175,21 @@ public class WorldManager {
         // Read Game Object Data from File //todo also texture and animation
         jsonDataLoaderForEntities jsonLoader = new jsonDataLoaderForEntities();
         allData = jsonLoader.getAllData();
-        System.out.println("!"+allData.getSomethingDataByIndex(4).entityName);
 
         // Factory init and build
-        factory = new Factory(world, texRegManager, animManager, allData,
+        factory = new Factory(world, texRegManager, animManager, allData, collider,
                 tileSize,mapWidth,mapHeight);
         Vector2 pos = new Vector2();
         factory.buildOnEvent(Entity.Tree,  pos.set( 9*tileSize , 3*tileSize ));
         factory.buildOnEvent(Entity.Stone, pos.set( 3*tileSize , 6*tileSize ));
         factory.buildOnEvent(Entity.Ore,   pos.set( 6*tileSize , 6*tileSize ));
+        factory.buildOnEvent(Entity.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
 
-//          add colliders
-
-
-        collider.add(factory.somethingsOnDuty.get(0).getBorder());
-        collider.add(factory.somethingsOnDuty.get(1).getBorder());
-        collider.add(factory.somethingsOnDuty.get(2).getBorder());
 
 
 
 
-
-//        tree1  = new Something(Entity.Tree  );
-//        tree2  = new Something(Entity.Stone );
-//        tree3  = new Something(Entity.Ore   );
-        lever  = new Something(Entity.Temp  );
         door1  = new Door(Entity.Temp, EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
 //        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
@@ -213,30 +202,18 @@ public class WorldManager {
         tower2 = new Something(Entity.Tower);
         tower3 = new Something(Entity.Tower);
 
-//        tree1.set1TexReg(texRegManager);
-//        tree2.set1TexReg(texRegManager);
-//        tree3.set1TexReg(texRegManager);
-        lever.set1TexReg(texRegManager);
         tower1.set1TexReg(texRegManager);
         tower2.set1TexReg(texRegManager);
         tower3.set1TexReg(texRegManager);
         door1.set1TexReg(texRegManager);
         boomE.set1TexReg(texRegManager);
 
-//        tree1.set2World(world);
-//        tree2.set2World(world);
-//        tree3.set2World(world);
-        lever.set2World(world);
         tower1.set2World(world);
         tower2.set2World(world);
         tower3.set2World(world);
         door1.set2World(world);
         boomE.set2World(world);
 
-//        tree1.setBorders();
-//        tree2.setBorders();
-//        tree3.setBorders();
-        lever.setBorders();
         door1.setBorders();
         boomE.setBorders();
         tower1.setBorders();
@@ -250,27 +227,6 @@ public class WorldManager {
         door1.setAnim(animManager);
         boomE.setAnim(animManager);
 
-//        tree1  .entity = Entity.Tree;
-//        tree2  .entity = Entity.Stone;
-//        tree3  .entity = Entity.Ore;
-//        lever  .entity = Entity.None;
-//        door1  .entity = Entity.None;
-//        door2  .entity = Entity.None;
-//        tower1  .entity = Entity.Tower;
-//        tower2  .entity = Entity.Tower;
-//        tower3  .entity = Entity.Tower;
-
-//        world.addActor(tree1);
-//        world.addActor(tree2);
-//        world.addActor(tree3);
-//        world.addActor(lever);
-//        world.addActor(door1);
-//        world.addActor(tower1);
-//        world.addActor(tower2);
-//        world.addActor(tower3);
-//        world.addActor(player);
-
-//        world.addActorAfter(player,door2); //! fix
 
         for (int i = 0; i < mobCount; i++) {
             slime1[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_1);
@@ -302,14 +258,6 @@ public class WorldManager {
 //            world.addActor(slime3[i]);
         }
 
-
-
-        // grl
-
-//        tree1.setPosition(9 *tileSize,3 *tileSize);
-//        tree2.setPosition(3 *tileSize,6 *tileSize);
-//        tree3.setPosition(6 *tileSize,6 *tileSize);
-        lever.setPosition(12*tileSize,9 *tileSize);
         door1.setPosition(12*tileSize,12*tileSize);
         boomE.setPosition(15*tileSize,12*tileSize);
         tower1.setPosition(18 *tileSize,0 *tileSize);

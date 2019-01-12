@@ -4,14 +4,18 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.ants.something.animated.event.pc.a.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Collider {
     boolean upLockFinal;
     boolean downLockFinal;
     boolean leftLockFinal;
     boolean rightLockFinal;
-    private int idOfNextAddedElement;
-    private int max;
-    private Rectangle[] rectangles;
+//    private int idOfNextAddedElement;
+//    private int max;
+//    private Rectangle[] rectangles;
+    private List<Rectangle> rectXXX;
     private Rectangle intersection;
 
     Collider(int firstChunkEntitiesCount) {
@@ -19,9 +23,10 @@ public class Collider {
     }
 
     void populate(int chunkEntitiesCount) { // public for further integrations
-        idOfNextAddedElement = 0;
-        max = chunkEntitiesCount;
-        rectangles = new Rectangle[max + 1];
+//        idOfNextAddedElement = 0;
+//        max = chunkEntitiesCount;
+        rectXXX = new ArrayList<Rectangle>();
+//        rectangles = new Rectangle[max + 1];
         intersection = new Rectangle();
 
     }
@@ -31,8 +36,12 @@ public class Collider {
 //        System.out.println(newRect.getY());
 //        System.out.println(newRect.getWidth());
 //        System.out.println(newRect.getHeight());
-        rectangles[idOfNextAddedElement] = newRect;
-        idOfNextAddedElement++;
+        rectXXX.add(newRect);
+//        rectangles[idOfNextAddedElement] = newRect;
+//        idOfNextAddedElement++;
+    }
+    public void del(Rectangle newRect){
+        rectXXX.remove(newRect);
     }
 
     void calc(Player player) {
@@ -47,10 +56,10 @@ public class Collider {
         downLock  = downLockFinal  = false; // unlock all dir moves
 
         if (true){
-            for (int i = 1; i < max + 1; i++) {
-                if (rectangles[0].overlaps(rectangles[i])) {
+            for (int i = 1; i < rectXXX.size(); i++) {
+                if (rectXXX.get(0).overlaps(rectXXX.get(i))) {
                     intersection = new Rectangle();
-                    Intersector.intersectRectangles(rectangles[0], rectangles[i], intersection);
+                    Intersector.intersectRectangles(rectXXX.get(0), rectXXX.get(i), intersection);
 //System.out.println("tree X" + i + " = " + rectangles[i].getX());
 //System.out.println("tree Y" + i + " = " + rectangles[i].getY());
 //System.out.println("tree W" + i + " = " + rectangles[i].getWidth());
@@ -64,16 +73,16 @@ public class Collider {
 //System.out.println("inter" + 7 + " = " + intersection.getWidth());
 //System.out.println("inter" + 7 + " = " + intersection.getHeight());
 //System.out.println("overlaps"+rectangles[i].x+"-"+rectangles[i].y);
-                    if (intersection.x > rectangles[0].x) {
+                    if (intersection.x > rectXXX.get(0).x) {
                         rightLock = true;
                     }
-                    if (intersection.y > rectangles[0].y) {
+                    if (intersection.y > rectXXX.get(0).y) {
                         upLock = true;
                     }
-                    if (intersection.x + intersection.width < rectangles[0].x + rectangles[0].width) {
+                    if (intersection.x + intersection.width < rectXXX.get(0).x + rectXXX.get(0).width) {
                         leftLock = true;
                     }
-                    if (intersection.y + intersection.height < rectangles[0].y + rectangles[0].height) {
+                    if (intersection.y + intersection.height < rectXXX.get(0).y + rectXXX.get(0).height) {
                         downLock = true;
 
                     }

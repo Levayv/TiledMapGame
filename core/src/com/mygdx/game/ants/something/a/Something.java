@@ -73,13 +73,17 @@ public class Something extends coreActor{
         this.remove();
         this.setVisible(false);
         this.setPosition(nullVector.x, nullVector.y);
-//        texReg = null;
+        this.data = null;
+        this.texReg = null;
 //        border = null;
 //        range = null;
         entity = Entity.None;
         set3IndexID(-1);
     }
-//    public void setData(SomethingData data) {
-//        this.data = data;
-//    }
+    public void setData(SomethingData data) {
+        this.data = data;
+    }
+    public SomethingData getData(){
+        return data;
+    }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.mygdx.game.Collider;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.entity.Entity;
@@ -27,6 +28,7 @@ public class Factory {
     private final Vector2 nullVector = new Vector2(-1000,-1000);
     public List<Something> somethingsOnDuty; //todo make private
     private AllData allData;
+    private Collider collider;
     // for debug only
     private int x;
     private int y;
@@ -35,12 +37,14 @@ public class Factory {
              WorldResTexRegManager texRegManager,
              WorldResAnimManager animManager,
              AllData allData,
+             Collider collider,
              int tileSize,
              int mapWidth,
              int mapHeight){
         this.worldGroup = worldGroup;
         this.texRegManager = texRegManager;
         this.animManager = animManager;
+        this.collider = collider;
         this.allData = allData;
         // init 2 ghosts for build and destroy
         ghostBuild = new Something(Entity.Ghost1);
@@ -107,7 +111,7 @@ public class Factory {
                 Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty.size());
                 Gdx.app.debug("Debug: Factory", "");
                 // tear off DeadPool , and store in ... from ...onDuty
-                Something tavern = deadPool.createSomething(entity);
+                Something tavern = deadPool.createSomething(entity); //todo BOOOO its not a tavern
                 somethingsOnDuty.add(tavern);
                 // Object property init
                 tavern.set0Entity(entity);
@@ -118,11 +122,15 @@ public class Factory {
                 tavern.setVisible(true);
                 tavern.setPosition(posManager.getPosX(), posManager.getPosY());
                 tavern.setName("Tavern");
+                tavern.setData(allData.getSomethingDataByID(tavern.getEntityID()));
                 // inform coreTileData about data update
                 coreTileData.buildingHere(posManager.getTileX(), posManager.getTileY());
                 // remove ghost from screen, it will go invisible after phase end
                 ghostBuild.setPosition(nullVector.x, nullVector.y);
 //                stopBuildingPhase();
+                // add collider
+                if (tavern.getData().isCollider)
+                    collider.add(tavern.getBorder());
             }
         }
     }
@@ -135,6 +143,9 @@ public class Factory {
                 Gdx.app.debug("Debug: Factory", "arg indexID="+indexID);
                 Gdx.app.debug("Debug: Factory", "x/y="+x+"/"+y);
                 Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty);
+                // remove collider if it was
+                if (somethingsOnDuty.get(indexID).getData().isCollider)
+                    collider.del(somethingsOnDuty.get(indexID).getBorder());
                 // tear off ... from ...onDuty , and store in DeadPool
                 deadPool.burySomething(somethingsOnDuty.remove(indexID));
                 // iterate threw ...onDuty , to fix shifted ID's

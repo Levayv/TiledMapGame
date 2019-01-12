@@ -1,5 +1,8 @@
 package com.mygdx.game.enums.entity;
 
+import com.mygdx.game.ants.something.a.Something;
+import com.mygdx.game.ants.something.a.SomethingData;
+
 public enum Entity {
     None(0),
     Player(1),
@@ -14,8 +17,11 @@ public enum Entity {
     Temp(66);
 
     int id;
+    SomethingData data;
     Entity(int i){id = i;}
     public int getID(){return id;}
+//    public SomethingData data(){return data;}
+//    public void setData(SomethingData data){this.data = data;}
 
 //    public boolean IsEmpty(){return this.equals(Entity.None);}
 //    public boolean Compare(int i){return id == i;}

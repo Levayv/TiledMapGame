@@ -1,6 +1,6 @@
 package com.mygdx.game.world;
 
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityTex;
 
 public class WorldResStringManager { //todo integrate [unused class]
     private String[] strings;
@@ -11,12 +11,12 @@ public class WorldResStringManager { //todo integrate [unused class]
         this.arrayCap = namesArrayCap;
         strings = new String[arrayCap];
     }
-    public void addTexReg(Entity entity, String name){
-        strings[entity.getID()] = name;
+    public void addTexReg(EntityTex entityTex, String name){
+        strings[entityTex.getID()] = name;
         namesSize++;
     }
-    public String getTexRegByID(Entity entity){
-        string = strings[entity.getID()];
+    public String getTexRegByID(EntityTex entityTex){
+        string = strings[entityTex.getID()];
         return string;
     }
 }

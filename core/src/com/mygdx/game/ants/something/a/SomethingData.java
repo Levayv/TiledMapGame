@@ -1,6 +1,6 @@
 package com.mygdx.game.ants.something.a;
 
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityTex;
 
 public class SomethingData {
     public String entityName;
@@ -13,8 +13,8 @@ public class SomethingData {
 
     public int test = 1;
     public void setExample(int i){
-        entityID = Entity.values()[i].getID();
-        entityName = Entity.values()[i].name();
+        entityID = EntityTex.values()[i].getID();
+        entityName = EntityTex.values()[i].name();
 
         isCollider = false;
         isRigid = false;

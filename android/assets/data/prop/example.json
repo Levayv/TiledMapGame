@@ -1,0 +1,103 @@
+{
+"somethingData": [
+	{
+		"entityName": "None",
+		"entityID": 0,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Player",
+		"entityID": 1,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "NPC",
+		"entityID": 2,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Tower",
+		"entityID": 3,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Tree",
+		"entityID": 11,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Stone",
+		"entityID": 12,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Ore",
+		"entityID": 13,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Door",
+		"entityID": 14,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Ghost1",
+		"entityID": 15,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Ghost2",
+		"entityID": 16,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "Temp",
+		"entityID": 66,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	}
+]
+}

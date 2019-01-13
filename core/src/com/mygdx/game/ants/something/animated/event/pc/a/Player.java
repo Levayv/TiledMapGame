@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.enums.DirConst4;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityClass;
+import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 
 
@@ -49,11 +50,25 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
 //    public Player(Entity entity, String file, int rows) {
 //        super(entity, file, rows);
 //    }
-    public Player(Entity entity) {
-        super(entity, EntityAnimation.EXPLOSION);
+    public Player() {
+        super();
         dirLast = DirConst4.NULL;
         dirX = DirConst4.NULL;
         dirY = DirConst4.NULL;
+    }
+    @Override
+    public void set0Entity(EntityClass entityClass) {
+        super.set0Entity(entityClass);
+    }
+    @Override
+    public void set01EntityTex(EntityTex entityTex) {
+        super.set01EntityTex(entityTex);
+    }
+    @Override
+    public void set02EntityAnim(EntityAnimation entityAnim) {
+//        super.set02EntityAnim(entityAnim);
+        super.set02EntityAnim(EntityAnimation.EXPLOSION); //todo fix
+
     }
 
     public void setUpLock(boolean upLock){

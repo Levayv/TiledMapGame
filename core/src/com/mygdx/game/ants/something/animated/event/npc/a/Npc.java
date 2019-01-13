@@ -10,8 +10,10 @@ import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityClass;
+import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.world.WorldResAnimManager;
 
@@ -23,9 +25,20 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         go = true;
     }
     private Path path;
-    public Npc(Entity entity, EntityAnimation entityAnim) {
-        super(entity, entityAnim,NpcState.values().length);
-        this.entity = Entity.Temp; //todo fix ASAP
+    public Npc() {
+        super();
+    }
+    @Override
+    public void set0Entity(EntityClass entityClass) {
+        super.set0Entity(entityClass);
+    }
+    @Override
+    public void set01EntityTex(EntityTex entityTex) {
+        super.set01EntityTex(entityTex);
+    }
+    @Override
+    public void set02EntityAnim(EntityAnimation entityAnim) {
+        super.set02EntityAnim(entityAnim);
     }
     @Override
     public void setAnim(WorldResAnimManager animManager){

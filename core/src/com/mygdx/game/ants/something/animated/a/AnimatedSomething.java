@@ -2,9 +2,10 @@ package com.mygdx.game.ants.something.animated.a;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 
 public class AnimatedSomething extends Something {
@@ -21,11 +22,9 @@ public class AnimatedSomething extends Something {
     public int tempINT;
     public String tempString;
 
-    public AnimatedSomething(Entity entity, EntityAnimation entityAnim) {
-        super(entity);
-        this.entityAnim = entityAnim;
+    public AnimatedSomething() {
+        super();
         animation = new MyAnimation(true);
-
 //        this.rows = rows;
 //        int FRAME_COLS = rows;
 //        int FRAME_ROWS = 1;
@@ -45,6 +44,18 @@ public class AnimatedSomething extends Something {
 //        for (int i = 0; i < FRAME_COLS; i++) { animFrames[i] = buffer[index++];}
 
 //        coreAnimation = new Animation<TextureRegion>(frameDur, animFrames);
+    }
+    @Override
+    public void set0Entity(EntityClass entityClass) {
+        super.set0Entity(entityClass);
+    }
+    @Override
+    public void set01EntityTex(EntityTex entityTex) {
+        super.set01EntityTex(entityTex);
+    }
+    @Override
+    public void set02EntityAnim(EntityAnimation entityAnim) {
+        super.set02EntityAnim(entityAnim);
     }
     public void setAnim(WorldResAnimManager animManager){
         animation.setCoreAnimation(animManager.getAnimationByID(this.entityAnim));

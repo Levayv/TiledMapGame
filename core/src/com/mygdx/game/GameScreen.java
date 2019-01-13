@@ -29,7 +29,8 @@ import com.mygdx.game.debug.tools.PerfCounter;
 import com.mygdx.game.debug.tools.ProfilerID;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirParser;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityClass;
+import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.hud.GraphicalUserInterface;
 import com.mygdx.game.world.WorldManager;
@@ -124,19 +125,19 @@ public class GameScreen implements Screen {
 //        Texture texAnimSlime1       = new Texture(Gdx.files.internal("animation/knightRun1.png"));
         // WorldResTexRegManager init
         WorldResTexRegManager buffer1 = new WorldResTexRegManager(100);
-        buffer1.addTexReg(Entity.Tree,texRegTree);
-        buffer1.addTexReg(Entity.Stone,texRegStone);
-        buffer1.addTexReg(Entity.Ore,texRegOre);
-        buffer1.addTexReg(Entity.Tower,texRegTower);
-        buffer1.addTexReg(Entity.Temp,texRegTemp32);
-        buffer1.addTexReg(Entity.Player,texRegPlayer);
-        buffer1.addTexReg(Entity.Ghost1,texRegGhost1);
-        buffer1.addTexReg(Entity.Ghost2,texRegGhost2);
-        buffer1.addTexReg(Entity.Ghost2,texRegGhost2);
+        buffer1.addTexReg(EntityTex.Tree,texRegTree);
+        buffer1.addTexReg(EntityTex.Stone,texRegStone);
+        buffer1.addTexReg(EntityTex.Ore,texRegOre);
+        buffer1.addTexReg(EntityTex.Tower,texRegTower);
+        buffer1.addTexReg(EntityTex.Temp,texRegTemp32);
+        buffer1.addTexReg(EntityTex.Player,texRegPlayer);
+        buffer1.addTexReg(EntityTex.Ghost1,texRegGhost1);
+        buffer1.addTexReg(EntityTex.Ghost2,texRegGhost2);
+        buffer1.addTexReg(EntityTex.Ghost2,texRegGhost2);
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,44);
-        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin,21);
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin,8);
         buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimDoor2,21);
         buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimExplosion,9);
         buffer2.addAnimationFromFile(EntityAnimation.SLIME_1,texAnimSlime1,4);
@@ -168,7 +169,8 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(inputMultiplexer);
 
         // WorldManager init
-        player = new Player(Entity.Player);
+        player = new Player();
+        player.set01EntityTex(EntityTex.Player);
         player.set1TexReg(buffer1);
         player.setBorders(20,0,20,20);
 
@@ -184,6 +186,7 @@ public class GameScreen implements Screen {
 //        player.setBorders(10,10,20,20);
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2); //todo screen_w/h object_w/h are final ?
+        player.setAnimations();
 
 //        player.setName("player");
 //        world.addActorAfter(player,door2); //! fix
@@ -234,7 +237,6 @@ public class GameScreen implements Screen {
     }
 
     void animationCreate(){
-        player.setAnimations();
     }
 
 
@@ -275,7 +277,7 @@ public class GameScreen implements Screen {
             lastHitActor   = stage  .hit(stagePos1.x,stagePos1.y,true);
             lastHitUIActor = stageUI.hit(stagePos2.x,stagePos2.y,true);
             if (lastHitUIActor==null){ // no hit on stageUI
-                worldManager.factory.buildOnClick(Entity.Temp /*,stagePos1.x,stagePos1.y*/);
+                worldManager.factory.buildOnClick(EntityTex.Temp /*,stagePos1.x,stagePos1.y*/);
                 if (lastHitActor!=null){ // no hit on stageUI, hit on stage
                     if (lastHitActor.getClass() == Something.class //todo check and remove IF
 //                            || lastHitActor.getClass() == Player.class

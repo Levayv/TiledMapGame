@@ -3,9 +3,11 @@ package com.mygdx.game.ants.something.a;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.ants.a.JsonSerialization;
+
 import com.mygdx.game.ants.a.coreActor;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityAnimation;
+import com.mygdx.game.enums.entity.EntityClass;
+import com.mygdx.game.enums.entity.EntityTex;
 
 public class Something extends coreActor{
 //    Sprite sprite;
@@ -24,12 +26,23 @@ public class Something extends coreActor{
 //        range = new Circle();
 //        buffVect2 = new Vector2();
 //    }
-    public Something(Entity entity) { //todo change constructor , only entity enum must be needed
-        super(entity);
+    public Something() { //todo change constructor , only entity enum must be needed
+        super();
         border = new Rectangle();
         range = new Circle();
         buffVect2 = new Vector2();
-
+    }
+    @Override
+    public void set0Entity(EntityClass entityClass) {
+        super.set0Entity(entityClass);
+    }
+    @Override
+    public void set01EntityTex(EntityTex entityTex) {
+        super.set01EntityTex(entityTex);
+    }
+    @Override
+    public void set02EntityAnim(EntityAnimation entityAnim) {
+        super.set02EntityAnim(entityAnim);
     }
     public void setBorders(){
         border.x      = texReg.getRegionX();
@@ -77,7 +90,7 @@ public class Something extends coreActor{
         this.texReg = null;
 //        border = null;
 //        range = null;
-        entity = Entity.None;
+        entityTex = entityTex.None;
         set3IndexID(-1);
     }
     public void setData(SomethingData data) {

@@ -1,6 +1,5 @@
 package com.mygdx.game.ants.something.a;
 
-import com.mygdx.game.enums.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;

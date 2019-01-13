@@ -17,11 +17,11 @@ import com.mygdx.game.Grid;
 import com.mygdx.game.Pos;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
-import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityAnimation;
+import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.jsonDataLoaderForEntities;
 
 public class WorldManager {
@@ -49,7 +49,7 @@ public class WorldManager {
 //    public Something lever;
 
     public Door door1;
-    public AnimatedSomething boomE;
+//    public AnimatedSomething boomE;
 
 
     public Door[]                 doorss;
@@ -170,19 +170,25 @@ public class WorldManager {
         factory = new Factory(world, texRegManager, animManager, allData, collider,
                 tileSize,mapWidth,mapHeight);
         Vector2 pos = new Vector2();
-        factory.buildOnEvent(Entity.Tree,  pos.set( 9*tileSize , 3*tileSize ));
-        factory.buildOnEvent(Entity.Stone, pos.set( 3*tileSize , 6*tileSize ));
-        factory.buildOnEvent(Entity.Ore,   pos.set( 6*tileSize , 6*tileSize ));
-        factory.buildOnEvent(Entity.Temp,  pos.set(12*tileSize , 9*tileSize ));
+        factory.buildOnEvent(EntityTex.Tree,  pos.set( 9*tileSize , 3*tileSize ));
+        factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
+        factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
+        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
-
+        System.out.println("!!! 1");
+//        System.out.println("!!!"+EntityAnimation.PUMPKIN.GetID());
         Npc pumpkin1;
-        pumpkin1 = new Npc(Entity.Temp,EntityAnimation.PUMPKIN);
+        pumpkin1 = new Npc();
+        pumpkin1.set01EntityTex(EntityTex.Temp);
+        pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
+        System.out.println("!!! 1.5");
+        System.out.println("!!! "+pumpkin1.getEntityID());
         pumpkin1.set1TexReg(texRegManager);
         pumpkin1.set2World(world);
         pumpkin1.setBorders();
         pumpkin1.setPosition(500,300);
         pumpkin1.setAnim(animManager);
+        System.out.println("!!! 2");
 
 
 //        Spawner spawner = new Spawner(Entity.Temp );
@@ -195,32 +201,36 @@ public class WorldManager {
 
 
 
-        door1  = new Door(Entity.Temp, EntityAnimation.DOOR_OPEN);
+        door1  = new Door();
+        door1.set01EntityTex(EntityTex.Temp);
+        door1.set02EntityAnim(EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
 //        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
-        boomE = new AnimatedSomething(Entity.Temp,EntityAnimation.EXPLOSION); // ,"Explosion" , 12
+//        boomE = new AnimatedSomething(Entity.Temp,EntityAnimation.EXPLOSION); // ,"Explosion" , 12
         slime1 = new Npc[mobCount];
         slime2 = new Npc[mobCount];
         slime3 = new Npc[mobCount];
         doorss = new Door[mobCount];
-        tower1 = new Something(Entity.Tower);
-        tower2 = new Something(Entity.Tower);
-        tower3 = new Something(Entity.Tower);
-
+        tower1 = new Something();
+        tower2 = new Something();
+        tower3 = new Something();
+        tower1.set01EntityTex(EntityTex.Tower);
+        tower2.set01EntityTex(EntityTex.Tower);
+        tower3.set01EntityTex(EntityTex.Tower);
         tower1.set1TexReg(texRegManager);
         tower2.set1TexReg(texRegManager);
         tower3.set1TexReg(texRegManager);
         door1.set1TexReg(texRegManager);
-        boomE.set1TexReg(texRegManager);
+//        boomE.set1TexReg(texRegManager);
 
         tower1.set2World(world);
         tower2.set2World(world);
         tower3.set2World(world);
         door1.set2World(world);
-        boomE.set2World(world);
+//        boomE.set2World(world);
 
         door1.setBorders();
-        boomE.setBorders();
+//        boomE.setBorders();
         tower1.setBorders();
         tower2.setBorders();
         tower3.setBorders();
@@ -230,14 +240,24 @@ public class WorldManager {
 //        door2.tempINT = 12;
 //        door2.tempString = "Explosion";
         door1.setAnim(animManager);
-        boomE.setAnim(animManager);
+//        boomE.setAnim(animManager);
 
 
         for (int i = 0; i < mobCount; i++) {
-            slime1[i] = new Npc(Entity.Temp,EntityAnimation.SLIME_1);
-            slime2[i] = new Npc(Entity.Temp,EntityAnimation.SLIME_2);
-            slime3[i] = new Npc(Entity.Temp,EntityAnimation.SLIME_3);
-            doorss[i] = new Door(Entity.Temp,EntityAnimation.DOOR_OPEN);
+            slime1[i] = new Npc();
+            slime2[i] = new Npc();
+            slime3[i] = new Npc();
+            doorss[i] = new Door();
+            slime1[i].set01EntityTex(EntityTex.Temp);
+            slime2[i].set01EntityTex(EntityTex.Temp);
+            slime3[i].set01EntityTex(EntityTex.Temp);
+            doorss[i].set01EntityTex(EntityTex.Temp);
+            slime1[i].set02EntityAnim(EntityAnimation.SLIME_1);
+            slime2[i].set02EntityAnim(EntityAnimation.SLIME_2);
+            slime3[i].set02EntityAnim(EntityAnimation.SLIME_3);
+            doorss[i].set02EntityAnim(EntityAnimation.DOOR_OPEN);
+
+
             slime1[i].set1TexReg(texRegManager);
             slime2[i].set1TexReg(texRegManager);
             slime3[i].set1TexReg(texRegManager);
@@ -264,15 +284,16 @@ public class WorldManager {
         }
 
         door1.setPosition(12*tileSize,12*tileSize);
-        boomE.setPosition(15*tileSize,12*tileSize);
+//        boomE.setPosition(15*tileSize,12*tileSize);
         tower1.setPosition(18 *tileSize,0 *tileSize);
         tower2.setPosition(18 *tileSize,5 *tileSize);
         tower3.setPosition(18 *tileSize,10 *tileSize);
 
-        boomE.setLoop(false);
+//        boomE.setLoop(false);
 
 
 
+        System.out.println("!!! 3");
 
     }
 

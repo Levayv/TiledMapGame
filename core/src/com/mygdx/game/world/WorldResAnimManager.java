@@ -15,13 +15,16 @@ public class WorldResAnimManager {
         animations = new Animation[arrayCap];
 //        animations = new TextureRegion[arrayCap];
     }
-    public void addAnimation(EntityAnimation entity, Animation animation){
-        animations[entity.GetID()] = animation;
+    public void addAnimation(EntityAnimation entityAnim, Animation animation){
+        animations[entityAnim.GetID()] = animation;
         animationsSize++;
     }
-    public Animation getAnimationByID(EntityAnimation entity){
+    public Animation getAnimationByID(EntityAnimation entityAnim){
 //        System.out.println(entity);
-        animation = animations[entity.GetID()];
+        System.out.println("!!! Animation getAnimationByID");
+        System.out.println("!!! ");
+        System.out.println("!!!"+entityAnim.GetID());
+        animation = animations[entityAnim.GetID()];
         return animation;
     }
     public void addAnimationFromFile(EntityAnimation entity, Texture walkSheet, int FRAME_COLS){

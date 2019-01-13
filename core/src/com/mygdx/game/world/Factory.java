@@ -7,7 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.Collider;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.enums.entity.EntityClass;
+import com.mygdx.game.enums.entity.EntityTex;
+import com.mygdx.game.enums.entity.EntityAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,14 +49,16 @@ public class Factory {
         this.collider = collider;
         this.allData = allData;
         // init 2 ghosts for build and destroy
-        ghostBuild = new Something(Entity.Ghost1);
+        ghostBuild = new Something();
+        ghostBuild.set01EntityTex(EntityTex.Ghost1);
         ghostBuild.set1TexReg(texRegManager);
         ghostBuild.set2World(worldGroup);
         ghostBuild.setBorders();
         ghostBuild.setPosition(nullVector.x, nullVector.y);
         ghostBuild.setTouchable(Touchable.disabled);
         ghostBuild.setVisible(false);
-        ghostDestroy = new Something(Entity.Ghost2);
+        ghostDestroy = new Something();
+        ghostDestroy.set01EntityTex(EntityTex.Ghost2);
         ghostDestroy.set1TexReg(texRegManager);
         ghostDestroy.set2World(worldGroup);
         ghostDestroy.setBorders();
@@ -70,13 +74,13 @@ public class Factory {
         somethingsOnDuty = new ArrayList<Something>();
     }
     // Building / Destroying
-    public void buildOnClick(Entity entity){
+    public void buildOnClick(EntityTex entity){
         this.build(entity);
     }
     public void destroyOnClick(int indexID){
         this.destroy(indexID);
     }
-    public void buildOnEvent(Entity entity, Vector2 pos){
+    public void buildOnEvent(EntityTex entity, Vector2 pos){
         this.isBuilding = true;
         this.canBuild = true;
         posManager.update(pos);
@@ -96,25 +100,26 @@ public class Factory {
         this.isDestroying = false;
         this.canDestroy = false;
     }
-    private void build(Entity entity){
+    private void build(EntityTex entityTex){
         if (isBuilding){
             if (canBuild){
                 // worldGroup.swapActor()
                 // todo make ghost always on foreground
                 // todo add x y, id >> convert entity
-                Gdx.app.log("Factory", "Building Something at "+x+"/"+y+" with EID:"+entity.name());
+                Gdx.app.log("Factory", "Building Something at "+x+"/"+y+" with EID:"+entityTex.name());
                 Gdx.app.debug("Debug: Factory", "build() method *START* ------------"+
                         " ------------ ------------ ------------ ------------ ------------");
-                Gdx.app.debug("Debug: Factory", "arg entityID="+entity.getID());
-                Gdx.app.debug("Debug: Factory", "arg entity="+entity);
+                Gdx.app.debug("Debug: Factory", "arg entityID="+entityTex.getID());
+                Gdx.app.debug("Debug: Factory", "arg entity="+entityTex);
                 Gdx.app.debug("Debug: Factory", "x/y="+x+"/"+y);
                 Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty.size());
                 Gdx.app.debug("Debug: Factory", "");
                 // tear off DeadPool , and store in ... from ...onDuty
-                Something tavern = deadPool.createSomething(entity); //todo BOOOO its not a tavern
+                //todo BOOOO its not a tavern
+                Something tavern = deadPool.createSomething(entityTex);
                 somethingsOnDuty.add(tavern);
                 // Object property init
-                tavern.set0Entity(entity);
+                tavern.set01EntityTex(entityTex);
                 tavern.set3IndexID(somethingsOnDuty.size()-1);
                 tavern.set1TexReg(texRegManager);
                 tavern.set2World(worldGroup);

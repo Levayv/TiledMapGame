@@ -6,6 +6,7 @@ import com.badlogic.gdx.ai.fsm.StateMachine;
 
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.enums.entity.Entity;
 import com.mygdx.game.enums.entity.EntityAnimation;
@@ -20,22 +21,18 @@ public class Door extends AnimatedEventSomething implements Telegraph {
     @Override
     public void setAnim(WorldResAnimManager animManager){
         super.setAnim(animManager);
+        // changes in animation logic
         animation.setLoopingEndless(false);
         stateMachine = new DefaultStateMachine<Door, DoorState>(this, DoorState.CLOSING);
         stateMachine.changeState(DoorState.CLOSED);
         // test
         animation.setLoopingEndless(false);
     }
-    public void update (/*float delta*/) {
+    @Override
+    public void act(float delta) {
+        texReg = animation.updateFrame(delta);
         stateMachine.update();
-//        System.out.println("Door:" + stateMachine.getCurrentState());
-//        System.out.println("Door:" + stateMachine.getCurrentState());
-        ;
-
-//        System.out.println(this.getClass().toString() + this.getEntityName() ); //todo fix ASAP
     }
-//    public boolean unhandledSignal = false; todo WIPE !
-
     @Override
     public boolean handleMessage(Telegram msg) {
             Gdx.app.debug("FSM",
@@ -44,4 +41,5 @@ public class Door extends AnimatedEventSomething implements Telegraph {
                             " handleMessage: "+msg.message);
         return stateMachine.getCurrentState().onMessage(this, msg);
     }
+
 }

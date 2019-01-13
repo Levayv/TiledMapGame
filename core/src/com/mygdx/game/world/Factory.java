@@ -102,7 +102,7 @@ public class Factory {
                 // worldGroup.swapActor()
                 // todo make ghost always on foreground
                 // todo add x y, id >> convert entity
-                Gdx.app.log("Factory", "Building  Something at "+x+"/"+y);
+                Gdx.app.log("Factory", "Building Something at "+x+"/"+y+" with EID:"+entity.name());
                 Gdx.app.debug("Debug: Factory", "build() method *START* ------------"+
                         " ------------ ------------ ------------ ------------ ------------");
                 Gdx.app.debug("Debug: Factory", "arg entityID="+entity.getID());

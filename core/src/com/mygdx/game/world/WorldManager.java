@@ -15,9 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Collider;
 import com.mygdx.game.Grid;
 import com.mygdx.game.Pos;
-import com.mygdx.game.Spawner;
 import com.mygdx.game.ants.something.a.AllData;
-import com.mygdx.game.ants.something.animated.event.npc.a.NonPlayableCharacter;
+import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
 import com.mygdx.game.ants.something.animated.a.AnimatedSomething;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
@@ -52,12 +51,14 @@ public class WorldManager {
     public Door door1;
     public AnimatedSomething boomE;
 
+
     public Door[]                 doorss;
-    public NonPlayableCharacter[] slime1;
-    public NonPlayableCharacter[] slime2;
-    public NonPlayableCharacter[] slime3;
+    public Npc[] slime1;
+    public Npc[] slime2;
+    public Npc[] slime3;
     public int mobCount = 5;
 
+    //tiled map loader // todo tiled map optimise
     private int aLayersCount;   // all layers
     private int tLayersCount;   // tile layers
     private int oLayersCount;   // object layers
@@ -137,10 +138,6 @@ public class WorldManager {
         world = new Group();
         stage.addActor(world);
 
-        TextureRegion texRegTree; //todo wtf is this ?
-
-
-
         // load map , get props
         map = new TmxMapLoader().load("maps/32/level0.tmx");
         MapProperties prop = map.getProperties();
@@ -163,14 +160,7 @@ public class WorldManager {
 //      stage.getViewport().getScreenHeight());
 
         // temp grid manipulations
-        Spawner spawner = new Spawner(Entity.Temp );
-        spawner.set1TexReg(texRegManager);
-        spawner.set2World(world);
-//        spawner.entity = Entity.Temp;
-//        world.addActor(spawner);
-        spawner.setBorders();
-        spawner.setPosition(objX[0],objY[0]);
-//        spawner.create(world);
+
 
         // Read Game Object Data from File //todo also texture and animation
         jsonDataLoaderForEntities jsonLoader = new jsonDataLoaderForEntities();
@@ -186,6 +176,21 @@ public class WorldManager {
         factory.buildOnEvent(Entity.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
 
+        Npc pumpkin1;
+        pumpkin1 = new Npc(Entity.Temp,EntityAnimation.PUMPKIN);
+        pumpkin1.set1TexReg(texRegManager);
+        pumpkin1.set2World(world);
+        pumpkin1.setBorders();
+        pumpkin1.setPosition(500,300);
+        pumpkin1.setAnim(animManager);
+
+
+//        Spawner spawner = new Spawner(Entity.Temp );
+//        spawner.set1TexReg(texRegManager);
+//        spawner.set2World(world);
+//        spawner.setBorders();
+//        spawner.setPosition(objX[0],objY[0]);
+//        spawner.create(factory,pos.set(12*tileSize , 3*tileSize ));
 
 
 
@@ -194,9 +199,9 @@ public class WorldManager {
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
 //        door1  = new Door(Entity.Temp,texRegManager,world, "pumpkin" , 8);
         boomE = new AnimatedSomething(Entity.Temp,EntityAnimation.EXPLOSION); // ,"Explosion" , 12
-        slime1 = new NonPlayableCharacter[mobCount];
-        slime2 = new NonPlayableCharacter[mobCount];
-        slime3 = new NonPlayableCharacter[mobCount];
+        slime1 = new Npc[mobCount];
+        slime2 = new Npc[mobCount];
+        slime3 = new Npc[mobCount];
         doorss = new Door[mobCount];
         tower1 = new Something(Entity.Tower);
         tower2 = new Something(Entity.Tower);
@@ -229,9 +234,9 @@ public class WorldManager {
 
 
         for (int i = 0; i < mobCount; i++) {
-            slime1[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_1);
-            slime2[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_2);
-            slime3[i] = new NonPlayableCharacter(Entity.Temp,EntityAnimation.SLIME_3);
+            slime1[i] = new Npc(Entity.Temp,EntityAnimation.SLIME_1);
+            slime2[i] = new Npc(Entity.Temp,EntityAnimation.SLIME_2);
+            slime3[i] = new Npc(Entity.Temp,EntityAnimation.SLIME_3);
             doorss[i] = new Door(Entity.Temp,EntityAnimation.DOOR_OPEN);
             slime1[i].set1TexReg(texRegManager);
             slime2[i].set1TexReg(texRegManager);

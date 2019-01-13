@@ -1,10 +1,8 @@
 package com.mygdx.game.ants.something.animated.event.a;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
-import com.mygdx.game.enums.BasicEvents;
+import com.mygdx.game.enums.Events.BasicDoorEvents;
 
 public enum DoorState implements State<Door> { //todo polish commented prints
     OPEN(){
@@ -27,7 +25,7 @@ public enum DoorState implements State<Door> { //todo polish commented prints
 
         @Override
         public boolean onMessage(Door door, Telegram telegram) {
-            if (telegram.message==BasicEvents.CLOSE.getID()){
+            if (telegram.message==BasicDoorEvents.CLOSE.getID()){
                 door.stateMachine.changeState(DoorState.CLOSING);
             }
             return false;
@@ -51,7 +49,7 @@ public enum DoorState implements State<Door> { //todo polish commented prints
 
         @Override
         public boolean onMessage(Door door, Telegram telegram) {
-            if (telegram.message==BasicEvents.OPEN.getID()){
+            if (telegram.message==BasicDoorEvents.OPEN.getID()){
                 door.stateMachine.changeState(DoorState.OPENING);
             }
             return false;

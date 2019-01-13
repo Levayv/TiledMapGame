@@ -66,4 +66,8 @@ public class MyAnimation {
     public boolean isAlive(){
         return startAnimCycle;
     }
+    public TextureRegion getTEMPPP(){
+        frame = coreAnimation.getKeyFrames()[0];
+        return frame;
+    }
 }

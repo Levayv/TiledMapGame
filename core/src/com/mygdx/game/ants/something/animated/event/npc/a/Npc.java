@@ -1,5 +1,10 @@
 package com.mygdx.game.ants.something.animated.event.npc.a;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
+import com.badlogic.gdx.ai.fsm.StateMachine;
+import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Path;
@@ -8,21 +13,35 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
 import com.mygdx.game.enums.entity.Entity;
 import com.mygdx.game.enums.entity.EntityAnimation;
+import com.mygdx.game.world.WorldResAnimManager;
 
-public class NonPlayableCharacter extends AnimatedEventSomething {
-
+public class Npc extends AnimatedEventSomething implements Telegraph {
+    StateMachine<Npc, NpcState> stateMachine;
     private boolean go;
     private float time = 0;
     public void go(){
         go = true;
     }
     private Path path;
-    public NonPlayableCharacter(Entity entity, EntityAnimation entityAnim) {
-        super(entity, entityAnim,0);
+    public Npc(Entity entity, EntityAnimation entityAnim) {
+        super(entity, entityAnim,NpcState.values().length);
+        this.entity = Entity.Temp; //todo fix ASAP
+    }
+    @Override
+    public void setAnim(WorldResAnimManager animManager){
+        super.setAnim(animManager);
+        // changes in animation logic
+        animation.setLoopingEndless(false);
+        stateMachine = new DefaultStateMachine<Npc, NpcState>(this, NpcState.RESTING);
+        stateMachine.changeState(NpcState.IDLE);
+        // test
+        animation.setLoopingEndless(false);
+//        texReg = animation.getTEMPPP();
     }
     @Override
     public void act(float delta){
-        super.act(delta);
+        texReg = animation.updateFrame(delta);
+        stateMachine.update();
 //        if (go){ //todo fix move testing
 //            float updateX = 1;
 //            float updateY = 0;
@@ -61,6 +80,14 @@ public class NonPlayableCharacter extends AnimatedEventSomething {
             }
         }
 
+    }
+    @Override
+    public boolean handleMessage(Telegram msg) {
+        Gdx.app.debug("FSM",
+                "EntityID:"+this.getEntityName()+
+                        " state:"+this.stateMachine.getCurrentState().name()+
+                        " handleMessage: "+msg.message);
+        return stateMachine.getCurrentState().onMessage(this, msg);
     }
     float speed = 0.15f;
     float current = 0;
@@ -106,8 +133,8 @@ public class NonPlayableCharacter extends AnimatedEventSomething {
         }
         return points;
     }
+    @Override
     public void draw (Batch batch, float parentAlpha) {
-        super.draw(batch , parentAlpha);
+        batch.draw(texReg, getX(), getY());
     }
-
 }

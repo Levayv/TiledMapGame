@@ -1,18 +1,19 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.entity.Entity;
+import com.mygdx.game.world.Factory;
 
 public class Spawner extends Something {
     public Spawner(Entity entity) {
         super(entity);
     }
-    public void create(Group worldGroup){
-//        Something mob = new Something(texReg);
-//        mob.entity = Entity.Temp;
-//        worldGroup.addActor(mob);
-//        mob.setBorders();
-//        mob.setPosition(200,200);
+    public void create(Factory factory, Vector2 pos){
+        Something mob; //= new Npc(Entity.Temp,EntityAnimation.PUMPKIN);
+        int lastActorIndex = factory.somethingsOnDuty.size();
+        factory.buildOnEvent(Entity.Temp,pos);
+        mob = factory.somethingsOnDuty.get(lastActorIndex);
+        System.out.println("!");
     }
 }

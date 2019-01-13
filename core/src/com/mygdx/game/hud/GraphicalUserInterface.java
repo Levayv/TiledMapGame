@@ -3,7 +3,6 @@ package com.mygdx.game.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import com.mygdx.game.enums.BasicEvents;
+import com.mygdx.game.enums.Events.BasicDoorEvents;
 import com.mygdx.game.world.WorldManager;
 
 public class GraphicalUserInterface {
@@ -91,12 +90,12 @@ public class GraphicalUserInterface {
         tableRoot.add(label1).bottom();
         tableRoot.add(rightPanelButtons).expand().top().right();
         //FIXME listeners
-        dispatcher.addListener(worldManager.door1     , BasicEvents.OPEN.getID());
-        dispatcher.addListener(worldManager.door1     , BasicEvents.CLOSE.getID());
+        dispatcher.addListener(worldManager.door1     , BasicDoorEvents.OPEN.getID());
+        dispatcher.addListener(worldManager.door1     , BasicDoorEvents.CLOSE.getID());
 
         for (int i = 0; i < worldManager.mobCount; i++) {
-            dispatcher.addListener(worldManager.doorss[i] , BasicEvents.OPEN.getID());
-            dispatcher.addListener(worldManager.doorss[i] , BasicEvents.CLOSE.getID());
+            dispatcher.addListener(worldManager.doorss[i] , BasicDoorEvents.OPEN.getID());
+            dispatcher.addListener(worldManager.doorss[i] , BasicDoorEvents.CLOSE.getID());
         }
         for (int i = 2; i < size; i++) {
             buttons[i].addListener(new InputListener() {
@@ -138,7 +137,7 @@ public class GraphicalUserInterface {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("GUI",event.getListenerActor().getName()+"  pressed");
-                dispatcher.dispatchMessage(BasicEvents.CLOSE.getID());
+                dispatcher.dispatchMessage(BasicDoorEvents.CLOSE.getID());
                 return true;
             }
         });
@@ -146,7 +145,7 @@ public class GraphicalUserInterface {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("GUI",event.getListenerActor().getName()+"  pressed");
-                dispatcher.dispatchMessage(BasicEvents.OPEN.getID());
+                dispatcher.dispatchMessage(BasicDoorEvents.OPEN.getID());
                 return true;
             }
         });
@@ -154,7 +153,7 @@ public class GraphicalUserInterface {
 //            @Override
 //            public void changed(ChangeEvent event, Actor actor) {
 //                Gdx.app.log("GUI","Button 1 pressed");
-//                dispatcher.dispatchMessage(BasicEvents.CLOSE.getID());
+//                dispatcher.dispatchMessage(BasicDoorEvents.CLOSE.getID());
 //            }
 //        });
 

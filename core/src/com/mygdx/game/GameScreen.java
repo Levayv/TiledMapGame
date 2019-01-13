@@ -169,6 +169,9 @@ public class GameScreen implements Screen {
 
         // WorldManager init
         player = new Player(Entity.Player);
+        player.set1TexReg(buffer1);
+        player.setBorders(20,0,20,20);
+
         colCheck.add(player.getBorder());
 
         worldManager = new WorldManager(stage , buffer1, buffer2, new TextureRegion(texRegLever),colCheck);
@@ -176,13 +179,12 @@ public class GameScreen implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //actors!
-        player.set1TexReg(buffer1);
         player.set2World(worldManager.world);
 //        player.setBorders();
 //        player.setBorders(10,10,20,20);
-        player.setBorders(20,0,20,20);
         player.setPosition(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2); //todo screen_w/h object_w/h are final ?
+
 //        player.setName("player");
 //        world.addActorAfter(player,door2); //! fix
 
@@ -243,10 +245,10 @@ public class GameScreen implements Screen {
         shittyRenderer(delta);
     }
     void shittyMechanics(float delta) {
-        worldManager.door1.update();
-        for (int i = 0; i < worldManager.mobCount; i++) {
-            worldManager.doorss[i].update();
-        }
+//        worldManager.door1.update();
+//        for (int i = 0; i < worldManager.mobCount; i++) {
+//            worldManager.doorss[i].update();
+//        }
 
         //todo builder/destroyer integration
         lastInputX = Gdx.input.getX();
@@ -430,8 +432,8 @@ public class GameScreen implements Screen {
 //            worldManager.door1.unhandledSignal = true;
             // todo another test to be removed [EVENTS] or [OBSERVER]
 //            MessageDispatcher mDispetcher = new MessageDispatcher();
-//            mDispetcher.addListener(worldManager.door1 , BasicEvents.CLOSE.getID());
-//            mDispetcher.dispatchMessage(BasicEvents.CLOSE.getID());
+//            mDispetcher.addListener(worldManager.door1 , BasicDoorEvents.CLOSE.getID());
+//            mDispetcher.dispatchMessage(BasicDoorEvents.CLOSE.getID());
 //            worldManager.factory.ghost.setColor(Color.RED);
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
@@ -510,7 +512,7 @@ public class GameScreen implements Screen {
 //        stage.getCamera().update(); //? why
         tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
         tiledMapRenderer.render();
-        stage.act(delta);
+        stage.act(delta); //todo profile
         if (worldManager.factory.isBuilding()||worldManager.factory.isDestroying()){
             if (worldManager.factory.isBuilding())
                 stage.getBatch().setColor(Color.GREEN);

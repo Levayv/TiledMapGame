@@ -167,8 +167,8 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
 //        batch.draw(currentFrameR, 75, 75); // Draw current frame at (50, 50)
 
 
-//        batch.draw(texReg, getX()+16, getY()+2);
-        batch.draw(texReg, getX(), getY());
+        batch.draw(texReg, getX()+16, getY()+2); // todo change dynamic from offsets
+//        batch.draw(texReg, getX(), getY());
 //        batch.draw(texReg, getX(), getY(), getOriginX(), getOriginY(),
 //                getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }

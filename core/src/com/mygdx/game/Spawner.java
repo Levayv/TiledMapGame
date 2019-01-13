@@ -14,6 +14,5 @@ public class Spawner extends Something {
         int lastActorIndex = factory.somethingsOnDuty.size();
         factory.buildOnEvent(EntityTex.Temp,pos);
         mob = factory.somethingsOnDuty.get(lastActorIndex);
-        System.out.println("!!!");
     }
 }

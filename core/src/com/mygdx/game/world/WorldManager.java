@@ -166,29 +166,26 @@ public class WorldManager {
         jsonDataLoaderForEntities jsonLoader = new jsonDataLoaderForEntities();
         allData = jsonLoader.getAllData();
 
-        // Factory init and build
+        // Factory init
         factory = new Factory(world, texRegManager, animManager, allData, collider,
                 tileSize,mapWidth,mapHeight);
+        // Factory build
         Vector2 pos = new Vector2();
         factory.buildOnEvent(EntityTex.Tree,  pos.set( 9*tileSize , 3*tileSize ));
         factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
         factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
-        System.out.println("!!! 1");
-//        System.out.println("!!!"+EntityAnimation.PUMPKIN.GetID());
+
         Npc pumpkin1;
         pumpkin1 = new Npc();
         pumpkin1.set01EntityTex(EntityTex.Temp);
         pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
-        System.out.println("!!! 1.5");
-        System.out.println("!!! "+pumpkin1.getEntityID());
         pumpkin1.set1TexReg(texRegManager);
         pumpkin1.set2World(world);
         pumpkin1.setBorders();
         pumpkin1.setPosition(500,300);
         pumpkin1.setAnim(animManager);
-        System.out.println("!!! 2");
 
 
 //        Spawner spawner = new Spawner(Entity.Temp );
@@ -292,8 +289,6 @@ public class WorldManager {
 //        boomE.setLoop(false);
 
 
-
-        System.out.println("!!! 3");
 
     }
 

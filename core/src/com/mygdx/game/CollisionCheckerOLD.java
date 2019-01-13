@@ -37,11 +37,9 @@ public class CollisionCheckerOLD {
 //            System.out.println("i"+i);
             if ((playerCol.getX() <= (col[i].getX() + col[i].getW())) && ((playerCol.getX() + playerCol.getW()) >= col[i].getX()) ){
                 xBlock = true;
-//                System.out.println("!!!");
             }
             if (playerCol.getY() <= col[i].getY() + col[i].getH() && playerCol.getY() + playerCol.getH() >= col[i].getY() ){
                 yBlock = true;
-//                System.out.println("!!!");
 
             }
         }

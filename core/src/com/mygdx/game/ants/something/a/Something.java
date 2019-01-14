@@ -23,23 +23,9 @@ public class Something extends coreActor{
         range = new Circle();
         buffVect2 = new Vector2();
     }
-    @Override
-    public void set0Entity(EntityClass entityClass) {
-        super.set0Entity(entityClass);
-    }
-    @Override
-    public void set01EntityTex(EntityTex entityTex) {
-        super.set01EntityTex(entityTex);
-    }
-
     public void set09Data(SomethingData data) {
         this.data = data;
     }
-    public SomethingData getData(){
-        return data;
-    }
-
-
     public void set22Borders(){
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
@@ -62,12 +48,15 @@ public class Something extends coreActor{
         range.setRadius(border.x*2);
     }
     //-------------------------------------------------------------------------------------------//
+    public SomethingData getData(){
+        return data;
+    }
+    public Rectangle getBorder(){ return border;}
+    public Circle getRange(){ return range;}
     public float getBorderX(){ return border.x;}
     public float getBorderY(){ return border.y;}
     public float getBorderW(){ return border.width;}
     public float getBorderH(){ return border.height;}
-    public Rectangle getBorder(){ return border;}
-    public Circle getRange(){ return range;}
     //-------------------------------------------------------------------------------------------//
     @Override
     protected void positionChanged(){ //todo optimise ! Something pos rarely changes

@@ -56,14 +56,7 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
         dirX = DirConst4.NULL;
         dirY = DirConst4.NULL;
     }
-    @Override
-    public void set0Entity(EntityClass entityClass) {
-        super.set0Entity(entityClass);
-    }
-    @Override
-    public void set01EntityTex(EntityTex entityTex) {
-        super.set01EntityTex(entityTex);
-    }
+
     @Override
     public void set02EntityAnim(EntityAnimation entityAnim) {
 //        super.set02EntityAnim(entityAnim);

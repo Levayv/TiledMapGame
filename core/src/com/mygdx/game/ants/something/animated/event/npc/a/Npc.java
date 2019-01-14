@@ -29,18 +29,6 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         super();
     }
     @Override
-    public void set0Entity(EntityClass entityClass) {
-        super.set0Entity(entityClass);
-    }
-    @Override
-    public void set01EntityTex(EntityTex entityTex) {
-        super.set01EntityTex(entityTex);
-    }
-    @Override
-    public void set02EntityAnim(EntityAnimation entityAnim) {
-        super.set02EntityAnim(entityAnim);
-    }
-    @Override
     public void set12Anim(WorldResAnimManager animManager){
         super.set12Anim(animManager);
         // changes in animation logic

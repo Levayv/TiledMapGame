@@ -17,14 +17,6 @@ public class AnimatedEventSomething extends Something {
         super();
         animation = new MyAnimation(true);
     }
-    @Override
-    public void set0Entity(EntityClass entityClass) {
-        super.set0Entity(entityClass);
-    }
-    @Override
-    public void set01EntityTex(EntityTex entityTex) {
-        super.set01EntityTex(entityTex);
-    }
     public void set02EntityAnim(EntityAnimation entityAnim) { //todo remove
         this.entityAnim = entityAnim;
     }
@@ -42,5 +34,11 @@ public class AnimatedEventSomething extends Something {
 //            setVisible(false);
 //        }else
 //            setVisible(true);
+    }
+    //-------------------------------------------------------------------------------------------//
+    @Override
+    public void destroy(){ // Call from DeadPool
+        super.destroy();
+        //todo add Anim
     }
 }

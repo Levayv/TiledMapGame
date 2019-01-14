@@ -15,19 +15,6 @@ public class Door extends AnimatedEventSomething implements Telegraph {
     StateMachine<Door, DoorState> stateMachine;
     public Door() {
         super();
-//        this.entity = Entity.Temp; //todo fix ASAP
-    }
-    @Override
-    public void set0Entity(EntityClass entityClass) {
-        super.set0Entity(entityClass);
-    }
-    @Override
-    public void set01EntityTex(EntityTex entityTex) {
-        super.set01EntityTex(entityTex);
-    }
-    @Override
-    public void set02EntityAnim(EntityAnimation entityAnim) {
-        super.set02EntityAnim(entityAnim);
     }
     @Override
     public void set12Anim(WorldResAnimManager animManager){

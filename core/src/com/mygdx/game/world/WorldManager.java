@@ -176,6 +176,7 @@ public class WorldManager {
         factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
+        //todo 1. add NPC class to creations
 
         Npc pumpkin1;
         pumpkin1 = new Npc();

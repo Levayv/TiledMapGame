@@ -44,12 +44,9 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     public void setAnim(WorldResAnimManager animManager){
         super.setAnim(animManager);
         // changes in animation logic
-        animation.setLoopingEndless(false);
-        stateMachine = new DefaultStateMachine<Npc, NpcState>(this, NpcState.RESTING);
-        stateMachine.changeState(NpcState.IDLE);
-        // test
-        animation.setLoopingEndless(false);
-//        texReg = animation.getTEMPPP();
+        animation.setLoopingEndless(true);
+        // fsm init
+        stateMachine = new DefaultStateMachine<Npc, NpcState>(this, NpcState.IDLE);
     }
     @Override
     public void act(float delta){

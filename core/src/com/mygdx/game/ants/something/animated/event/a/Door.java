@@ -37,10 +37,8 @@ public class Door extends AnimatedEventSomething implements Telegraph {
         super.setAnim(animManager);
         // changes in animation logic
         animation.setLoopingEndless(false);
-        stateMachine = new DefaultStateMachine<Door, DoorState>(this, DoorState.CLOSING);
-        stateMachine.changeState(DoorState.CLOSED);
-        // test
-        animation.setLoopingEndless(false);
+        // fsm init
+        stateMachine = new DefaultStateMachine<Door, DoorState>(this, DoorState.CLOSED);
     }
     @Override
     public void act(float delta) {

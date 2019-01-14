@@ -7,7 +7,7 @@ public enum NpcState implements State<Npc> { //todo Animation will blow if FSM f
     IDLE(){
         @Override
         public void enter(Npc entity) {
-            entity.animation.setToFirstFrame();
+
         }
         @Override
         public void update(Npc entity) {

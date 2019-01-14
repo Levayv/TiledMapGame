@@ -13,16 +13,13 @@ public enum DoorState implements State<Door> { //todo polish commented prints
 
         @Override
         public void update(Door door) {
-//            if (door.unhandledSignal){ //todo WIPE
-//                door.stateMachine.changeState(DoorState.CLOSING);
-//            }
+
         }
 
         @Override
         public void exit(Door door) {
 
         }
-
         @Override
         public boolean onMessage(Door door, Telegram telegram) {
             if (telegram.message==BasicDoorEvents.CLOSE.getID()){

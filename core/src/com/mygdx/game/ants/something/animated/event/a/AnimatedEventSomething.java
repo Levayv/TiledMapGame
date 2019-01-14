@@ -29,6 +29,8 @@ public class AnimatedEventSomething extends Something {
 
     public void setAnim(WorldResAnimManager animManager){
         animation.setCoreAnimation(animManager.getAnimationByID(this.entityAnim));
+        animation.setToFirstFrame(); //otherwise texReg will be null
+
 //        coreFrameDur = 0.015f; // 60 fps !
     }
     @Override

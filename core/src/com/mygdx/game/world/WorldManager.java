@@ -9,12 +9,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Collider;
 import com.mygdx.game.Grid;
-import com.mygdx.game.Pos;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
 import com.mygdx.game.ants.something.a.Something;
@@ -90,11 +89,15 @@ public class WorldManager {
             for (int i = tLayersCount; i < aLayersCount; i++) { // separate O layers to array
                 oLayers[i - tLayersCount] = map.getLayers().get(i);
             }
-            tileID = new int[mapWidth][mapHeight]; // init tileID based on map size
+            //todo add more tile properties
+            // init tileID and other properties based on map size
+            tileID = new int[mapWidth][mapHeight];
+            isRoad = new boolean[mapWidth][mapHeight];
             for (int i = 0; i < mapWidth; i++) { // todo fix for multi layer tiles
                 for (int j = 0; j < mapHeight; j++) {
                     //populate entity id from tmx, [0][0] is left bottom corner
                     tileID[i][j] = tLayers[0].getCell(i,j).getTile().getProperties().get("entity", int.class);
+                    isRoad[i][j] = tLayers[0].getCell(i,j).getTile().getProperties().get("road", boolean.class);
                     //todo add func to read all properties
                 }
             }
@@ -188,24 +191,48 @@ public class WorldManager {
         pumpkin1.set23Range();
         pumpkin1.set31World(world);
         pumpkin1.set32Position(500,300);
-
         pumpkin1.moveToPosition(200,300);
 
-        Npc[] pumpkins = new Npc[30];
-        for (int i = 0; i < pumpkins.length; i++) {
-            pumpkins[i] = new Npc();
-            pumpkins[i].set01EntityTex(EntityTex.Temp);
-            pumpkins[i].set02EntityAnim(EntityAnimation.PUMPKIN);
-            pumpkins[i].set11TexReg(texRegManager);
-            pumpkins[i].set12Anim(animManager);
-            pumpkins[i].set21Bounds();
-            pumpkins[i].set22Borders();
-            pumpkins[i].set23Range();
-            pumpkins[i].set31World(world);
-            pumpkins[i].set32Position(500,300);
-            pumpkins[i].moveToPosition(200,300);
 
-        }
+        MyPathFinder pathFinder;
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,isRoad);
+        pathFinder.calc(2,2);
+
+        isRoad = pathFinder.getVisited();
+
+
+//        System.out.println("!!!+"+TimeUtils.nanoTime());
+//        for (int i = 31; i >= 0; i--) {
+//            for (int j = 0; j < 32; j++) {
+//                if (isRoad[j][i]){
+//                    System.out.print("+");
+//                }else {
+//                    System.out.print("-");
+//                }
+//            }
+//            System.out.println();
+//        }
+//        System.out.println("!!!+"+TimeUtils.nanoTime());
+
+//        if (isRoad[0][0]) System.out.println("!!! 1/3");
+//        if (isRoad[1][0]) System.out.println("!!! 2/3");
+//        if (isRoad[2][0]) System.out.println("!!! 3/3");
+
+
+//        Npc[] pumpkins = new Npc[30];
+//        for (int i = 0; i < pumpkins.length; i++) {
+//            pumpkins[i] = new Npc();
+//            pumpkins[i].set01EntityTex(EntityTex.Temp);
+//            pumpkins[i].set02EntityAnim(EntityAnimation.PUMPKIN);
+//            pumpkins[i].set11TexReg(texRegManager);
+//            pumpkins[i].set12Anim(animManager);
+//            pumpkins[i].set21Bounds();
+//            pumpkins[i].set22Borders();
+//            pumpkins[i].set23Range();
+//            pumpkins[i].set31World(world);
+//            pumpkins[i].set32Position(500,300);
+//            pumpkins[i].moveToPosition(200,300);
+//        }
 //        Spawner spawner = new Spawner(Entity.Temp );
 //        spawner.set11TexReg(texRegManager);
 //        spawner.set31World(world);

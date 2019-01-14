@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-import com.mygdx.game.Pos;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
@@ -86,16 +85,16 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         return stateMachine.getCurrentState().onMessage(this, msg);
     }
     //-------------------------------------------------------------------------------------------//
-    MyPath myPath = new MyPath();
+    public MyPath myPath = new MyPath();
     List<Vector2> path25 = new ArrayList<Vector2>();
     Vector2[] path5;
     public void moveToPosition(float x, float y){
         x = 100;
         y = 100;
         Random r = new Random();
-
+        myPath.speed *= 0.01;
         for (int i = 0; i < 200; i++) {
-            path25.add(new Vector2(x+r.nextInt(500),     y+r.nextInt(500)));
+            path25.add(new Vector2(x+r.nextInt(500),     y+r.nextInt(300)));
         }
 //        path25.add(new Vector2(x+0,     y-0));
 //        path25.add(new Vector2(x+100,   y-0));

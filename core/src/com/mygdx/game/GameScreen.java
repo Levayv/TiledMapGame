@@ -203,7 +203,7 @@ public class GameScreen implements Screen {
         //animation
         animationCreate();
 
-        testing();
+//        testing();
     }
     private void testing() {
         System.out.println("Testing LINE START");
@@ -372,7 +372,7 @@ public class GameScreen implements Screen {
         }
         // Camera moves 4 dir
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            stage.getCamera().translate(-6, 0, 0);
+            stage.getCamera().translate((float)-6.1f, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
             stage.getCamera().translate(6, 0, 0);
@@ -384,14 +384,14 @@ public class GameScreen implements Screen {
             stage.getCamera().translate(0, 6, 0);
         }
         // Camera zoom temp
-        if (Gdx.input.isKeyPressed(Keys.E)) {
-            if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)){
-                ((OrthographicCamera)stage.getCamera()).zoom += 1*delta;
+        if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)) {
+            if (Gdx.input.isKeyJustPressed(Keys.E)){
+                ((OrthographicCamera)stage.getCamera()).zoom += 0.2; //+= 1*delta;
             }
         }
-        if (Gdx.input.isKeyPressed(Keys.Q)) {
-            if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)){
-                ((OrthographicCamera)stage.getCamera()).zoom -= 1*delta;
+        if (Gdx.input.isKeyPressed(Keys.ALT_LEFT)) {
+            if (Gdx.input.isKeyJustPressed(Keys.Q)){
+                ((OrthographicCamera)stage.getCamera()).zoom -= 0.2; //+= 1*delta;
             }
         }
         if (Gdx.input.isKeyPressed(Keys.TAB)) {

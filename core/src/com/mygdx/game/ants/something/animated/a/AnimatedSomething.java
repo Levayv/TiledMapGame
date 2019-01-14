@@ -45,18 +45,7 @@ public class AnimatedSomething extends Something {
 
 //        coreAnimation = new Animation<TextureRegion>(frameDur, animFrames);
     }
-    @Override
-    public void set0Entity(EntityClass entityClass) {
-        super.set0Entity(entityClass);
-    }
-    @Override
-    public void set01EntityTex(EntityTex entityTex) {
-        super.set01EntityTex(entityTex);
-    }
-    @Override
-    public void set02EntityAnim(EntityAnimation entityAnim) {
-        super.set02EntityAnim(entityAnim);
-    }
+
     public void setAnim(WorldResAnimManager animManager){
         animation.setCoreAnimation(animManager.getAnimationByID(this.entityAnim));
 //        eventAnimation = animManager.getAnimationByID(this.entityAnim);

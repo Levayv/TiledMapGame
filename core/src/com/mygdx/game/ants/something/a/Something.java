@@ -40,10 +40,6 @@ public class Something extends coreActor{
     public void set01EntityTex(EntityTex entityTex) {
         super.set01EntityTex(entityTex);
     }
-    @Override
-    public void set02EntityAnim(EntityAnimation entityAnim) {
-        super.set02EntityAnim(entityAnim);
-    }
     public void setBorders(){
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
@@ -70,6 +66,7 @@ public class Something extends coreActor{
 
     @Override
     protected void positionChanged(){
+        // update Range if both range and border are not null
         if (range != null && border != null) {
             border.x = this.getX() + this.borderXdelta;
             border.y = this.getY() + this.borderYdelta;

@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
 public class Pos {
-    int x;
-    int y;
+    public int x;
+    public int y;
 }

@@ -30,10 +30,6 @@ public class AnimatedEventSomething extends Something {
     @Override
     public void act(float delta) {
         texReg = animation.updateFrame(delta);
-//        if (loopingEndless || startAnimCycle){
-//            setVisible(false);
-//        }else
-//            setVisible(true);
     }
     //-------------------------------------------------------------------------------------------//
     @Override

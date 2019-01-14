@@ -36,7 +36,6 @@ public class WorldManager {
     public WorldPositionManager posManager;
     private Collider collider;
     private AllData allData;
-    private Pos lastPos;
     public Group world;
 
 //    public Something tree1;
@@ -175,7 +174,8 @@ public class WorldManager {
         factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
-        //todo 1. add NPC class to creations
+        //todo 1. add NPC class to factory builder
+
 
         Npc pumpkin1;
         pumpkin1 = new Npc();
@@ -183,12 +183,29 @@ public class WorldManager {
         pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
         pumpkin1.set11TexReg(texRegManager);
         pumpkin1.set12Anim(animManager);
-        pumpkin1.set22Borders();
         pumpkin1.set21Bounds();
+        pumpkin1.set22Borders();
+        pumpkin1.set23Range();
         pumpkin1.set31World(world);
         pumpkin1.set32Position(500,300);
 
+        pumpkin1.moveToPosition(200,300);
 
+        Npc[] pumpkins = new Npc[30];
+        for (int i = 0; i < pumpkins.length; i++) {
+            pumpkins[i] = new Npc();
+            pumpkins[i].set01EntityTex(EntityTex.Temp);
+            pumpkins[i].set02EntityAnim(EntityAnimation.PUMPKIN);
+            pumpkins[i].set11TexReg(texRegManager);
+            pumpkins[i].set12Anim(animManager);
+            pumpkins[i].set21Bounds();
+            pumpkins[i].set22Borders();
+            pumpkins[i].set23Range();
+            pumpkins[i].set31World(world);
+            pumpkins[i].set32Position(500,300);
+            pumpkins[i].moveToPosition(200,300);
+
+        }
 //        Spawner spawner = new Spawner(Entity.Temp );
 //        spawner.set11TexReg(texRegManager);
 //        spawner.set31World(world);
@@ -300,12 +317,6 @@ public class WorldManager {
 
 
     }
-
-    private void setPosition(Actor actor , int x, int y){ // todo usage ?
-        actor.setPosition(x*tileSize , y*tileSize);
-    }
-
-
 
     public TiledMap getMap(){
         return map;

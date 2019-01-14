@@ -36,6 +36,8 @@ import com.mygdx.game.world.WorldManager;
 import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.world.WorldResTexRegManager;
 
+import java.util.Random;
+
 public class GameScreen implements Screen {
     final MyGdxGame game;
 
@@ -95,7 +97,7 @@ public class GameScreen implements Screen {
         this.game = game;
         saveLoadJson.setOutputType(JsonWriter.OutputType.json);
 //        boolean isLocAvailable = Gdx.files.isLocalStorageAvailable();
-//        if (!isLocAvailable) System.out.println("no space !!!");
+//        if (!isLocAvailable) System.out.println("no space");
 //        String locRoot = Gdx.files.getLocalStoragePath();
 //        System.out.println(locRoot);
 

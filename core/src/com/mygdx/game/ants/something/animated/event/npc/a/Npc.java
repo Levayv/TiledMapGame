@@ -7,24 +7,30 @@ import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.CatmullRomSpline;
-import com.badlogic.gdx.math.Path;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import com.mygdx.game.Pos;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.world.WorldResAnimManager;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Npc extends AnimatedEventSomething implements Telegraph {
     StateMachine<Npc, NpcState> stateMachine;
     private boolean go;
+    private float lastX;
+    private float lastY;
     private float time = 0;
     public void go(){
         go = true;
     }
-    private Path path;
     public Npc() {
         super();
     }
@@ -53,26 +59,18 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //        }
         if (go){ //todo fix move testing
 
-            current += delta * speed;
-            if(current >= 1)
-                current -= 1;
-            float place = current * k;
-            Vector2 first = points[(int)place];
-            Vector2 second;
-            if(((int)place+1) < k)
-            {
-                second = points[(int)place+1];
-            }
-            else
-            {
-                second = points[0]; //or finish, in case it does not loop.
-            }
-            float t = place - ((int)place); //the decimal part of place
-            setPosition(first.x + (second.x - first.x) * t, first.y + (second.y - first.y) * t);
+//            int ppp = (int) current * k;
+//            current += delta * speed / points[ppp].len() *1000;
+//            current += 1000* (delta * speed / myCatmull.spanCount) / points[ppp].len();
+//            current += (delta * speed / myCatmull.spanCount) / points[0].len();
 
+            myPath.nextDot(delta);
+            lastX = myPath.getNextX();
+            lastY = myPath.getNextY();
+            set32Position(lastX , lastY);
 
             time += delta;
-            if (time > 3){ //stop after 3 sec
+            if (time > 300){ //stop after 3 sec
                 go = false;
                 time = 0;
             }
@@ -87,50 +85,75 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                         " handleMessage: "+msg.message);
         return stateMachine.getCurrentState().onMessage(this, msg);
     }
-    float speed = 0.15f;
-    float current = 0;
-    CatmullRomSpline<Vector2> myCatmull;
-    private int k ; //increase k for more fidelity to the spline
-    private Vector2[] points  ;
-    public Vector2[] findPath(Stage stage){
-//        CatmullRomSpline<Vector2> myCatmull = new CatmullRomSpline<Vector2>(dataSet, true);
-//        Vector2 out = new Vector2();
-//        myCatmull.valueAt(out, t);
-//        myCatmull.derivativeAt(out, t);
+    //-------------------------------------------------------------------------------------------//
+    MyPath myPath = new MyPath();
+    List<Vector2> path25 = new ArrayList<Vector2>();
+    Vector2[] path5;
+    public void moveToPosition(float x, float y){
+        x = 100;
+        y = 100;
+        Random r = new Random();
 
-        /*members*/
-         k = 100; //increase k for more fidelity to the spline
-         points = new Vector2[k];
-//        Vector2[] dataSet = new Vector2[3];
-//        dataSet[0] = new Vector2(0,0);
-//        dataSet[1] = new Vector2(500,500);
-//        dataSet[2] = new Vector2(1000,1000);
-        Vector2[] dataSet = {
-                new Vector2(50,150), new Vector2(50,150),
-                new Vector2(400,400), new Vector2(600,150), new Vector2(700,400),
-                new Vector2(860,150), new Vector2(860,150)
-        };
+        for (int i = 0; i < 200; i++) {
+            path25.add(new Vector2(x+r.nextInt(500),     y+r.nextInt(500)));
+        }
+//        path25.add(new Vector2(x+0,     y-0));
+//        path25.add(new Vector2(x+100,   y-0));
+//        path25.add(new Vector2(x+100,   y-0));
+//        path25.add(new Vector2(x+300,   y-0));
+//        path25.add(new Vector2(x+400,   y-0));
+//        path25.add(new Vector2(x+500,   y-0));
+//        path25.add(new Vector2(x+600,   y-0));
+//        path25.add(new Vector2(x+700,   y-0));
+//        path25.add(new Vector2(x+600,   y-100));
+//        path25.add(new Vector2(x+500,   y-200));
+//        path25.add(new Vector2(x+400,   y-300));
+//        path25.add(new Vector2(x+300,   y-400));
+//        path25.add(new Vector2(x+200,   y-500));
+//        path25.add(new Vector2(x+100,   y-600));
+//        path25.add(new Vector2(x+900,   y-0));
+        path5 = new Vector2[path25.size()];
+        path5 = path25.toArray(path5);
+//        for (int i = 0; i < path25.size(); i++) {
+//            System.out.println("!!!"+path5[i].x+"/"+path5[i].y);
+//        }
+        myPath.findPath(path5);
+        go = true;
+
+
+    }
+    //-------------------------------------------------------------------------------------------//
+//    float speed = 0.15f;
+//    float current = 0;
+//    CatmullRomSpline<Vector2> myCatmull;
+//    private int k ; //increase k for more fidelity to the spline
+//    private Vector2[] points  ;
+//    public Vector2[] findPath(){
+////        CatmullRomSpline<Vector2> myCatmull = new CatmullRomSpline<Vector2>(dataSet, true);
+////        Vector2 out = new Vector2();
+////        myCatmull.valueAt(out, t);
+////        myCatmull.derivativeAt(out, t);
+//
+//        /*members*/
+//         k = 100; //increase k for more fidelity to the spline
+//         points = new Vector2[k];
+////        Vector2[] dataSet = new Vector2[3];
+////        dataSet[0] = new Vector2(0,0);
+////        dataSet[1] = new Vector2(500,500);
+////        dataSet[2] = new Vector2(1000,1000);
 //        Vector2[] dataSet = {
 //                new Vector2(50,150), new Vector2(50,150),
-//                new Vector2(400,800), new Vector2(600,150), new Vector2(700,400),
+//                new Vector2(400,400), new Vector2(600,150), new Vector2(700,400),
 //                new Vector2(860,150), new Vector2(860,150)
 //        };
-//        dataSet[1] = new Vector2(stage.getViewport().getScreenX()/2 , stage.getViewport().getScreenY()/2);
-//        dataSet[2] = new Vector2(stage.getViewport().getScreenX(),stage.getViewport().getScreenY());
-
-        /*init()*/
-
-        myCatmull = new CatmullRomSpline<Vector2>(dataSet, false);
-        for(int i = 0; i < k; ++i)
-        {
-            points[i] = new Vector2();
-            myCatmull.valueAt(points[i], ((float)i)/((float)k-1));
-//            myCatmull.derivativeAt(points[i], ((float)i)/((float)k-1));
-
-            System.out.println("C = " + points[i].x + points[i].y);
-        }
-        return points;
-    }
+//        myCatmull = new CatmullRomSpline<Vector2>(path5, false);
+//        for(int i = 0; i < k; ++i)
+//        {
+//            points[i] = new Vector2();
+//            myCatmull.valueAt(points[i], ((float)i)/((float)k-1));
+//        }
+//        return points;
+//    }
     @Override
     public void draw (Batch batch, float parentAlpha) {
         super.draw(batch,parentAlpha);

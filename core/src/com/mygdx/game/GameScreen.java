@@ -29,7 +29,6 @@ import com.mygdx.game.debug.tools.PerfCounter;
 import com.mygdx.game.debug.tools.ProfilerID;
 import com.mygdx.game.enums.DirConst4;
 import com.mygdx.game.enums.DirParser;
-import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.hud.GraphicalUserInterface;
@@ -292,10 +291,10 @@ public class GameScreen implements Screen {
                         System.out.print(" EntityName=");
                         System.out.print(lastHitSomething.getEntityName());
                         System.out.print(" IndexID=");
-                        System.out.print(lastHitSomething.getIndexID());
+                        System.out.print(lastHitSomething.getMyIndex());
                         System.out.println();
                         //todo builder/destroyer integration
-                        worldManager.factory.destroyOnClick(lastHitSomething.getIndexID());
+                        worldManager.factory.destroyOnClick(lastHitSomething.getMyIndex());
                     }else {
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");

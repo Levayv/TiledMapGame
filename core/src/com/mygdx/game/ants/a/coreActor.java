@@ -14,7 +14,7 @@ import com.mygdx.game.world.WorldResTexRegManager;
 public class coreActor extends Actor {
     public TextureRegion texReg;
     private Color color;
-    private InternalActorData data = new InternalActorData();
+    private InternalActorData internalData = new InternalActorData();
     protected EntityTex entityTex;
     protected EntityClass entityClass;
 
@@ -35,12 +35,10 @@ public class coreActor extends Actor {
         setBounds(texReg.getRegionX(), texReg.getRegionY(),
                 texReg.getRegionWidth(), texReg.getRegionHeight());
     }
-
     public void set2World(Group world) {
         world.addActor(this);
-        setUserObject(data);
+        setUserObject(internalData);
     }
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
 //        color = getColor();
@@ -48,21 +46,17 @@ public class coreActor extends Actor {
         batch.draw(texReg, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
-
     public int getEntityID() {
         return this.entityTex.getID();
     }
-
     public String getEntityName() {
         return entityTex.name();
     }
-
-    public void set3IndexID(int indexID) {
-        data.indexID = indexID;
+    public void setMyIndexID(int index) {
+        internalData.index = index;
     }
-
-    public int getIndexID() {
-        return ((InternalActorData) getUserObject()).indexID;
+    public int getMyIndex() {
+        return ((InternalActorData) getUserObject()).index;
     }
 
 

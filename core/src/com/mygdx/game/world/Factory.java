@@ -7,9 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.Collider;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
-import com.mygdx.game.enums.entity.EntityAnimation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,14 +118,14 @@ public class Factory {
                 somethingsOnDuty.add(tavern);
                 // Object property init
                 tavern.set01EntityTex(entityTex);
-                tavern.set3IndexID(somethingsOnDuty.size()-1);
+                tavern.setMyIndexID(somethingsOnDuty.size()-1);
                 tavern.set1TexReg(texRegManager);
                 tavern.set2World(worldGroup);
                 tavern.setBorders();
                 tavern.setVisible(true);
                 tavern.setPosition(posManager.getPosX(), posManager.getPosY());
                 tavern.setName("Tavern");
-                tavern.setData(allData.getSomethingDataByID(tavern.getEntityID()));
+                tavern.set9Data(allData.getSomethingDataByID(tavern.getEntityID()));
                 // inform coreTileData about data update
                 coreTileData.buildingHere(posManager.getTileX(), posManager.getTileY());
                 // remove ghost from screen, it will go invisible after phase end
@@ -151,16 +149,16 @@ public class Factory {
                 // remove collider if it was
                 if (somethingsOnDuty.get(indexID).getData().isCollider)
                     collider.del(somethingsOnDuty.get(indexID).getBorder());
-                // tear off ... from ...onDuty , and store in DeadPool
+                // tear off ... from ...onDuty , and store in DeadPool (which wipes internal state)
                 deadPool.burySomething(somethingsOnDuty.remove(indexID));
                 // iterate threw ...onDuty , to fix shifted ID's
                 for (int i = indexID; i < somethingsOnDuty.size() ; i++) { // -1 ?
                     Gdx.app.debug("Debug: Factory", "for i="+i);
                     Gdx.app.debug("Debug: Factory", "for onDutySize="+somethingsOnDuty.size());
-                    Gdx.app.debug("Debug: Factory", "duty ID [BUGGY]="+somethingsOnDuty.get(i).getIndexID());
-                    // shifting ID to right in Actor's container via getIndexID & getIndexID
-                    somethingsOnDuty.get(i).set3IndexID(somethingsOnDuty.get(i).getIndexID()-1);
-                    Gdx.app.debug("Debug: Factory", "duty ID [FIXED]="+somethingsOnDuty.get(i).getIndexID());
+                    Gdx.app.debug("Debug: Factory", "duty ID [BUGGY]="+somethingsOnDuty.get(i).getMyIndex());
+                    // shifting ID to right in Actor's container via getMyIndex & getMyIndex
+                    somethingsOnDuty.get(i).setMyIndexID(somethingsOnDuty.get(i).getMyIndex()-1);
+                    Gdx.app.debug("Debug: Factory", "duty ID [FIXED]="+somethingsOnDuty.get(i).getMyIndex());
                 }
                 Gdx.app.debug("Debug: Factory", "Tile ="+posManager.getTileX()+" / "+ posManager.getTileY());
                 // inform coreTileData about data update

@@ -14,7 +14,7 @@ class CoreTileData {
         isDestructible = new boolean[this.w][this.h];
     }
     public boolean canBuildHere(int x, int y){
-        if (x>=0 && y>=0 && x<=w && x<=h){
+        if (x>=0 && y>=0 && x<w && y<h){
             buffer = !isOccupied[x][y];
         }else
             buffer = false;

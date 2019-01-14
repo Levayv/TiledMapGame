@@ -26,7 +26,7 @@ class DeadPool {
             return graveOfSomething.remove(graveOfSomething.size()-1);
         }
     }
-    public void burySomething(Something something){
+    public void burySomething(Something something){ // must wipe internal state
         Gdx.app.debug("DeadPool", "burying Something, total:"+(graveOfSomething.size()+1));
         something.destroy();
         graveOfSomething.add(something);

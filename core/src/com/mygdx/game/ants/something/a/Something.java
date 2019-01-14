@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import com.mygdx.game.ants.a.coreActor;
-import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
 
@@ -40,6 +39,14 @@ public class Something extends coreActor{
     public void set01EntityTex(EntityTex entityTex) {
         super.set01EntityTex(entityTex);
     }
+
+    public void set9Data(SomethingData data) {
+        this.data = data;
+    }
+    public SomethingData getData(){
+        return data;
+    }
+
     public void setBorders(){
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
@@ -88,12 +95,7 @@ public class Something extends coreActor{
 //        border = null;
 //        range = null;
         entityTex = entityTex.None;
-        set3IndexID(-1);
+        setMyIndexID(-1);
     }
-    public void setData(SomethingData data) {
-        this.data = data;
-    }
-    public SomethingData getData(){
-        return data;
-    }
+
 }

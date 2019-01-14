@@ -17,15 +17,7 @@ public class Something extends coreActor{
     private int borderYdelta;
     private SomethingData data;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
-
-
-    //    public Something(TextureRegion texReg) { //todo change constructor , only entity enum must be needed
-//        super(texReg);
-//        border = new Rectangle();
-//        range = new Circle();
-//        buffVect2 = new Vector2();
-//    }
-    public Something() { //todo change constructor , only entity enum must be needed
+    public Something() {
         super();
         border = new Rectangle();
         range = new Circle();
@@ -40,14 +32,15 @@ public class Something extends coreActor{
         super.set01EntityTex(entityTex);
     }
 
-    public void set9Data(SomethingData data) {
+    public void set09Data(SomethingData data) {
         this.data = data;
     }
     public SomethingData getData(){
         return data;
     }
 
-    public void setBorders(){
+
+    public void set22Borders(){
         border.x      = texReg.getRegionX();
         border.y      = texReg.getRegionY();
         border.width  = texReg.getRegionWidth();
@@ -55,24 +48,29 @@ public class Something extends coreActor{
 //        border.x = this.getX() + 0;
 //        border.y = this.getY() + 0;
 //        range.set(border.getCenter(new Vector2()),new Vector2(border.x*2,border.y*2)  );
-        setRange();
     }
-    public void setBorders(int borderXdelta, int borderYdelta , int borderWdelta, int borderHdelta  ){
+    public void set22Borders(int borderXdelta, int borderYdelta , int borderWdelta, int borderHdelta  ){
         this.borderXdelta = borderXdelta;
         this.borderYdelta = borderYdelta;
         border.x = texReg.getRegionX() + this.borderXdelta;
         border.y = texReg.getRegionY() + this.borderYdelta;
         border.width  = texReg.getRegionWidth()  - borderWdelta*2;
         border.height = texReg.getRegionHeight() - borderHdelta*2;
-        setRange();
     }
-    public void setRange(){
+    public void set23Range(){
         range.setPosition(border.getCenter(new Vector2()));
         range.setRadius(border.x*2);
     }
-
+    //-------------------------------------------------------------------------------------------//
+    public float getBorderX(){ return border.x;}
+    public float getBorderY(){ return border.y;}
+    public float getBorderW(){ return border.width;}
+    public float getBorderH(){ return border.height;}
+    public Rectangle getBorder(){ return border;}
+    public Circle getRange(){ return range;}
+    //-------------------------------------------------------------------------------------------//
     @Override
-    protected void positionChanged(){
+    protected void positionChanged(){ //todo optimise ! Something pos rarely changes
         // update Range if both range and border are not null
         if (range != null && border != null) {
             border.x = this.getX() + this.borderXdelta;
@@ -80,13 +78,8 @@ public class Something extends coreActor{
             range.setPosition(border.getCenter(buffVect2));
         }
     }
-    public float getBorderX(){ return border.x;}
-    public float getBorderY(){ return border.y;}
-    public float getBorderW(){ return border.width;}
-    public float getBorderH(){ return border.height;}
-    public Rectangle getBorder(){ return border;}
-    public Circle getRange(){ return range;}
-    public void destroy(){
+    //-------------------------------------------------------------------------------------------//
+    public void destroy(){ // Call from DeadPool
         this.remove();
         this.setVisible(false);
         this.setPosition(nullVector.x, nullVector.y);
@@ -94,8 +87,7 @@ public class Something extends coreActor{
         this.texReg = null;
 //        border = null;
 //        range = null;
-        entityTex = entityTex.None;
-        setMyIndexID(-1);
+        entityTex = null; //todo research
+        setMyIndex(-1);
     }
-
 }

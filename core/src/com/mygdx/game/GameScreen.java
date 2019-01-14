@@ -170,9 +170,10 @@ public class GameScreen implements Screen {
         // WorldManager init
         player = new Player();
         player.set01EntityTex(EntityTex.Player);
-        player.set1TexReg(buffer1);
-        player.setBorders(20,0,20,20);
-
+        player.set11TexReg(buffer1);
+        player.set21Bounds();
+        player.set22Borders(20,0,20,20);
+        player.set23Range();
         colCheck.add(player.getBorder());
 
         worldManager = new WorldManager(stage , buffer1, buffer2, new TextureRegion(texRegLever),colCheck);
@@ -180,10 +181,10 @@ public class GameScreen implements Screen {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(worldManager.getMap());
 
         //actors!
-        player.set2World(worldManager.world);
-//        player.setBorders();
-//        player.setBorders(10,10,20,20);
-        player.setPosition(screen_width / 2 - object_width / 2,
+        player.set31World(worldManager.world);
+//        player.set22Borders();
+//        player.set22Borders(10,10,20,20);
+        player.set32Position(screen_width / 2 - object_width / 2,
                 screen_height/ 2 - object_height / 2); //todo screen_w/h object_w/h are final ?
         player.setAnimations();
 

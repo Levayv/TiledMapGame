@@ -49,17 +49,19 @@ public class Factory {
         // init 2 ghosts for build and destroy
         ghostBuild = new Something();
         ghostBuild.set01EntityTex(EntityTex.Ghost1);
-        ghostBuild.set1TexReg(texRegManager);
-        ghostBuild.set2World(worldGroup);
-        ghostBuild.setBorders();
+        ghostBuild.set11TexReg(texRegManager);
+        ghostBuild.set21Bounds();
+        ghostBuild.set22Borders();
+        ghostBuild.set31World(worldGroup);
         ghostBuild.setPosition(nullVector.x, nullVector.y);
         ghostBuild.setTouchable(Touchable.disabled);
         ghostBuild.setVisible(false);
         ghostDestroy = new Something();
         ghostDestroy.set01EntityTex(EntityTex.Ghost2);
-        ghostDestroy.set1TexReg(texRegManager);
-        ghostDestroy.set2World(worldGroup);
-        ghostDestroy.setBorders();
+        ghostDestroy.set11TexReg(texRegManager);
+        ghostDestroy.set21Bounds();
+        ghostDestroy.set22Borders();
+        ghostDestroy.set31World(worldGroup);
         ghostDestroy.setPosition(nullVector.x, nullVector.y);
         ghostDestroy.setTouchable(Touchable.disabled);
         ghostDestroy.setVisible(false);
@@ -116,16 +118,17 @@ public class Factory {
                 //todo BOOOO its not a tavern
                 Something tavern = deadPool.createSomething(entityTex);
                 somethingsOnDuty.add(tavern);
+                tavern.setMyIndex(somethingsOnDuty.size()-1);
                 // Object property init
                 tavern.set01EntityTex(entityTex);
-                tavern.setMyIndexID(somethingsOnDuty.size()-1);
-                tavern.set1TexReg(texRegManager);
-                tavern.set2World(worldGroup);
-                tavern.setBorders();
+                tavern.set11TexReg(texRegManager);
+                tavern.set21Bounds();
+                tavern.set31World(worldGroup);
+                tavern.set22Borders();
                 tavern.setVisible(true);
                 tavern.setPosition(posManager.getPosX(), posManager.getPosY());
-                tavern.setName("Tavern");
-                tavern.set9Data(allData.getSomethingDataByID(tavern.getEntityID()));
+                tavern.setName("Tavern: "+entityTex.name());
+                tavern.set09Data(allData.getSomethingDataByID(tavern.getEntityID()));
                 // inform coreTileData about data update
                 coreTileData.buildingHere(posManager.getTileX(), posManager.getTileY());
                 // remove ghost from screen, it will go invisible after phase end
@@ -146,7 +149,7 @@ public class Factory {
                 Gdx.app.debug("Debug: Factory", "arg indexID="+indexID);
                 Gdx.app.debug("Debug: Factory", "x/y="+x+"/"+y);
                 Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty);
-                // remove collider if it was
+                // remove collider if it has one
                 if (somethingsOnDuty.get(indexID).getData().isCollider)
                     collider.del(somethingsOnDuty.get(indexID).getBorder());
                 // tear off ... from ...onDuty , and store in DeadPool (which wipes internal state)
@@ -157,7 +160,7 @@ public class Factory {
                     Gdx.app.debug("Debug: Factory", "for onDutySize="+somethingsOnDuty.size());
                     Gdx.app.debug("Debug: Factory", "duty ID [BUGGY]="+somethingsOnDuty.get(i).getMyIndex());
                     // shifting ID to right in Actor's container via getMyIndex & getMyIndex
-                    somethingsOnDuty.get(i).setMyIndexID(somethingsOnDuty.get(i).getMyIndex()-1);
+                    somethingsOnDuty.get(i).setMyIndex(somethingsOnDuty.get(i).getMyIndex()-1);
                     Gdx.app.debug("Debug: Factory", "duty ID [FIXED]="+somethingsOnDuty.get(i).getMyIndex());
                 }
                 Gdx.app.debug("Debug: Factory", "Tile ="+posManager.getTileX()+" / "+ posManager.getTileY());

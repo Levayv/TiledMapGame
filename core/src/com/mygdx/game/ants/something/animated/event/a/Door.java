@@ -5,13 +5,10 @@ import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.StateMachine;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
-import com.badlogic.gdx.graphics.g2d.Batch;
 
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.world.WorldResAnimManager;
-import com.mygdx.game.enums.entity.EntityClass;
-import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 
 public class Door extends AnimatedEventSomething implements Telegraph {
@@ -33,8 +30,8 @@ public class Door extends AnimatedEventSomething implements Telegraph {
         super.set02EntityAnim(entityAnim);
     }
     @Override
-    public void setAnim(WorldResAnimManager animManager){
-        super.setAnim(animManager);
+    public void set12Anim(WorldResAnimManager animManager){
+        super.set12Anim(animManager);
         // changes in animation logic
         animation.setLoopingEndless(false);
         // fsm init
@@ -42,7 +39,7 @@ public class Door extends AnimatedEventSomething implements Telegraph {
     }
     @Override
     public void act(float delta) {
-        texReg = animation.updateFrame(delta);
+        super.act(delta);
         stateMachine.update();
     }
     @Override

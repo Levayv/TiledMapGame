@@ -19,7 +19,6 @@ import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
-import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.jsonDataLoaderForEntities;
@@ -182,17 +181,18 @@ public class WorldManager {
         pumpkin1 = new Npc();
         pumpkin1.set01EntityTex(EntityTex.Temp);
         pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
-        pumpkin1.set1TexReg(texRegManager);
-        pumpkin1.set2World(world);
-        pumpkin1.setBorders();
-        pumpkin1.setPosition(500,300);
-        pumpkin1.setAnim(animManager);
+        pumpkin1.set11TexReg(texRegManager);
+        pumpkin1.set12Anim(animManager);
+        pumpkin1.set22Borders();
+        pumpkin1.set21Bounds();
+        pumpkin1.set31World(world);
+        pumpkin1.set32Position(500,300);
 
 
 //        Spawner spawner = new Spawner(Entity.Temp );
-//        spawner.set1TexReg(texRegManager);
-//        spawner.set2World(world);
-//        spawner.setBorders();
+//        spawner.set11TexReg(texRegManager);
+//        spawner.set31World(world);
+//        spawner.set22Borders();
 //        spawner.setPosition(objX[0],objY[0]);
 //        spawner.create(factory,pos.set(12*tileSize , 3*tileSize ));
 
@@ -215,31 +215,34 @@ public class WorldManager {
         tower1.set01EntityTex(EntityTex.Tower);
         tower2.set01EntityTex(EntityTex.Tower);
         tower3.set01EntityTex(EntityTex.Tower);
-        tower1.set1TexReg(texRegManager);
-        tower2.set1TexReg(texRegManager);
-        tower3.set1TexReg(texRegManager);
-        door1.set1TexReg(texRegManager);
-//        boomE.set1TexReg(texRegManager);
+        tower1.set11TexReg(texRegManager);
+        tower2.set11TexReg(texRegManager);
+        tower3.set11TexReg(texRegManager);
+        tower1.set21Bounds();
+        tower2.set21Bounds();
+        tower3.set21Bounds();
+        door1.set11TexReg(texRegManager);
+        door1.set12Anim(animManager);
+        door1.set21Bounds();
+//        boomE.set11TexReg(texRegManager);
 
-        tower1.set2World(world);
-        tower2.set2World(world);
-        tower3.set2World(world);
-        door1.set2World(world);
-//        boomE.set2World(world);
+        tower1.set31World(world);
+        tower2.set31World(world);
+        tower3.set31World(world);
+        door1.set31World(world);
+//        boomE.set31World(world);
 
-        door1.setBorders();
-//        boomE.setBorders();
-        tower1.setBorders();
-        tower2.setBorders();
-        tower3.setBorders();
+        door1.set22Borders();
+//        boomE.set22Borders();
+        tower1.set22Borders();
+        tower2.set22Borders();
+        tower3.set22Borders();
 
 //        door1.tempINT = 12;
 //        door1.tempString = "Explosion";
 //        door2.tempINT = 12;
 //        door2.tempString = "Explosion";
-        door1.setAnim(animManager);
-//        boomE.setAnim(animManager);
-
+//        boomE.set12Anim(animManager);
 
         for (int i = 0; i < mobCount; i++) {
             slime1[i] = new Npc();
@@ -256,36 +259,41 @@ public class WorldManager {
             doorss[i].set02EntityAnim(EntityAnimation.DOOR_OPEN);
 
 
-            slime1[i].set1TexReg(texRegManager);
-            slime2[i].set1TexReg(texRegManager);
-            slime3[i].set1TexReg(texRegManager);
-            doorss[i].set1TexReg(texRegManager);
-            slime1[i].set2World(world);
-            slime2[i].set2World(world);
-            slime3[i].set2World(world);
-            doorss[i].set2World(world);
-            slime1[i].setBorders();
-            slime2[i].setBorders();
-            slime3[i].setBorders();
-            doorss[i].setBorders();
-            slime1[i].setPosition(i*tileSize,1*tileSize);
-            slime2[i].setPosition(i*tileSize,6*tileSize);
-            slime3[i].setPosition(i*tileSize,9*tileSize);
-            doorss[i].setPosition(i*tileSize,12*tileSize);
-            slime1[i].setAnim(animManager);
-            slime2[i].setAnim(animManager);
-            slime3[i].setAnim(animManager);
-            doorss[i].setAnim(animManager);
+            slime1[i].set11TexReg(texRegManager);
+            slime2[i].set11TexReg(texRegManager);
+            slime3[i].set11TexReg(texRegManager);
+            doorss[i].set11TexReg(texRegManager);
+            slime1[i].set12Anim(animManager);
+            slime2[i].set12Anim(animManager);
+            slime3[i].set12Anim(animManager);
+            doorss[i].set12Anim(animManager);
+            slime1[i].set21Bounds();
+            slime2[i].set21Bounds();
+            slime3[i].set21Bounds();
+            doorss[i].set21Bounds();
+            slime1[i].set31World(world);
+            slime2[i].set31World(world);
+            slime3[i].set31World(world);
+            doorss[i].set31World(world);
+            slime1[i].set22Borders();
+            slime2[i].set22Borders();
+            slime3[i].set22Borders();
+            doorss[i].set22Borders();
+            slime1[i].set32Position(i*tileSize,1*tileSize);
+            slime2[i].set32Position(i*tileSize,6*tileSize);
+            slime3[i].set32Position(i*tileSize,9*tileSize);
+            doorss[i].set32Position(i*tileSize,12*tileSize);
+
 //            world.addActor(slime1[i]);
 //            world.addActor(slime2[i]);
 //            world.addActor(slime3[i]);
         }
 
-        door1.setPosition(12*tileSize,12*tileSize);
+        door1.set32Position(12*tileSize,12*tileSize);
 //        boomE.setPosition(15*tileSize,12*tileSize);
-        tower1.setPosition(18 *tileSize,0 *tileSize);
-        tower2.setPosition(18 *tileSize,5 *tileSize);
-        tower3.setPosition(18 *tileSize,10 *tileSize);
+        tower1.set32Position(18 *tileSize,0 *tileSize);
+        tower2.set32Position(18 *tileSize,5 *tileSize);
+        tower3.set32Position(18 *tileSize,10 *tileSize);
 
 //        boomE.setLoop(false);
 
@@ -309,9 +317,9 @@ public class WorldManager {
 //    public void build(int id,float x, float y){
 //        System.out.println("id="+id);
 //        Something tavern = new Something(Entity.Temp);
-//        tavern.set1TexReg(texRegManager);
-//        tavern.set2World(world);
-//        tavern.setBorders();
+//        tavern.set11TexReg(texRegManager);
+//        tavern.set31World(world);
+//        tavern.set22Borders();
 //        tavern.setPosition(x,y);
 //
 //        factory.stopBuilding();

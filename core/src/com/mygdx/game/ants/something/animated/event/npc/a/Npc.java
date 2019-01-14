@@ -41,8 +41,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         super.set02EntityAnim(entityAnim);
     }
     @Override
-    public void setAnim(WorldResAnimManager animManager){
-        super.setAnim(animManager);
+    public void set12Anim(WorldResAnimManager animManager){
+        super.set12Anim(animManager);
         // changes in animation logic
         animation.setLoopingEndless(true);
         // fsm init
@@ -50,7 +50,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     }
     @Override
     public void act(float delta){
-        texReg = animation.updateFrame(delta);
+        super.act(delta);
         stateMachine.update();
 //        if (go){ //todo fix move testing
 //            float updateX = 1;
@@ -145,6 +145,6 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     }
     @Override
     public void draw (Batch batch, float parentAlpha) {
-        batch.draw(texReg, getX(), getY());
+        super.draw(batch,parentAlpha);
     }
 }

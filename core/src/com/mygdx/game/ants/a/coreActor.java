@@ -13,32 +13,34 @@ import com.mygdx.game.world.WorldResTexRegManager;
 
 public class coreActor extends Actor {
     public TextureRegion texReg;
-    private Color color;
+//    private Color color;
     private InternalActorData internalData = new InternalActorData();
     protected EntityTex entityTex;
     protected EntityClass entityClass;
-
     protected coreActor() {
     }
-
     public void set0Entity(EntityClass entityClass) {
         this.entityClass = entityClass;
     }
-
     public void set01EntityTex(EntityTex entityTex) {
         this.entityTex = entityTex;
     }
-
-
-    public void set1TexReg(WorldResTexRegManager texRegManager) {
+    public void set11TexReg(WorldResTexRegManager texRegManager) {
         texReg = texRegManager.getTexRegByID(entityTex);
+
+    }
+    public void set21Bounds(){
         setBounds(texReg.getRegionX(), texReg.getRegionY(),
                 texReg.getRegionWidth(), texReg.getRegionHeight());
+        setUserObject(internalData); //dependent on EntityTex
     }
-    public void set2World(Group world) {
+    public void set31World(Group world) {
         world.addActor(this);
-        setUserObject(internalData);
     }
+    public void set32Position (float x, float y) {
+        super.setPosition(x,y);
+    }
+    //-------------------------------------------------------------------------------------------//
     @Override
     public void draw(Batch batch, float parentAlpha) {
 //        color = getColor();
@@ -52,21 +54,10 @@ public class coreActor extends Actor {
     public String getEntityName() {
         return entityTex.name();
     }
-    public void setMyIndexID(int index) {
+    public void setMyIndex(int index) {
         internalData.index = index;
     }
     public int getMyIndex() {
         return ((InternalActorData) getUserObject()).index;
     }
-
-
-//    public boolean getColision() {
-//        return collision;
-//    }
-//
-//    public void setCollision(boolean collision) {
-//        this.collision = collision;
-//    }
-
-
 }

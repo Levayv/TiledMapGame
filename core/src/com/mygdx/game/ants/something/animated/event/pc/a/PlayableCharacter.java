@@ -24,8 +24,4 @@ public class PlayableCharacter extends Npc {
     public void set02EntityAnim(EntityAnimation entityAnim) {
         super.set02EntityAnim(entityAnim);
     }
-    @Override
-    public void draw (Batch batch, float parentAlpha) {
-        batch.draw(texReg, getX(), getY());
-    }
 }

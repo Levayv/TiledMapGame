@@ -69,15 +69,16 @@ class MyPathFinder {
         posDir[1].x--;
         posDir[2].y++;
         posDir[3].y--;
-        int minBuffer = Integer.MAX_VALUE;
+        int minBuffer = 999999;
         int buffer = 0;
         Vector1 posBuffer = new Vector1();
         for (int i = 0; i < 4; i++) {
-            System.out.println("!!! 2222222"+posC.x+"/"+posC.y);
-            if (road[posDir[i].x][posDir[i].y] ){
+            System.out.println("!!! 2222222ppggg"+posC.x+"/"+posC.y);
+            if (road[posDir[i].x][posDir[i].y] && processed[posDir[i].x][posDir[i].y]){
                 buffer = distance[posDir[i].x][posDir[i].y];
                 if (buffer<minBuffer){
-                    System.out.println("!!!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    minBuffer = buffer;
+                    System.out.println("!!!+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"+buffer);
                     posBuffer = posDir[i];
                 }
             }
@@ -140,7 +141,7 @@ class MyPathFinder {
             }
         }
 //        pos = new Vector1(destination);
-        pos.x = Integer.valueOf(destination.x) ;
+        pos.x = destination.x ;
         pos.y = destination.y;
         watchdog = 0;
         go = true;

@@ -196,7 +196,7 @@ public class WorldManager {
 
         MyPathFinder pathFinder;
         pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,isRoad);
-        pathFinder.calc(new Vector1(2,2),new Vector1(10,10));
+        pathFinder.calc(new Vector1(2,2),new Vector1(2,10));
 
 
 

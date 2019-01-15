@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 public class MyPath {
     float speed = 0.15f;
     float current = 0;
-    CatmullRomSpline<Vector2> myCatmull;
+    public CatmullRomSpline<Vector2> myCatmull;
     private int k ; //increase k for more fidelity to the spline
-    private Vector2[] points  ;
+    public Vector2[] points  ;
     private Vector2 first;
     private Vector2 second;
     private float timeDecimalPart;

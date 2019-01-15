@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Collider;
 import com.mygdx.game.Grid;
+import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
 import com.mygdx.game.ants.something.a.Something;
@@ -44,7 +45,7 @@ public class WorldManager {
     public Something tower2;
     public Something tower3;
 //    public Something lever;
-
+    public Npc pumpkin1;
     public Door door1;
 //    public AnimatedSomething boomE;
 
@@ -180,7 +181,7 @@ public class WorldManager {
         //todo 1. add NPC class to factory builder
 
 
-        Npc pumpkin1;
+
         pumpkin1 = new Npc();
         pumpkin1.set01EntityTex(EntityTex.Temp);
         pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
@@ -191,28 +192,46 @@ public class WorldManager {
         pumpkin1.set23Range();
         pumpkin1.set31World(world);
         pumpkin1.set32Position(500,300);
-        pumpkin1.moveToPosition(200,300);
 
 
         MyPathFinder pathFinder;
-        pathFinder = new MyPathFinder(mapWidth,mapHeight,isRoad);
-        pathFinder.calc(2,2);
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,isRoad);
+        pathFinder.calc(new Vector1(2,2),new Vector1(10,10));
+
+
 
         isRoad = pathFinder.getVisited();
 
 
-//        System.out.println("!!!+"+TimeUtils.nanoTime());
-//        for (int i = 31; i >= 0; i--) {
-//            for (int j = 0; j < 32; j++) {
+        System.out.println("!!!+"+TimeUtils.nanoTime());
+        for (int i = 31; i >= 0; i--) {
+            for (int j = 0; j < 32; j++) {
 //                if (isRoad[j][i]){
 //                    System.out.print("+");
 //                }else {
 //                    System.out.print("-");
 //                }
-//            }
-//            System.out.println();
-//        }
-//        System.out.println("!!!+"+TimeUtils.nanoTime());
+                System.out.print(pathFinder.distance[j][i]+",");
+            }
+            System.out.println();
+        }
+        for (int i = 31; i >= 0; i--) {
+            for (int j = 0; j < 32; j++) {
+                if (pathFinder.processed[j][i]){
+                    System.out.print("+");
+                }else {
+                    System.out.print("-");
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("!!!+"+TimeUtils.nanoTime());
+        Vector2[] vvv = pathFinder.getPath5();
+        for (int i = 0; i < vvv.length; i++) {
+            System.out.println("!!! vvv + " +vvv[i].x+"/"+vvv[i].y);
+        }
+
+        pumpkin1.moveToPosition(pathFinder.getPath5());
 
 //        if (isRoad[0][0]) System.out.println("!!! 1/3");
 //        if (isRoad[1][0]) System.out.println("!!! 2/3");

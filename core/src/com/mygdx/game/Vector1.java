@@ -11,4 +11,8 @@ public class Vector1 {
         this.x = pos.x;
         this.y = pos.y;
     }
+    public Vector1(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 }

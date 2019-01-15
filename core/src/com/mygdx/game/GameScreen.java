@@ -581,6 +581,16 @@ public class GameScreen implements Screen {
             debugShape.circle(player.getRange().x,
                     player.getRange().y,
                     player.getRange().radius);
+//            if (worldManager.pumpkin1.myPath.myCatmull!=null){
+//                if (worldManager.pumpkin1.myPath.points!=null){
+//                    Vector2[] points2 = worldManager.pumpkin1.myPath.points;
+//                    for(int i = 0; i < points.length; ++i)
+//                    {
+//                        debugShape.line(points2[i], points[i+1]);
+//                    }
+//                }
+//
+//            }
             if (points!=null){
                 for(int i = 0; i < 99-1; ++i)
                 {

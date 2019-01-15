@@ -88,38 +88,40 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     public MyPath myPath = new MyPath();
     List<Vector2> path25 = new ArrayList<Vector2>();
     Vector2[] path5;
-    public void moveToPosition(float x, float y){
-        x = 100;
-        y = 100;
-        Random r = new Random();
-        myPath.speed *= 0.01;
-        for (int i = 0; i < 200; i++) {
-            path25.add(new Vector2(x+r.nextInt(500),     y+r.nextInt(300)));
-        }
-//        path25.add(new Vector2(x+0,     y-0));
-//        path25.add(new Vector2(x+100,   y-0));
-//        path25.add(new Vector2(x+100,   y-0));
-//        path25.add(new Vector2(x+300,   y-0));
-//        path25.add(new Vector2(x+400,   y-0));
-//        path25.add(new Vector2(x+500,   y-0));
-//        path25.add(new Vector2(x+600,   y-0));
-//        path25.add(new Vector2(x+700,   y-0));
-//        path25.add(new Vector2(x+600,   y-100));
-//        path25.add(new Vector2(x+500,   y-200));
-//        path25.add(new Vector2(x+400,   y-300));
-//        path25.add(new Vector2(x+300,   y-400));
-//        path25.add(new Vector2(x+200,   y-500));
-//        path25.add(new Vector2(x+100,   y-600));
-//        path25.add(new Vector2(x+900,   y-0));
-        path5 = new Vector2[path25.size()];
-        path5 = path25.toArray(path5);
-//        for (int i = 0; i < path25.size(); i++) {
-//            System.out.println("!!!"+path5[i].x+"/"+path5[i].y);
+    public void moveToPosition(Vector2[] vectorArg){
+        myPath.speed *= 1.1;
+        int x = 100;
+        int y = 100;
+//        Random r = new Random();
+//        for (int i = 0; i < 200; i++) {
+//            path25.add(new Vector2(x+r.nextInt(500),     y+r.nextInt(300)));
 //        }
+        path25.add(new Vector2(x+0,     y-0));
+        path25.add(new Vector2(x+100,   y-0));
+        path25.add(new Vector2(x+100,   y-0));
+        path25.add(new Vector2(x+300,   y-0));
+        path25.add(new Vector2(x+400,   y-0));
+        path25.add(new Vector2(x+500,   y-0));
+        path25.add(new Vector2(x+600,   y-0));
+        path25.add(new Vector2(x+700,   y-0));
+        path25.add(new Vector2(x+600,   y-100));
+        path25.add(new Vector2(x+500,   y-200));
+        path25.add(new Vector2(x+400,   y-300));
+        path25.add(new Vector2(x+300,   y-400));
+        path25.add(new Vector2(x+200,   y-500));
+        path25.add(new Vector2(x+100,   y-600));
+        path25.add(new Vector2(x+900,   y-0));
+
+
+
+
+
+
+        path5 = vectorArg;
+//        path5 = new Vector2[path25.size()];
+//        path5 = path25.toArray(path5);
         myPath.findPath(path5);
         go = true;
-
-
     }
     //-------------------------------------------------------------------------------------------//
 //    float speed = 0.15f;

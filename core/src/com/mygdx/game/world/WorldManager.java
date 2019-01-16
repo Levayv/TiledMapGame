@@ -188,14 +188,19 @@ public class WorldManager {
         pumpkin1.set11TexReg(texRegManager);
         pumpkin1.set12Anim(animManager);
         pumpkin1.set21Bounds();
-        pumpkin1.set22Borders();
+//        pumpkin1.set22Borders(-40,-20);
+        pumpkin1.set22Borders(50,2);
         pumpkin1.set23Range();
         pumpkin1.set31World(world);
         pumpkin1.set32Position(500,300);
 
 
         MyPathFinder pathFinder;
-        pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,isRoad);
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,
+                pumpkin1.getBorderW(),pumpkin1.getBorderH(),
+                pumpkin1.borderXdelta,pumpkin1.borderYdelta,
+                isRoad);
+//        pumpkin1.getWidth(),pumpkin1.getHeight(),isRoad);
         pathFinder.calc(new Vector1(2,2),new Vector1(2,10));
 
 
@@ -232,6 +237,10 @@ public class WorldManager {
         }
 
         pumpkin1.moveToPosition(pathFinder.getPath5());
+        System.out.println("!!! aaa "+pumpkin1.texReg.getRegionHeight());
+        System.out.println("!!! aaa "+pumpkin1.texReg.getRegionWidth());
+        System.out.println("!!! aaa "+pumpkin1.getBorderW());
+        System.out.println("!!! aaa "+pumpkin1.getBorderH());
 
 //        if (isRoad[0][0]) System.out.println("!!! 1/3");
 //        if (isRoad[1][0]) System.out.println("!!! 2/3");

@@ -89,7 +89,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     List<Vector2> path25 = new ArrayList<Vector2>();
     Vector2[] path5;
     public void moveToPosition(Vector2[] vectorArg){
-        myPath.speed *= 1.1;
+        myPath.speed *= 0.25;
         int x = 100;
         int y = 100;
 //        Random r = new Random();

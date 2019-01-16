@@ -3,6 +3,7 @@ package com.mygdx.game.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Vector1;
+import com.mygdx.game.ants.something.a.Something;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -10,8 +11,10 @@ import java.util.Comparator;
 import java.util.List;
 
 class MyPathFinder {
-    private int width;
-    private int height;
+    private int objWidth;
+    private int objHeight;
+    private int objBorderXdelta;
+    private int objBorderYdelta;
     private int tileSize;
     private boolean[][] road;
     private Vector2[] path5;
@@ -24,14 +27,19 @@ class MyPathFinder {
     public int[][] distance;
 //    private Vector1 pos;
     private boolean go;
-    MyPathFinder(int width, int height,int tileSize, boolean[][] road){
-        this.width = width;
-        this.height = height;
+    MyPathFinder(int mapWidth, int mapHeight,int tileSize,
+                 float objWidth,float objHeight,
+                 int objBorderXdelta, int objBorderYdelta,
+                 boolean[][] road){
+        this.objWidth  = (int) objWidth;
+        this.objHeight = (int) objHeight;
+        this.objBorderXdelta  = objBorderXdelta;
+        this.objBorderYdelta  = objBorderYdelta;
         this.tileSize = tileSize;
         this.road = road;
 //        pos = new Vector1();
-        processed = new boolean[width][height];
-        distance = new int[width][height];
+        processed = new boolean[mapWidth][mapHeight];
+        distance = new int[mapWidth][mapHeight];
     }
     public void getNext(List<Vector1> stack,Vector1 posC){ // posC Current
         Vector1[] posDir = new Vector1[4];
@@ -163,7 +171,19 @@ class MyPathFinder {
     }
     public Vector2 tileXYCorrector(int x, int y){
         Vector2 r = new Vector2();
-        r.set(x*tileSize+tileSize/2,y*tileSize+tileSize/2);
+//        r.set(x*tileSize/*+tileSize/2*/,y*tileSize/*+tileSize/2*/);
+//        r.set(x*tileSize+objWidth/2,y*tileSize+objHeight/2);
+//        r.set(x*tileSize-objWidth/2,y*tileSize-objHeight/2);
+
+
+//        r.set(x*tileSize+tileSize/2-objWidth/2,y*tileSize+tileSize/2-objHeight/2);
+//        r.set(x*tileSize-objWidth/2,y*tileSize-objHeight/2);
+//        r.set(x*tileSize+tileSize/2,y*tileSize+tileSize/2);
+//        r.set(x*tileSize,y*tileSize);
+        r.set(
+                x*tileSize+tileSize/2-objBorderXdelta-objWidth/2,
+                y*tileSize+tileSize/2-objBorderYdelta-objHeight/2);
+
         System.out.println("!!! tileXYCorrector "+r.x+"/"+r.y);
         return r;
     }

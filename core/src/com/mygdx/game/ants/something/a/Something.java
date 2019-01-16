@@ -1,5 +1,7 @@
 package com.mygdx.game.ants.something.a;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -11,10 +13,11 @@ import com.mygdx.game.enums.entity.EntityTex;
 public class Something extends coreActor{
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object ?
+    private boolean customBorder;
     private Circle range;
     private Vector2 buffVect2;
-    public int borderXdelta;
-    private int borderYdelta;
+        public int borderXdelta;
+    public int borderYdelta;
     private SomethingData data;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
     public Something() {
@@ -42,6 +45,23 @@ public class Something extends coreActor{
         border.y = texReg.getRegionY() + this.borderYdelta;
         border.width  = texReg.getRegionWidth()  - borderWdelta*2;
         border.height = texReg.getRegionHeight() - borderHdelta*2;
+        customBorder = true;
+    }
+    public void set22Borders(int borderXdelta, int borderYdelta){
+        this.borderXdelta = borderXdelta;
+        this.borderYdelta = borderYdelta;
+        border.x = texReg.getRegionX() + this.borderXdelta;
+        border.y = texReg.getRegionY() + this.borderYdelta;
+        border.width  = texReg.getRegionWidth()  - borderXdelta*2;
+        border.height = texReg.getRegionHeight() - borderYdelta*2;
+        customBorder = true;
+        // change rectangle to square, by smallest side
+        if (border.width!=border.height){
+            if (border.width > border.height)
+                border.width = border.height;
+            if (border.height > border.width)
+                border.height = border.width;
+        }
     }
     public void set23Range(){
         range.setPosition(border.getCenter(new Vector2()));
@@ -66,6 +86,18 @@ public class Something extends coreActor{
             border.y = this.getY() + this.borderYdelta;
             range.setPosition(border.getCenter(buffVect2));
         }
+    }
+    @Override
+    protected void drawDebugBounds (ShapeRenderer shapes) {
+        super.drawDebugBounds(shapes);
+        if (customBorder){
+            shapes.setColor(Color.RED);
+            shapes.rect(border.x, border.y,border.width, border.height);
+        }
+//        if (!debug) return;
+//        shapes.set(ShapeRenderer.ShapeType.Line);
+//        shapes.setColor(stage.getDebugColor());
+//        shapes.rect(x, y, originX, originY, width, height, scaleX, scaleY, rotation);
     }
     //-------------------------------------------------------------------------------------------//
     public void destroy(){ // Call from DeadPool

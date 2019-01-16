@@ -1,6 +1,8 @@
 package com.mygdx.game.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
@@ -173,10 +175,10 @@ public class WorldManager {
                 tileSize,mapWidth,mapHeight);
         // Factory build
         Vector2 pos = new Vector2();
-        factory.buildOnEvent(EntityTex.Tree,  pos.set( 9*tileSize , 3*tileSize ));
-        factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
-        factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
-        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
+//        factory.buildOnEvent(EntityTex.Tree,  pos.set( 9*tileSize , 3*tileSize ));
+//        factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
+//        factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
+//        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
         //todo how to manipulate objects ?
         //todo 1. add NPC class to factory builder
 
@@ -189,19 +191,23 @@ public class WorldManager {
         pumpkin1.set12Anim(animManager);
         pumpkin1.set21Bounds();
 //        pumpkin1.set22Borders(-40,-20);
-        pumpkin1.set22Borders(50,2);
+//        pumpkin1.set22Borders(50,2);
+        pumpkin1.set22Borders(0,0);
         pumpkin1.set23Range();
         pumpkin1.set31World(world);
         pumpkin1.set32Position(500,300);
 
         factory.collider.add(pumpkin1.getBorder());
 
+
+
         MyPathFinder pathFinder;
         pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,isRoad);
 //        pumpkin1.getWidth(),pumpkin1.getHeight(),isRoad);
-        pathFinder.calc(new Vector1(2,2),new Vector1(2,10), pumpkin1);
+//        pathFinder.calc(new Vector1(8,3),new Vector1(2,8), pumpkin1);
+        pathFinder.calc(new Vector1(3,4),new Vector1(3,10), pumpkin1);
 
-        System.out.println("!!! pumpkin1="+pumpkin1.getEntityName());
+//        System.out.println("!!! pumpkin1="+pumpkin1.getEntityName());
 
 
         isRoad = pathFinder.getVisited();
@@ -233,6 +239,10 @@ public class WorldManager {
         Vector2[] vvv = pathFinder.getPath5();
         for (int i = 0; i < vvv.length; i++) {
             System.out.println("!!! vvv + " +vvv[i].x+"/"+vvv[i].y);
+            factory.buildOnEvent(EntityTex.Temp,  pos.set(
+                    vvv[i].x, vvv[i].y)
+            );
+            Vector2[] v5 = pathFinder.getPath5();
         }
 
         pumpkin1.moveToPosition(pathFinder.getPath5());
@@ -266,6 +276,22 @@ public class WorldManager {
 //        spawner.set22Borders();
 //        spawner.setPosition(objX[0],objY[0]);
 //        spawner.create(factory,pos.set(12*tileSize , 3*tileSize ));
+
+        System.out.println("!!!");
+        System.out.println("!!!");
+        System.out.println("!!!");
+        //test
+        Vector1 v1 = new Vector1(1,1);
+        Vector1 v2 = new Vector1();
+        Vector1 v3 = new Vector1();
+        v1.x++;
+        v3 = v1.newOne();
+        v1.x++;
+        v3.x--;
+        System.out.println("v1="+ v1.x + "/" + v1.y);
+        System.out.println("v2="+ v2.x + "/" + v2.y);
+        System.out.println("v3="+ v3.x + "/" + v3.y);
+
 
 
 

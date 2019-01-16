@@ -39,6 +39,9 @@ public class coreActor extends Actor {
         world.addActor(this);
     }
     public void set32Position (float x, float y) {
+        super.setPosition((int)x,(int)y);
+    }
+    public void set32Position (int x, int y) {
         super.setPosition(x,y);
     }
     //-------------------------------------------------------------------------------------------//

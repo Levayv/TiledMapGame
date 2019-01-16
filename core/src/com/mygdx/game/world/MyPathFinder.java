@@ -83,6 +83,8 @@ class MyPathFinder {
                 }
             }
             System.out.println("!!! 2buffer"+buffer);
+            System.out.println("!!! 2buffer"+minBuffer);
+            System.out.println("!!! posDir["+i+"]"+posDir[i].x+"/"+posDir[i].y);
             System.out.println("!!! 2posBuffer"+posBuffer.x+"/"+posBuffer.y);
             System.out.println("!!! 2posC"+posC.x+"/"+posC.y);
             System.out.println("!!! 2posDirDISTANCE"+distance[posDir[i].x][posDir[i].y]);
@@ -91,12 +93,6 @@ class MyPathFinder {
 
         }
 
-//        int xxx = getMin(minMax);
-
-        if (posC.x == start.x && posC.y == start.y){
-            go = false;
-            Gdx.app.debug("MyPathFinder", "Destination reconnected to Start");
-        }
         return new Vector1(posBuffer);
     }
 //    public int getMin(int[] arr){
@@ -125,7 +121,7 @@ class MyPathFinder {
 
 
         pos = new Vector1(start);
-        distance[pos.x][pos.y] = 0;
+        distance[pos.x][pos.y] = -1; //todo research -1 or 0
         stack.add(new Vector1(pos));
         processed[pos.x][pos.y] = true;
         getNext(stack,pos);
@@ -150,6 +146,8 @@ class MyPathFinder {
 //        pos = new Vector1(destination);
         pos.x = destination.x ;
         pos.y = destination.y;
+        path25.add(tileXYCorrector(pos.x,pos.y));
+
         watchdog = 0;
         go = true;
         while (go){
@@ -157,6 +155,12 @@ class MyPathFinder {
             System.out.println("!!! 333333 "+watchdog+"-"+pos.x+"/"+pos.y);
             System.out.println("!!! 333333 "+watchdog+"-"+destination.x+"/"+destination.y);
 
+            if (pos.x == start.x && pos.y == start.y){
+                go = false;
+                Gdx.app.debug("MyPathFinder", "Destination reconnected to Start");
+                path25.add(tileXYCorrector(pos.x,pos.y)); // Manually add destination
+                break;
+            }
             pos = getPrev(pos);
             path25.add(tileXYCorrector(pos.x,pos.y));
             watchdog++;

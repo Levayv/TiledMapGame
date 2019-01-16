@@ -80,7 +80,7 @@ public class Something extends coreActor{
     //-------------------------------------------------------------------------------------------//
     @Override
     protected void positionChanged(){ //todo optimise ! Something pos rarely changes
-        // update Range if both range and border are not null
+        // update Range, if both range and border are not null
         if (range != null && border != null) {
             border.x = this.getX() + this.borderXdelta;
             border.y = this.getY() + this.borderYdelta;

@@ -63,16 +63,21 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //            current += 1000* (delta * speed / myCatmull.spanCount) / points[ppp].len();
 //            current += (delta * speed / myCatmull.spanCount) / points[0].len();
 
-            myPath.nextDot(delta);
-            lastX = myPath.getNextX();
-            lastY = myPath.getNextY();
-            set32Position(lastX , lastY);
-
-            time += delta;
-            if (time > 300){ //stop after 3 sec
+            if (myPath.nextDot(delta)){
                 go = false;
-                time = 0;
+
+            }else {
+                lastX = myPath.getNextX();
+                lastY = myPath.getNextY();
+                set32Position(lastX , lastY);
+                time += delta;
+                if (time > 300){ //stop after 3 sec
+                    go = false;
+                    time = 0;
+                }
             }
+
+
         }
 
     }
@@ -89,7 +94,6 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     List<Vector2> path25 = new ArrayList<Vector2>();
     Vector2[] path5;
     public void moveToPosition(Vector2[] vectorArg){
-        myPath.speed *= 0.25;
         int x = 100;
         int y = 100;
 //        Random r = new Random();
@@ -116,12 +120,17 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 
 
 
+        lastX = this.getBorderX();
+        lastY = this.getBorderY();
 
         path5 = vectorArg;
+//        path5[0] = new Vector2(lastX,lastY);
 //        path5 = new Vector2[path25.size()];
 //        path5 = path25.toArray(path5);
-        myPath.findPath(path5);
-        go = true;
+
+        myPath.speed *= 2.25 / (path5.length);
+        myPath.findSpline(path5,path5.length * 10 );
+        go = false;
     }
     //-------------------------------------------------------------------------------------------//
 //    float speed = 0.15f;

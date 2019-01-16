@@ -263,9 +263,9 @@ public class GameScreen implements Screen {
         stagePos2 = stageUI.screenToStageCoordinates(screenPos2);
         worldManager.factory.update(stagePos1);
         // worldManager.posManager testing
-        //worldManager.posManager.convertPointerToTile(stagePos1);
-        //lastInputTileX = worldManager.posManager.getTileX();
-        //lastInputTileY = worldManager.posManager.getTileY();
+        worldManager.posManager.update(stagePos1);
+        lastInputTileX = worldManager.posManager.getTileX();
+        lastInputTileY = worldManager.posManager.getTileY();
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         if (Gdx.input.justTouched()) {
@@ -398,6 +398,9 @@ public class GameScreen implements Screen {
             // todo open close menu
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
+
+            worldManager.pumpkin1.go();
+
 
 //            Something s1 = worldManager.tree1;
 //            Something s2 = worldManager.tree1;

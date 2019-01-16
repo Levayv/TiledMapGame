@@ -13,14 +13,15 @@ public class MyPath {
     private Vector2 second;
     private float timeDecimalPart;
     private float place;
-    public Vector2[] findPath(Vector2[] binarPath){
+    public Vector2[] findSpline(Vector2[] binarPath , int argK){
+        this.k = argK;
 //        CatmullRomSpline<Vector2> myCatmull = new CatmullRomSpline<Vector2>(dataSet, true);
 //        Vector2 out = new Vector2();
 //        myCatmull.valueAt(out, t);
 //        myCatmull.derivativeAt(out, t);
 
         /*members*/
-        k = 10000; //increase k for more fidelity to the spline
+//        k = 10000; //increase k for more fidelity to the spline
         points = new Vector2[k];
 //        Vector2[] dataSet = {
 //                new Vector2(50,150), new Vector2(50,150),
@@ -35,7 +36,7 @@ public class MyPath {
         }
         return points;
     }
-    public void nextDot(float delta){
+    public boolean nextDot(float delta){
         current += delta * speed;
         if(current >= 1)
             current -= 1;
@@ -48,8 +49,10 @@ public class MyPath {
         else
         {
             second = points[0]; //or finish, in case it does not loop.
+            return true; // stop
         }
         timeDecimalPart = place - ((int)place); //the decimal part of place
+        return false; // don't stop
     }
     float getNextX(){
         return first.x + (second.x - first.x) * timeDecimalPart;

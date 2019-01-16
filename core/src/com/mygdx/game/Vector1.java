@@ -15,4 +15,7 @@ public class Vector1 { //todo check mutation
         this.x = x;
         this.y = y;
     }
+    public Vector1 newOne(){
+        return new Vector1(x,y);
+    }
 }

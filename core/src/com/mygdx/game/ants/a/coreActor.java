@@ -50,7 +50,7 @@ public class coreActor extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
-    public int getEntityID() {
+    public int getEntityID() { //todo fix entity cloass vs texreg vs anim
         return this.entityTex.getID();
     }
     public String getEntityName() {

@@ -194,15 +194,14 @@ public class WorldManager {
         pumpkin1.set31World(world);
         pumpkin1.set32Position(500,300);
 
+        factory.collider.add(pumpkin1.getBorder());
 
         MyPathFinder pathFinder;
-        pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,
-                pumpkin1.getBorderW(),pumpkin1.getBorderH(),
-                pumpkin1.borderXdelta,pumpkin1.borderYdelta,
-                isRoad);
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,isRoad);
 //        pumpkin1.getWidth(),pumpkin1.getHeight(),isRoad);
-        pathFinder.calc(new Vector1(2,2),new Vector1(2,10));
+        pathFinder.calc(new Vector1(2,2),new Vector1(2,10), pumpkin1);
 
+        System.out.println("!!! pumpkin1="+pumpkin1.getEntityName());
 
 
         isRoad = pathFinder.getVisited();

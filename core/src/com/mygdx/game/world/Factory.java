@@ -28,7 +28,7 @@ public class Factory {
     private final Vector2 nullVector = new Vector2(-1000,-1000);
     public List<Something> somethingsOnDuty; //todo make private
     private AllData allData;
-    private Collider collider;
+    public Collider collider;
     // for debug only
     private int x;
     private int y;

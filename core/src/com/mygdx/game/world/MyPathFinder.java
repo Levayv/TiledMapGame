@@ -25,19 +25,11 @@ class MyPathFinder {
     private boolean reachable;
     public boolean[][] processed;
     public int[][] distance;
-//    private Vector1 pos;
     private boolean go;
     MyPathFinder(int mapWidth, int mapHeight,int tileSize,
-                 float objWidth,float objHeight,
-                 int objBorderXdelta, int objBorderYdelta,
                  boolean[][] road){
-        this.objWidth  = (int) objWidth;
-        this.objHeight = (int) objHeight;
-        this.objBorderXdelta  = objBorderXdelta;
-        this.objBorderYdelta  = objBorderYdelta;
         this.tileSize = tileSize;
         this.road = road;
-//        pos = new Vector1();
         processed = new boolean[mapWidth][mapHeight];
         distance = new int[mapWidth][mapHeight];
     }
@@ -116,7 +108,13 @@ class MyPathFinder {
 //            buffer2 = arr[2];
 //        return buffer1 < buffer2 ? buffer1 : buffer2;
 //    }
-    public void calc(Vector1 from, Vector1 to){
+    public boolean calc(Vector1 from, Vector1 to, Something who){
+        this.objWidth         = (int) who.getBorderW();
+        this.objHeight        = (int) who.getBorderH();
+        this.objBorderXdelta  = who.borderXdelta;
+        this.objBorderYdelta  = who.borderYdelta;
+        reachable = false;
+        //who = null; //todo research object casting
 
         // check x<0 x>width etc... , also from != to
         start = from;
@@ -139,6 +137,7 @@ class MyPathFinder {
             if (stack.isEmpty()){
                 Gdx.app.log("MyPathFinder", "Destination UnReachable");
                 go = false;
+                return reachable;
             }else {
                 getNext(stack, stack.remove(0));
             }
@@ -168,6 +167,7 @@ class MyPathFinder {
         }
         path5 = new Vector2[path25.size()];
         path5 = path25.toArray(path5);
+        return reachable;
     }
     public Vector2 tileXYCorrector(int x, int y){
         Vector2 r = new Vector2();

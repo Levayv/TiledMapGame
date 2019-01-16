@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-public class Vector1 {
+public class Vector1 { //todo check mutation
     public int x;
     public int y;
 

@@ -40,12 +40,12 @@ public class Spawner extends AnimatedEventSomething {
         this.animManager        = animManager;
         this.world              = world;
     }
-    public void create(Factory factory, Vector2 pos){
-        Something mob; //= new Npc(Entity.Temp,EntityAnimation.PUMPKIN);
-        int lastActorIndex = factory.somethingsOnDuty.size();
-        factory.buildOnEvent(EntityTex.Temp,pos);
-        mob = factory.somethingsOnDuty.get(lastActorIndex);
-    }
+//    public void create(Factory factory, Vector2 pos){
+//        Something mob; //= new Npc(Entity.Temp,EntityAnimation.PUMPKIN);
+//        int lastActorIndex = factory.somethingsOnDuty.size();
+//        factory.buildOnEvent(EntityTex.Temp,pos);
+//        mob = factory.somethingsOnDuty.get(lastActorIndex);
+//    }
     public void set33Destination(int x, int y){
         destination = new Vector1(x/32,y/32);
 

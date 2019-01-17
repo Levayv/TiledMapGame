@@ -263,7 +263,7 @@ public class GameScreen implements Screen {
         screenPos2.set(Gdx.input.getX(), Gdx.input.getY());
         stagePos1 =   stage.screenToStageCoordinates(screenPos1);
         stagePos2 = stageUI.screenToStageCoordinates(screenPos2);
-        worldManager.factory.update(stagePos1);
+        worldManager.factory.builder.update(stagePos1);
         // worldManager.posManager testing
         worldManager.posManager.update(stagePos1);
         lastInputTileX = worldManager.posManager.getTileX();
@@ -283,7 +283,7 @@ public class GameScreen implements Screen {
             lastHitActor   = stage  .hit(stagePos1.x,stagePos1.y,true);
             lastHitUIActor = stageUI.hit(stagePos2.x,stagePos2.y,true);
             if (lastHitUIActor==null){ // no hit on stageUI
-                worldManager.factory.buildOnClick(EntityTex.Temp /*,stagePos1.x,stagePos1.y*/);
+                worldManager.factory.builder.buildOnClick(EntityTex.Temp /*,stagePos1.x,stagePos1.y*/);
                 if (lastHitActor!=null){ // no hit on stageUI, hit on stage
                     if (lastHitActor.getClass() == Something.class //todo check and remove IF
 //                            || lastHitActor.getClass() == Player.class
@@ -301,7 +301,7 @@ public class GameScreen implements Screen {
                         System.out.print(lastHitSomething.getMyIndex());
                         System.out.println();
                         //todo builder/destroyer integration
-                        worldManager.factory.destroyOnClick(lastHitSomething.getMyIndex());
+                        worldManager.factory.builder.destroyOnClick(lastHitSomething.getMyIndex());
                     }else {
                         lastHitSomething = (Something) lastHitActor ;
                         System.out.print("Hit: ActorName=");
@@ -524,10 +524,10 @@ public class GameScreen implements Screen {
         tiledMapRenderer.setView((OrthographicCamera) stage.getCamera());
         tiledMapRenderer.render();
         stage.act(delta); //todo profile
-        if (worldManager.factory.isBuilding()||worldManager.factory.isDestroying()){
-            if (worldManager.factory.isBuilding())
+        if (worldManager.factory.builder.isBuilding()||worldManager.factory.builder.isDestroying()){
+            if (worldManager.factory.builder.isBuilding())
                 stage.getBatch().setColor(Color.GREEN);
-            if (worldManager.factory.isDestroying())
+            if (worldManager.factory.builder.isDestroying())
                 stage.getBatch().setColor(Color.RED);
         }else {
             stage.getBatch().setColor(Color.WHITE);

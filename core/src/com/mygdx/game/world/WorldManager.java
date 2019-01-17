@@ -225,7 +225,7 @@ public class WorldManager {
 
 
 
-        factory.collider.add(pumpkin1.getBorder());
+//        factory.collider.add(pumpkin1.getBorder());
 
 //        MyPathFinder pathFinder;
 //        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
@@ -363,9 +363,9 @@ public class WorldManager {
         tower1.set22Borders();
         tower2.set22Borders();
         tower3.set22Borders();
-        factory.collider.add(tower1.getBorder());
-        factory.collider.add(tower1.getBorder());
-        factory.collider.add(tower1.getBorder());
+//        factory.collider.add(tower1.getBorder());
+//        factory.collider.add(tower1.getBorder());
+//        factory.collider.add(tower1.getBorder());
 //        door1.tempINT = 12;
 //        door1.tempString = "Explosion";
 //        door2.tempINT = 12;

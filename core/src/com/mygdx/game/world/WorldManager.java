@@ -202,10 +202,12 @@ public class WorldManager {
 
 
         MyPathFinder pathFinder;
-        pathFinder = new MyPathFinder(mapWidth,mapHeight,tileSize,isRoad);
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pumpkin1.getWidth(),pumpkin1.getHeight(),isRoad);
 //        pathFinder.calc(new Vector1(8,3),new Vector1(2,8), pumpkin1);
-        pathFinder.calc(new Vector1(3,4),new Vector1(3,10), pumpkin1);
+//        pathFinder.calc(new Vector1(3,4),new Vector1(3,10), pumpkin1);
+        pumpkin1.set32Position(3*tileSize,10*tileSize);
+        pathFinder.calculate(pumpkin1, new Vector1(3,4));
 
 //        System.out.println("!!! pumpkin1="+pumpkin1.getEntityName());
 

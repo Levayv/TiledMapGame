@@ -1,6 +1,7 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Vector1;
 
 public class WorldPositionManager {
     private int tileSize; // set only once
@@ -10,13 +11,15 @@ public class WorldPositionManager {
     private int posY;  // for tile՛s texReg left bottom corner
     private int buffer;
     private int count;
+    private Vector1 vector1 = new Vector1();
     private Vector2 bufferVector = new Vector2();
 
     public WorldPositionManager(int tileSize){
         this.tileSize = tileSize;
     }
+    public int getTileSize(){ return this.tileSize; }
 
-    private void convertVectorToTile(Vector2 pos){ // during render
+    private Vector1 convertVectorToTile(Vector2 pos){ // during render
         posX = (int) pos.x;
         posY = (int) pos.y;
         if (posX>=0 && posY>=0){
@@ -41,6 +44,9 @@ public class WorldPositionManager {
             tileX = -1;
             tileY = -1;
         }
+        vector1.x = tileX;
+        vector1.y = tileY;
+        return vector1.newOne();
     }
 //    public void convertTileToVector(int x, int y, Vector2 pos){
 //        x = (int) pos.x;
@@ -48,6 +54,9 @@ public class WorldPositionManager {
 //        pos.x = x * 32;
 //        pos.y = y * 32;
 //    }
+    public Vector1 getTileVector1(int x,int y){
+        return this.convertVectorToTile(new Vector2(x,y));
+    }
     public void update(Vector2 pos){ // during render
         convertVectorToTile(pos);
         if (posX>0)

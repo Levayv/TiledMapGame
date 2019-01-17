@@ -56,7 +56,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //                loads = 0;
 //            }
 //        }
-        if (go){ //todo fix move testing
+        if (go) { //todo fix move testing
 
 //            int ppp = (int) current * k;
 //            current += delta * speed / points[ppp].len() *1000;
@@ -71,7 +71,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                 lastY = myPath.getNextY();
                 set32Position(lastX , lastY);
                 time += delta;
-                if (time > 300){ //stop after 3 sec
+                if (time > 300) { //stop after 3 sec
                     go = false;
                     time = 0;
                 }
@@ -124,11 +124,12 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         lastY = this.getBorderY();
 
         path5 = vectorArg;
+//        this.set32Position(path5[0].x , path5[0].y);
 //        path5[0] = new Vector2(lastX,lastY);
 //        path5 = new Vector2[path25.size()];
 //        path5 = path25.toArray(path5);
 
-        myPath.speed *= 2.25 / (path5.length);
+        myPath.speed *= 20.25 / (path5.length);
         myPath.findSpline(path5,path5.length * 10 );
         go = false;
     }

@@ -7,6 +7,8 @@ import com.mygdx.game.ants.something.a.Something;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -26,9 +28,13 @@ class MyPathFinder {
     public boolean[][] processed;
     public int[][] distance;
     private boolean go;
-    MyPathFinder(int mapWidth, int mapHeight,int tileSize,
-                 boolean[][] road){
-        this.tileSize = tileSize;
+    private WorldPositionManager positionManager;
+    MyPathFinder(int mapWidth, int mapHeight,
+                 WorldPositionManager positionManager,
+                 boolean[][] road
+                 ){
+        this.positionManager = positionManager;
+        this.tileSize = positionManager.getTileSize();
         this.road = road;
         processed = new boolean[mapWidth][mapHeight];
         distance = new int[mapWidth][mapHeight];
@@ -57,7 +63,7 @@ class MyPathFinder {
             }
         }
     }
-    public Vector1 getPrev(Vector1 posC){
+    private Vector1 getPrev(Vector1 posC){
         System.out.println("!!! posCposCposCposC "+posC.x+posC.y);
 
         Vector1[] posDir = new Vector1[4];
@@ -104,7 +110,12 @@ class MyPathFinder {
 //            buffer2 = arr[2];
 //        return buffer1 < buffer2 ? buffer1 : buffer2;
 //    }
-    public boolean calc(Vector1 from, Vector1 to, Something who){
+    public boolean calculate(Something who, Vector1 where){
+        return calc(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
+                where, who
+                );
+    }
+    private boolean calc(Vector1 from, Vector1 to, Something who){
         this.objWidth         = (int) who.getBorderW();
         this.objHeight        = (int) who.getBorderH();
         this.objBorderXdelta  = who.borderXdelta;
@@ -121,6 +132,7 @@ class MyPathFinder {
 
 
         pos = new Vector1(start);
+//        System.out.println("!!! !!! !!!"+pos.x+"/"+pos.y);
         distance[pos.x][pos.y] = -1; //todo research -1 or 0
         stack.add(new Vector1(pos));
         processed[pos.x][pos.y] = true;
@@ -144,8 +156,10 @@ class MyPathFinder {
             }
         }
 //        pos = new Vector1(destination);
-        pos.x = destination.x ;
+        pos.x = destination.x;
         pos.y = destination.y;
+
+        path25.add(tileXYCorrector(pos.x,pos.y));
         path25.add(tileXYCorrector(pos.x,pos.y));
 
         watchdog = 0;
@@ -154,15 +168,18 @@ class MyPathFinder {
             System.out.println("!!! +111111111111111111111111asdasdadsdadsasd");
             System.out.println("!!! 333333 "+watchdog+"-"+pos.x+"/"+pos.y);
             System.out.println("!!! 333333 "+watchdog+"-"+destination.x+"/"+destination.y);
+            System.out.println("!!! !!! !!!"+pos.x+"/"+pos.y);
+            pos = getPrev(pos);
+            System.out.println("!!! !!! !!!"+pos.x+"/"+pos.y);
 
+
+
+            path25.add(tileXYCorrector(pos.x,pos.y));
             if (pos.x == start.x && pos.y == start.y){
                 go = false;
                 Gdx.app.debug("MyPathFinder", "Destination reconnected to Start");
-                path25.add(tileXYCorrector(pos.x,pos.y)); // Manually add destination
-                break;
+                path25.add(tileXYCorrector(pos.x,pos.y));
             }
-            pos = getPrev(pos);
-            path25.add(tileXYCorrector(pos.x,pos.y));
             watchdog++;
             if (watchdog>1024){
                 go = false;
@@ -171,6 +188,7 @@ class MyPathFinder {
         }
         path5 = new Vector2[path25.size()];
         path5 = path25.toArray(path5);
+        Collections.reverse(Arrays.asList(path5));
         return reachable;
     }
     public Vector2 tileXYCorrector(int x, int y){
@@ -185,8 +203,8 @@ class MyPathFinder {
 //        r.set(x*tileSize+tileSize/2,y*tileSize+tileSize/2);
 //        r.set(x*tileSize,y*tileSize);
         r.set(
-                x*tileSize+tileSize/2-objBorderXdelta-objWidth/2,
-                y*tileSize+tileSize/2-objBorderYdelta-objHeight/2);
+                x*tileSize+tileSize/2-objBorderXdelta-objWidth /2 ,
+                y*tileSize+tileSize/2-objBorderYdelta-objHeight/2 );
 
         System.out.println("!!! tileXYCorrector "+r.x+"/"+r.y);
         return r;

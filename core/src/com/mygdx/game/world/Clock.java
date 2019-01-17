@@ -1,7 +1,10 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.enums.Events.BasicDoorEvents;
+import com.mygdx.game.enums.Events.FactoryEvents;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -10,34 +13,24 @@ import java.util.Date;
 import java.util.List;
 
 public class Clock {
+    private MessageDispatcher dispatcher = new MessageDispatcher();
     private List<Job>  jobs;
     private Job  lastJob;
-//    private long last;
-    private long diff;
     private long raw;
     private int sec;
     private int min;
     private int hrs;
     private int day;
     private Date date;
-    private DecimalFormat print = new DecimalFormat("##,###");
-    private SimpleDateFormat outDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-//    private SimpleDateFormat outDate = new SimpleDateFormat("HH:mm:ss");
-    Clock(){
+    Clock(Factory factory){
         date = new Date();
         date.setTime(946684800000L-14400000);
+        dispatcher.addListener(factory , FactoryEvents.AAA.getID());
     }
     public void update(float deltaFloat){
-        diff = (int) (deltaFloat*1000*1000);
-        raw =  raw + diff ;
-
-//        diff = (int) (deltaFloat*1000*1000);
-//        raw =  raw + diff ;
-//        System.out.println("!!!"+deltaFloat*1000*1000);
-//        System.out.println("!!!"+diff);
-//        System.out.println("!!!"+raw);
-//        date.setTime(date.getTime()+raw+min*60000+hrs*3600000);
-//        date.setTime(date.getTime() + raw);
+        long diff;
+        diff = (int) (1 * 1000 * 1000);
+        raw = raw + diff;
         if (raw>=60000){
             raw-=60000;
             min++;
@@ -57,31 +50,35 @@ public class Clock {
         }
     }
     public String updateTimeNearFps(){ //todo temp
-//        System.out.println( outDate.format(date)+"+++"+date.getTime());
-//        System.out.println(raw);
-//        return outDate.format(date)+" +++ ";
+
         return " Day=" + day + " Time= " + hrs + ":" + min + " ";
     }
-    public void shedule(Job job){
+    public void shedule(Job job){ //todo mek multi , min hrs day
         jobs = new ArrayList<Job>();
         jobs.add(job);
-        System.out.println("jobs.size()");
+//        System.out.println("jobs.size()");
     }
     private void minUpdate(int min){
         if (jobs.size()>0){
+//            System.out.println("!!! " + "minUpdate");
 
         }
     }
     private void hourUpdate(int hrs){
         if (jobs.size()>0){
+            System.out.println("!!! " + "hourUpdate");
             lastJob = jobs.get(jobs.size()-1);
             if (!lastJob.endless){
                 jobs.remove(jobs.size()-1);
             }
             lastJob.start();
+            dispatcher.dispatchMessage(FactoryEvents.AAA.getID());
         }
     }
     private void dayUpdate(int day){
+        if (jobs.size()>0){
+//            System.out.println("!!! " + "dayUpdate");
 
+        }
     }
 }

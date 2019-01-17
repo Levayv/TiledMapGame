@@ -1,18 +1,21 @@
 package com.mygdx.game.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.msg.Telegram;
+import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.Collider;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
+import com.mygdx.game.enums.Events.FactoryEvents;
 import com.mygdx.game.enums.entity.EntityTex;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Factory {
+public class Factory implements Telegraph {
     private DeadPool deadPool;
     private CoreTileData coreTileData;
     private boolean isBuilding;
@@ -218,10 +221,10 @@ public class Factory {
     }
     // Updates during render, must be highly optimal
     public void update(Vector2 pos){ // arg = stage pos
-        if (this.isBuilding){ // only during build phase
+        if (this.isBuilding){ //todo only during build phase
             this.updateBuildGhostPosition(pos);
         }
-        if (this.isDestroying){ // only during destroy phase
+        if (this.isDestroying){ //todo only during destroy phase
             this.updateDestroyGhostPosition(pos);
         }
     }
@@ -252,5 +255,10 @@ public class Factory {
         x = posManager.getPosX();
         y = posManager.getPosY();
         return coreTileData.canDestroyThis(posManager.getTileX(), posManager.getTileY());
+    }
+    @Override
+    public boolean handleMessage(Telegram msg) {
+        System.out.println("!!! "+ "Factory new event:"+FactoryEvents.values()[msg.message]);
+        return false;
     }
 }

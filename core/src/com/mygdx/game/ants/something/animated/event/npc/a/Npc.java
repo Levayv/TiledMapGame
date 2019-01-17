@@ -91,6 +91,11 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 
     }
     @Override
+    public void draw (Batch batch, float parentAlpha) {
+        super.draw(batch,parentAlpha);
+        // changes in draw behavior, like hide
+    }
+    @Override
     public boolean handleMessage(Telegram msg) {
         Gdx.app.debug("FSM",
                 "EntityID:"+this.getEntityName()+
@@ -174,8 +179,5 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //        }
 //        return points;
 //    }
-    @Override
-    public void draw (Batch batch, float parentAlpha) {
-        super.draw(batch,parentAlpha);
-    }
+
 }

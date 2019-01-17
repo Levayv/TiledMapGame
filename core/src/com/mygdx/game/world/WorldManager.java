@@ -182,9 +182,13 @@ public class WorldManager {
 //        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
 
         // Clock init
-        clock = new Clock();
+        clock = new Clock(factory);
         //todo how to manipulate objects ?
         //todo 1. add NPC class to factory builder
+        //todo 2. add Spawner
+        //todo 3. integrate FSM
+        //todo 4. integrate listeners ()
+        //todo 5.
 
         pumpkin1 = new Npc();
         pumpkin1.setJob(clock);

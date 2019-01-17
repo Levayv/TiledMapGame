@@ -114,6 +114,7 @@ public class GameScreen implements Screen {
         TextureRegion texRegTemp32  = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
         TextureRegion texRegGhost1  = new TextureRegion(new Texture(Gdx.files.internal("ghost1.png")));
         TextureRegion texRegGhost2  = new TextureRegion(new Texture(Gdx.files.internal("ghost2.png")));
+        TextureRegion texRegSpawner  = new TextureRegion(new Texture(Gdx.files.internal("spawner.png")));
 //        TextureRegion texRegDoor0  = new TextureRegion(new Texture(Gdx.files.internal("door0.png")));
 //        TextureRegion texRegDoor1  = new TextureRegion(new Texture(Gdx.files.internal("door1.png")));
         Texture texAnimPumpkin      = new Texture(Gdx.files.internal("animation/pumpkin.png"));
@@ -135,6 +136,7 @@ public class GameScreen implements Screen {
         buffer1.addTexReg(EntityTex.Ghost1,texRegGhost1);
         buffer1.addTexReg(EntityTex.Ghost2,texRegGhost2);
         buffer1.addTexReg(EntityTex.Ghost2,texRegGhost2);
+        buffer1.addTexReg(EntityTex.Spawner,texRegSpawner);
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,44);

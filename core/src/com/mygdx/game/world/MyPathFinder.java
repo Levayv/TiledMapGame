@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class MyPathFinder {
+public class MyPathFinder {
     private int objWidth;
     private int objHeight;
     private int objBorderXdelta;

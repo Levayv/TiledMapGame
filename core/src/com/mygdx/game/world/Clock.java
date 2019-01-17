@@ -74,7 +74,10 @@ public class Clock {
     }
     private void hourUpdate(int hrs){
         if (jobs.size()>0){
-            lastJob = jobs.remove(0);
+            lastJob = jobs.get(jobs.size()-1);
+            if (!lastJob.endless){
+                jobs.remove(jobs.size()-1);
+            }
             lastJob.start();
         }
     }

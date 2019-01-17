@@ -37,6 +37,15 @@
 		"test": 111
 	},
 	{
+		"entityName": "Spawner",
+		"entityID": 4,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
 		"entityName": "Tree",
 		"entityID": 11,
 		"isCollider": false,

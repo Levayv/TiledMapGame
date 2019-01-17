@@ -8,6 +8,7 @@ public enum EntityTex {
     Player(1),
     NPC(2),
     Tower(3),
+    Spawner(4),
     Tree(11),
     Stone(12),
     Ore(13),

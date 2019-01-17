@@ -15,12 +15,13 @@ public class AnimatedEventSomething extends Something {
     protected EntityAnimation entityAnim;
     public AnimatedEventSomething() {
         super();
-        animation = new MyAnimation(true);
+
     }
     public void set02EntityAnim(EntityAnimation entityAnim) { //todo remove
         this.entityAnim = entityAnim;
     }
     public void set12Anim(WorldResAnimManager animManager){
+        animation = new MyAnimation(true);
         animation.setCoreAnimation(animManager.getAnimationByID(this.entityAnim));
         animation.setToFirstFrame(); //todo check , otherwise texReg will be null ?
         texReg = animation.getTEMPPP();
@@ -29,7 +30,8 @@ public class AnimatedEventSomething extends Something {
     //-------------------------------------------------------------------------------------------//
     @Override
     public void act(float delta) {
-        texReg = animation.updateFrame(delta);
+        if (animation!=null)
+            texReg = animation.updateFrame(delta);
     }
     //-------------------------------------------------------------------------------------------//
     @Override

@@ -140,7 +140,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 
         myPath.speed *= 20.25 / (path5.length);
         myPath.findSpline(path5,path5.length * 10 );
-        go = false;
+        go = true;
     }
     //-------------------------------------------------------------------------------------------//
 //    float speed = 0.15f;

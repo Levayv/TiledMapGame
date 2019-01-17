@@ -266,6 +266,8 @@ public class GameScreen implements Screen {
         worldManager.posManager.update(stagePos1);
         lastInputTileX = worldManager.posManager.getTileX();
         lastInputTileY = worldManager.posManager.getTileY();
+        //todo clock optimisation
+        worldManager.clock.update(delta);
     }
     void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
         if (Gdx.input.justTouched()) {
@@ -485,7 +487,7 @@ public class GameScreen implements Screen {
             debugging = !debugging;
             if (debugging){
                 stage.setDebugAll(true);
-                stageUI.setDebugAll(true);
+//                stageUI.setDebugAll(true);
                 Gdx.app.setLogLevel(3);
                 System.out.println("Debug: Enabling borders for ["+stage.getActors().size+"] entities");
 //                for (int i = 0; i < actors.size; i++) {
@@ -493,7 +495,7 @@ public class GameScreen implements Screen {
 //                }
             }else{
                 stage.setDebugAll(false);
-                stageUI.setDebugAll(false);
+//                stageUI.setDebugAll(false);
                 Gdx.app.setLogLevel(0);
                 System.out.println("Debug: Disabling borders for ["+stage.getActors().size+"] entities");
 //                for (int i = 0; i < actors.size; i++) {
@@ -606,7 +608,8 @@ public class GameScreen implements Screen {
             // debugging if end
         }else {
             game.batch.begin();
-            game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond(),
+            game.font.draw(game.batch, "FPS: "+ Gdx.graphics.getFramesPerSecond()+" Time: "+
+                    worldManager.clock.updateTimeNearFps(),
                     stageUI.getCamera().position.x-screen_width/2,
                     stageUI.getCamera().position.y+screen_height/2-0);
             game.batch.end();

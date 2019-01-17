@@ -14,6 +14,8 @@ import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
+import com.mygdx.game.world.Clock;
+import com.mygdx.game.world.Job;
 import com.mygdx.game.world.WorldResAnimManager;
 
 import java.lang.reflect.Array;
@@ -27,10 +29,17 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     private float lastX;
     private float lastY;
     private float time = 0;
+    private Job job;
+    public void setJob(Clock clock){
+        job = new Job();
+        job.hrs = 1;
+        job.task = "Peasent: Job Done";
+        clock.shedule(job);
+    }
     public void go(){
         go = true;
     }
-    public Npc() {
+    public Npc() { //todo redactor this sh*
         super();
     }
     @Override

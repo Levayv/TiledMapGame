@@ -39,7 +39,7 @@ public class WorldManager {
     private Collider collider;
     private AllData allData;
     public Group world;
-
+    public Clock clock;
 //    public Something tree1;
 //    public Something tree2;
 //    public Something tree3;
@@ -179,12 +179,17 @@ public class WorldManager {
 //        factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
 //        factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
 //        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
+
+        // Clock init
+        clock = new Clock();
         //todo how to manipulate objects ?
         //todo 1. add NPC class to factory builder
 
 
 
         pumpkin1 = new Npc();
+        pumpkin1.setJob(clock);
+
         pumpkin1.set01EntityTex(EntityTex.Temp);
         pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
         pumpkin1.set11TexReg(texRegManager);

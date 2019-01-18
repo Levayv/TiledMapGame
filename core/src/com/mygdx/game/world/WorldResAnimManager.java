@@ -24,6 +24,9 @@ public class WorldResAnimManager {
         return animation;
     }
     public void addAnimationFromFile(EntityAnimation entity, Texture walkSheet, int FRAME_COLS){
+        if (FRAME_COLS == 0){
+            FRAME_COLS = walkSheet.getWidth()/walkSheet.getHeight();
+        }
         int FRAME_ROWS = 1;
         TextureRegion[] animFrames;
         float frameDur = 0;

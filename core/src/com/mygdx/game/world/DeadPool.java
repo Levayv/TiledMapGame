@@ -16,6 +16,7 @@ public class DeadPool {
     private Npc bufferNpc;
     DeadPool(){
         graveOfSomething = new ArrayList<Something>();
+        graveOfNpc       = new ArrayList<Npc>();
     }
     public Something createSomething(EntityTex entityTex){
         if (graveOfSomething.size()==0){

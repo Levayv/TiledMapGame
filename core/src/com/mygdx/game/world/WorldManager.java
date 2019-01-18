@@ -179,6 +179,17 @@ public class WorldManager {
 //        factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
 //        factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
 //        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
+        factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(1*tileSize , 1*tileSize ));
+
+        int q = 99;
+        Npc[][] npcs = new Npc[q][q];
+        for (int i = 0; i < q; i++) {
+            for (int j = 0; j < q; j++) {
+                npcs[i][j] = factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(i*tileSize*4 , j*tileSize*4 ));
+//                factory.builder.buildOnEvent(EntityTex.Temp,  pos.set(i*tileSize , j*tileSize ));
+
+            }
+        }
 
         // Clock init
         clock = new Clock(factory);

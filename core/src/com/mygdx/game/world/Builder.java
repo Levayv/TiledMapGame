@@ -110,14 +110,14 @@ public class Builder {
                 // worldGroup.swapActor()
                 // todo make ghost always on foreground
                 // todo add x y, id >> convert entity
-                Gdx.app.log("Factory", "Building Something at "+x+"/"+y+" with EID:"+entityTex.name());
-                Gdx.app.debug("Debug: Factory", "build() method *START* ------------"+
+                Gdx.app.log("Builder", "Building Something at "+x+"/"+y+" with EID:"+entityTex.name());
+                Gdx.app.debug("Debug: Builder", "build() method *START* ------------"+
                         " ------------ ------------ ------------ ------------ ------------");
-                Gdx.app.debug("Debug: Factory", "arg entityID="+entityTex.getID());
-                Gdx.app.debug("Debug: Factory", "arg entity="+entityTex);
-                Gdx.app.debug("Debug: Factory", "x/y="+x+"/"+y);
-                Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty.size());
-                Gdx.app.debug("Debug: Factory", "");
+                Gdx.app.debug("Debug: Builder", "arg entityID="+entityTex.getID());
+                Gdx.app.debug("Debug: Builder", "arg entity="+entityTex);
+                Gdx.app.debug("Debug: Builder", "x/y="+x+"/"+y);
+                Gdx.app.debug("Debug: Builder", "OnDuty.size()="+somethingsOnDuty.size());
+                Gdx.app.debug("Debug: Builder", "");
                 // tear off DeadPool , and store in ... from ...onDuty
                 //todo BOOOO its not a tavern
                 Something tavern = deadPool.createSomething(entityTex);
@@ -147,12 +147,12 @@ public class Builder {
     private void destroy(int indexID){
         if (isDestroying){
             if (canDestroy){
-                Gdx.app.log("Factory", "Destroying Something at "+x+"/"+y);
-                Gdx.app.debug("Debug: Factory", "destroy() method *START* ------------"+
+                Gdx.app.log("Builder", "Destroying Something at "+x+"/"+y);
+                Gdx.app.debug("Debug: Builder", "destroy() method *START* ------------"+
                         " ------------ ------------ ------------ ------------ ------------");
-                Gdx.app.debug("Debug: Factory", "arg indexID="+indexID);
-                Gdx.app.debug("Debug: Factory", "x/y="+x+"/"+y);
-                Gdx.app.debug("Debug: Factory", "OnDuty.size()="+somethingsOnDuty);
+                Gdx.app.debug("Debug: Builder", "arg indexID="+indexID);
+                Gdx.app.debug("Debug: Builder", "x/y="+x+"/"+y);
+                Gdx.app.debug("Debug: Builder", "OnDuty.size()="+somethingsOnDuty);
                 // remove collider if it has one
                 if (somethingsOnDuty.get(indexID).getData().isCollider)
                     collider.del(somethingsOnDuty.get(indexID).getBorder());
@@ -160,19 +160,19 @@ public class Builder {
                 deadPool.burySomething(somethingsOnDuty.remove(indexID));
                 // iterate threw ...onDuty , to fix shifted ID's
                 for (int i = indexID; i < somethingsOnDuty.size() ; i++) { // -1 ?
-                    Gdx.app.debug("Debug: Factory", "for i="+i);
-                    Gdx.app.debug("Debug: Factory", "for onDutySize="+somethingsOnDuty.size());
-                    Gdx.app.debug("Debug: Factory", "duty ID [BUGGY]="+somethingsOnDuty.get(i).getMyIndex());
+                    Gdx.app.debug("Debug: Builder", "for i="+i);
+                    Gdx.app.debug("Debug: Builder", "for onDutySize="+somethingsOnDuty.size());
+                    Gdx.app.debug("Debug: Builder", "duty ID [BUGGY]="+somethingsOnDuty.get(i).getMyIndex());
                     // shifting ID to right in Actor's container via getMyIndex & getMyIndex
                     somethingsOnDuty.get(i).setMyIndex(somethingsOnDuty.get(i).getMyIndex()-1);
-                    Gdx.app.debug("Debug: Factory", "duty ID [FIXED]="+somethingsOnDuty.get(i).getMyIndex());
+                    Gdx.app.debug("Debug: Builder", "duty ID [FIXED]="+somethingsOnDuty.get(i).getMyIndex());
                 }
-                Gdx.app.debug("Debug: Factory", "Tile ="+posManager.getTileX()+" / "+ posManager.getTileY());
+                Gdx.app.debug("Debug: Builder", "Tile ="+posManager.getTileX()+" / "+ posManager.getTileY());
                 // inform coreTileData about data update
                 coreTileData.destroyingThis(posManager.getTileX(), posManager.getTileY());
                 // remove ghost from screen, it will go invisible after phase end
                 ghostDestroy.setPosition(nullVector.x,nullVector.y);
-                Gdx.app.debug("Debug: Factory", "destroy() method  *END*  ------------"+
+                Gdx.app.debug("Debug: Builder", "destroy() method  *END*  ------------"+
                         " ------------ ------------ ------------ ------------ ------------");
                 //stopDestroyingPhase();
 
@@ -181,12 +181,12 @@ public class Builder {
     }
     // Building / Destroying Phase changes
     public void startBuildingPhase(){
-        Gdx.app.debug("Factory", "start Building Phase");
+        Gdx.app.debug("Builder", "start Building Phase");
         isBuilding = true;
         ghostBuild.setVisible(true);
     }
     public void stopBuildingPhase(){
-        Gdx.app.debug("Factory", "stop Building Phase");
+        Gdx.app.debug("Builder", "stop Building Phase");
         isBuilding = false;
         ghostBuild.setVisible(false);
         ghostBuild.setPosition(nullVector.x, nullVector.y);
@@ -198,12 +198,12 @@ public class Builder {
             startBuildingPhase();
     }
     public void startDestroyingPhase(){
-        Gdx.app.debug("Factory", "start Destroying Phase");
+        Gdx.app.debug("Builder", "start Destroying Phase");
         isDestroying = true;
         ghostDestroy.setVisible(true);
     }
     public void stopDestroyingPhase(){
-        Gdx.app.debug("Factory", "stop Destroying Phase");
+        Gdx.app.debug("Builder", "stop Destroying Phase");
         isDestroying = false;
         ghostDestroy.setVisible(false);
         ghostDestroy.setPosition(nullVector.x, nullVector.y);

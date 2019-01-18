@@ -139,13 +139,13 @@ public class GameScreen implements Screen {
         buffer1.addTexReg(EntityTex.Spawner,texRegSpawner);
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
-        buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,44);
-        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin,8);
-        buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimDoor2,21);
-        buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimExplosion,9);
-        buffer2.addAnimationFromFile(EntityAnimation.SLIME_1,texAnimSlime1,4);
-        buffer2.addAnimationFromFile(EntityAnimation.SLIME_2,texAnimSlime2,4);
-        buffer2.addAnimationFromFile(EntityAnimation.SLIME_3,texAnimSlime3,4);
+        buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,       44 );
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin,    8  );
+        buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimDoor2,    21 );
+        buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimExplosion,0 );
+        buffer2.addAnimationFromFile(EntityAnimation.SLIME_1,texAnimSlime1,     4  );
+        buffer2.addAnimationFromFile(EntityAnimation.SLIME_2,texAnimSlime2,     4  );
+        buffer2.addAnimationFromFile(EntityAnimation.SLIME_3,texAnimSlime3,     4  );
 
         // load sound & music
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
@@ -669,6 +669,7 @@ public class GameScreen implements Screen {
         screen_width = width;
         screen_height = height;
         stage.getViewport().update(width, height);
+        stageUI.getViewport().update(width, height);
 //        camera.viewportWidth = 30f;
 //        camera.viewportHeight = 30f * height/width;
 //        camera.update();

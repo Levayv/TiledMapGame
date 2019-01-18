@@ -20,6 +20,7 @@ import com.mygdx.game.world.WorldPositionManager;
 import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.world.WorldResTexRegManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -75,8 +76,12 @@ public class Spawner{
         this.allData = allData;
         this.deadPool = deadPool;
         this.collider = collider;
+        // position helpers , actual to tile[i][j] and tile corner
+        posManager = new WorldPositionManager(tileSize);
+        // active entities goes onDuty
+        npcsOnDuty = new ArrayList<Npc>();
     }
-    private void spawn(EntityAnimation entityAnim){
+    private Npc spawn(EntityAnimation entityAnim){
         if (true){
             if (canSpawn){
                 // worldGroup.swapActor()
@@ -91,7 +96,7 @@ public class Spawner{
                 Gdx.app.debug("Debug: Factory", "OnDuty.size()="+npcsOnDuty.size());
                 Gdx.app.debug("Debug: Factory", "");
                 // tear off DeadPool , and store in ... from ...onDuty
-                //todo BOOOO its not a tavern
+                //todo BOOOO its not a pumpkin
                 Npc pumpkin = deadPool.createNpc(entityAnim);
                 npcsOnDuty.add(pumpkin);
                 pumpkin.setMyIndex(npcsOnDuty.size()-1);
@@ -99,6 +104,7 @@ public class Spawner{
                 pumpkin.set01EntityTex(EntityTex.Temp);
                 pumpkin.set02EntityAnim(entityAnim);
                 pumpkin.set11TexReg(texRegManager);
+                pumpkin.set12Anim(animManager);
                 pumpkin.set21Bounds();
                 pumpkin.set22Borders();
                 pumpkin.set23Range();
@@ -112,20 +118,22 @@ public class Spawner{
                 // add collider
 //                if (tavern.getData().isCollider)
 //                    collider.add(tavern.getBorder());
+                return pumpkin;
             }
         }
+        return null;
     }
     private void despawn(){
 
     }
-    public void spawnOnEvent(EntityAnimation entity, Vector2 pos){
+    public Npc spawnOnEvent(EntityAnimation entity, Vector2 pos){
         this.canSpawn = true;
         posManager.update(pos);
         x = posManager.getPosX();
         y = posManager.getPosY();
-        this.spawn(entity);
+        Npc rv = this.spawn(entity);
         this.canSpawn = false;
-
+        return rv;
     }
     public void despawnOnEvent(){
 //        this.canSpawn = true;

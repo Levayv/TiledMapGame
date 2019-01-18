@@ -120,6 +120,7 @@ public class GameScreen implements Screen {
         Texture texAnimPumpkin      = new Texture(Gdx.files.internal("animation/pumpkin.png"));
         Texture texAnimDoor2        = new Texture(Gdx.files.internal("animation/door2.png"));
         Texture texAnimExplosion    = new Texture(Gdx.files.internal("animation/Explosion.png"));
+        Texture texAnimTowerT    = new Texture(Gdx.files.internal("animation/tower.png"));
         Texture texAnimSlime1       = new Texture(Gdx.files.internal("animation/slime-blue.png"));
         Texture texAnimSlime2       = new Texture(Gdx.files.internal("animation/slime-green.png"));
         Texture texAnimSlime3       = new Texture(Gdx.files.internal("animation/slime-orange.png"));
@@ -146,6 +147,7 @@ public class GameScreen implements Screen {
         buffer2.addAnimationFromFile(EntityAnimation.SLIME_1,texAnimSlime1,     4  );
         buffer2.addAnimationFromFile(EntityAnimation.SLIME_2,texAnimSlime2,     4  );
         buffer2.addAnimationFromFile(EntityAnimation.SLIME_3,texAnimSlime3,     4  );
+        buffer2.addAnimationFromFile(EntityAnimation.TOWER,texAnimTowerT,     1  );
 
         // load sound & music
         dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));

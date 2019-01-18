@@ -12,7 +12,7 @@ import java.util.List;
 public class DeadPool {
     private List<Something> graveOfSomething;
     private Something bufferSomething;
-    private List<Npc> graveOfNpc;
+    public List<Npc> graveOfNpc;
     private Npc bufferNpc;
     DeadPool(){
         graveOfSomething = new ArrayList<Something>();

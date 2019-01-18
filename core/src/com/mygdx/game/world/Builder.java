@@ -152,7 +152,7 @@ public class Builder {
                         " ------------ ------------ ------------ ------------ ------------");
                 Gdx.app.debug("Debug: Builder", "arg indexID="+indexID);
                 Gdx.app.debug("Debug: Builder", "x/y="+x+"/"+y);
-                Gdx.app.debug("Debug: Builder", "OnDuty.size()="+somethingsOnDuty);
+                Gdx.app.debug("Debug: Builder", "OnDuty.size()="+somethingsOnDuty.size());
                 // remove collider if it has one
                 if (somethingsOnDuty.get(indexID).getData().isCollider)
                     collider.del(somethingsOnDuty.get(indexID).getBorder());

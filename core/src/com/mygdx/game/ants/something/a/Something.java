@@ -14,6 +14,7 @@ public class Something extends coreActor{
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object ?
     private boolean customBorder;
+    private boolean customRange;
     private Circle range;
     private Vector2 buffVect2;
         public int borderXdelta;
@@ -64,8 +65,9 @@ public class Something extends coreActor{
         }
     }
     public void set23Range(){
+        customRange = true;
         range.setPosition(border.getCenter(new Vector2()));
-        range.setRadius(border.x*2);
+        range.setRadius(border.width*2);
     }
     //-------------------------------------------------------------------------------------------//
     public SomethingData getData(){
@@ -90,6 +92,11 @@ public class Something extends coreActor{
     @Override
     protected void drawDebugBounds (ShapeRenderer shapes) {
         super.drawDebugBounds(shapes);
+        // draw Range, if both range and border are not null
+        if (customRange){
+            shapes.setColor(Color.YELLOW);
+            shapes.circle(range.x,range.y,range.radius);
+        }
         if (customBorder){
             shapes.setColor(Color.RED);
             shapes.rect(border.x, border.y,border.width, border.height);
@@ -110,5 +117,6 @@ public class Something extends coreActor{
 //        range = null;
         entityTex = null; //todo research
         setMyIndex(-1);
+        customRange = false;
     }
 }

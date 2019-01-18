@@ -123,7 +123,37 @@ public class Spawner{
         }
         return null;
     }
-    private void despawn(){
+    private void despawn(int indexID){
+        if (true){
+            if (canDespawn){
+                Gdx.app.log("Spawner", "De spawning Npc at "+x+"/"+y);
+                Gdx.app.debug("Debug: Spawner", "destroy() method *START* ------------"+
+                        " ------------ ------------ ------------ ------------ ------------");
+                Gdx.app.debug("Debug: Spawner", "arg indexID="+indexID);
+                Gdx.app.debug("Debug: Spawner", "x/y="+x+"/"+y);
+                Gdx.app.debug("Debug: Spawner", "OnDuty.size()="+npcsOnDuty.size());
+                // remove collider if it has one
+//                if (npcsOnDuty.get(indexID).getData().isCollider)
+//                    collider.del(npcsOnDuty.get(indexID).getBorder());
+                // tear off ... from ...onDuty , and store in DeadPool (which wipes internal state)
+                deadPool.buryNpc(npcsOnDuty.remove(indexID));
+                // iterate threw ...onDuty , to fix shifted ID's
+                for (int i = indexID; i < npcsOnDuty.size() ; i++) { // -1 ?
+                    Gdx.app.debug("Debug: Spawner", "for i="+i);
+                    Gdx.app.debug("Debug: Spawner", "for onDutySize="+npcsOnDuty.size());
+                    Gdx.app.debug("Debug: Spawner", "duty ID [BUGGY]="+npcsOnDuty.get(i).getMyIndex());
+                    // shifting ID to right in Actor's container via getMyIndex & getMyIndex
+                    npcsOnDuty.get(i).setMyIndex(npcsOnDuty.get(i).getMyIndex()-1);
+                    Gdx.app.debug("Debug: Spawner", "duty ID [FIXED]="+npcsOnDuty.get(i).getMyIndex());
+                }
+                Gdx.app.debug("Debug: Spawner", "Tile ="+posManager.getTileX()+" / "+ posManager.getTileY());
+                // inform coreTileData about data update
+//                coreTileData.destroyingThis(posManager.getTileX(), posManager.getTileY());
+                Gdx.app.debug("Debug: Spawner", "destroy() method  *END*  ------------"+
+                        " ------------ ------------ ------------ ------------ ------------");
+            }
+        }
+
 
     }
     public Npc spawnOnEvent(EntityAnimation entity, Vector2 pos){
@@ -135,10 +165,13 @@ public class Spawner{
         this.canSpawn = false;
         return rv;
     }
-    public void despawnOnEvent(){
-//        this.canSpawn = true;
-//        posManager.update(pos);
-//        this.canSpawn = false;
+    public void despawnOnEvent(int indexID, Vector2 pos){
+        this.canDespawn = true;
+        posManager.update(pos);
+        x = posManager.getPosX();
+        y = posManager.getPosY();
+        this.despawn(indexID);
+        this.canDespawn = false;
     }
 
 

@@ -9,6 +9,7 @@ public enum EntityAnimation {
     SLIME_2(12),
     SLIME_3(13),
     EXPLOSION(14),
+    TOWER(15),
     TEMP(66);
 
     int id;

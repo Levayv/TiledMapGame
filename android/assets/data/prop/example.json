@@ -183,6 +183,15 @@
 		"test": 111
 	},
 	{
+		"entityName": "TOWER",
+		"entityID": 15,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
 		"entityName": "TEMP",
 		"entityID": 66,
 		"isCollider": false,

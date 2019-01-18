@@ -175,21 +175,21 @@ public class WorldManager {
                 tileSize,mapWidth,mapHeight);
         // Factory build
         Vector2 pos = new Vector2();
-//        factory.buildOnEvent(EntityTex.Tree,  pos.set( 9*tileSize , 3*tileSize ));
-//        factory.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
-//        factory.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
-//        factory.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
-        factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(1*tileSize , 1*tileSize ));
+        factory.builder.buildOnEvent(EntityTex.Tree,  pos.set( 9*tileSize , 3*tileSize ));
+        factory.builder.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
+        factory.builder.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
+        factory.builder.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
+        factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(2*tileSize , 2*tileSize ));
+        factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,0 *tileSize));
+        factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,5 *tileSize));
+        factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,10 *tileSize));
 
-        int q = 99;
-        Npc[][] npcs = new Npc[q][q];
-        for (int i = 0; i < q; i++) {
-            for (int j = 0; j < q; j++) {
-                npcs[i][j] = factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(i*tileSize*4 , j*tileSize*4 ));
-//                factory.builder.buildOnEvent(EntityTex.Temp,  pos.set(i*tileSize , j*tileSize ));
 
-            }
-        }
+
+
+
+
+
 
         // Clock init
         clock = new Clock(factory);
@@ -212,7 +212,7 @@ public class WorldManager {
         pumpkin1.set23Range();
         pumpkin1.set31World(world);
         pumpkin1.set32Position(4*32,4*32);
-
+//        pumpkin1.getRange().radius += 100;
 //        MyPathFinder pathFinder;
 //        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pumpkin1.set32Position(3*tileSize,10*tileSize);

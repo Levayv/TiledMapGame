@@ -13,6 +13,6 @@ public enum EntityAnimation {
 
     int id;
     EntityAnimation(int i){id = i;}
-    public int GetID(){return id;}
+    public int getID(){return id;}
 }
 

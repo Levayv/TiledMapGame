@@ -376,7 +376,7 @@ public class GameScreen implements Screen {
         }
         // Camera moves 4 dir
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
-            stage.getCamera().translate((float)-6.1f, 0, 0);
+            stage.getCamera().translate(-6, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
             stage.getCamera().translate(6, 0, 0);

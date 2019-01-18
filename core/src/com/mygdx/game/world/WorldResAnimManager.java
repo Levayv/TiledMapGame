@@ -16,11 +16,11 @@ public class WorldResAnimManager {
 //        animations = new TextureRegion[arrayCap];
     }
     public void addAnimation(EntityAnimation entityAnim, Animation animation){
-        animations[entityAnim.GetID()] = animation;
+        animations[entityAnim.getID()] = animation;
         animationsSize++;
     }
     public Animation getAnimationByID(EntityAnimation entityAnim){
-        animation = animations[entityAnim.GetID()];
+        animation = animations[entityAnim.getID()];
         return animation;
     }
     public void addAnimationFromFile(EntityAnimation entity, Texture walkSheet, int FRAME_COLS){

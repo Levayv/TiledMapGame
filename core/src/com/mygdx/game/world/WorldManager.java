@@ -16,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Collider;
 import com.mygdx.game.Grid;
-import com.mygdx.game.Spawner;
 import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
@@ -203,23 +202,24 @@ public class WorldManager {
         pumpkin1.set31World(world);
         pumpkin1.set32Position(4*32,4*32);
 
-        MyPathFinder pathFinder;
-        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
+//        MyPathFinder pathFinder;
+//        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pumpkin1.set32Position(3*tileSize,10*tileSize);
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
 //        pathFinder.calculate(pumpkin1, new Vector1(3,4));
 
-        Spawner spawner = new Spawner(texRegManager,animManager,world);
-        spawner.set01EntityTex(EntityTex.Spawner);
-        spawner.set11TexReg(texRegManager);
-        spawner.set21Bounds();
-        spawner.set22Borders();
-        spawner.set23Range();
-        spawner.set31World(world);
-        spawner.set32Position(2*tileSize,2*tileSize);
-        spawner.set33Destination(2*tileSize,10*tileSize);
-        spawner.set34Path(pathFinder,pumpkin1);
-        spawner.setJob(clock);
+        //todo ASAP
+//        Spawner spawner = new Spawner(texRegManager,animManager,world);
+//        spawner.set01EntityTex(EntityTex.Spawner);
+//        spawner.set11TexReg(texRegManager);
+//        spawner.set21Bounds();
+//        spawner.set22Borders();
+//        spawner.set23Range();
+//        spawner.set31World(world);
+//        spawner.set32Position(2*tileSize,2*tileSize);
+//        spawner.set33Destination(2*tileSize,10*tileSize);
+//        spawner.set34Path(pathFinder,pumpkin1);
+//        spawner.setJob(clock);
 
 
 
@@ -227,11 +227,11 @@ public class WorldManager {
 
 //        factory.collider.add(pumpkin1.getBorder());
 
-//        MyPathFinder pathFinder;
-//        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
-//        pumpkin1.set32Position(3*tileSize,10*tileSize);
-////        pathFinder.calculate(pumpkin1, new Vector1(10,8));
-//        pathFinder.calculate(pumpkin1, new Vector1(3,4));
+        MyPathFinder pathFinder;
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
+        pumpkin1.set32Position(3*tileSize,10*tileSize);
+//        pathFinder.calculate(pumpkin1, new Vector1(10,8));
+        pathFinder.calculate(pumpkin1, new Vector1(3,4));
 
 
 

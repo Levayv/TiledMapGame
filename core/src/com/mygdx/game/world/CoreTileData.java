@@ -1,6 +1,6 @@
 package com.mygdx.game.world;
 
-class CoreTileData {
+public class CoreTileData {
     private boolean[][] isOccupied;
     private boolean[][] isDestructible;
 //    private boolean[][] isColidable;

@@ -20,7 +20,7 @@ public class jsonDataLoaderForEntities {
         json.setUsePrototypes(false);
         //output for example only
         AllData dataExample1 = new AllData();
-        dataExample1.setExample(EntityTex.values().length);
+        dataExample1.setExample();
         fileExample.writeString(json.prettyPrint(dataExample1),false);
         //input read json
         AllData dataFromFile = json.fromJson(AllData.class, file);        //read

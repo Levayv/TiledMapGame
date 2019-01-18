@@ -108,5 +108,88 @@
 		"isFlammable": false,
 		"test": 111
 	}
+],
+"npcData": [
+	{
+		"entityName": "NONE",
+		"entityID": 0,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "DOOR_OPEN",
+		"entityID": 1,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "DOOR_CLOSE_NOT_USED",
+		"entityID": 2,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "PUMPKIN",
+		"entityID": 3,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "SLIME_1",
+		"entityID": 11,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "SLIME_2",
+		"entityID": 12,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "SLIME_3",
+		"entityID": 13,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "EXPLOSION",
+		"entityID": 14,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	},
+	{
+		"entityName": "TEMP",
+		"entityID": 66,
+		"isCollider": false,
+		"isRigid": false,
+		"isLiquid": false,
+		"isFlammable": false,
+		"test": 111
+	}
 ]
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.mygdx.game.Collider;
+import com.mygdx.game.Spawner;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.Events.FactoryEvents;
@@ -18,6 +19,7 @@ import java.util.List;
 public class Factory implements Telegraph {
     public DeadPool deadPool;
     public Builder builder;
+    public Spawner spawner;
     private CoreTileData coreTileData;
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
@@ -37,27 +39,44 @@ public class Factory implements Telegraph {
              Collider collider,
              int tileSize,
              int mapWidth,
-             int mapHeight){
+             int mapHeight) {
         this.worldGroup = worldGroup;
         this.texRegManager = texRegManager;
         this.animManager = animManager;
-        this.collider = collider;
         this.allData = allData;
-
-
+        this.collider = collider;
         // position helpers , actual to tile[i][j] and tile corner
         posManager = new WorldPositionManager(tileSize);
         // tiled map data: isOccupied, isDestructible etc.
-        coreTileData = new CoreTileData(mapWidth,mapHeight);
+        coreTileData = new CoreTileData(mapWidth, mapHeight);
         // destroyed entities goes to DeadPool
         deadPool = new DeadPool();
-        // init builder
-        builder = new Builder(worldGroup, texRegManager, animManager,
-                allData, collider, deadPool, coreTileData,
-                tileSize,mapWidth,mapHeight);
+        // init builder and spawner
+        builder = new Builder(
+                worldGroup,
+                texRegManager,
+                animManager,
+                allData,
+                deadPool,
+                collider,
+                coreTileData,
+                tileSize,
+                mapWidth,
+                mapHeight
+        );
+        spawner = new Spawner(
+                worldGroup,
+                texRegManager,
+                animManager,
+                allData,
+                deadPool,
+                collider,
+                coreTileData,
+                tileSize,
+                mapWidth,
+                mapHeight
+        );
     }
-
-
     @Override
     public boolean handleMessage(Telegram msg) {
         System.out.println("!!! "+ "Factory new event:"+FactoryEvents.values()[msg.message]);

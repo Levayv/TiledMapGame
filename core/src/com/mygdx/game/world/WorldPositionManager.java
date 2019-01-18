@@ -14,7 +14,7 @@ public class WorldPositionManager {
     private Vector1 vector1 = new Vector1();
     private Vector2 bufferVector = new Vector2();
 
-    public WorldPositionManager(int tileSize){
+    public WorldPositionManager(int tileSize){ //
         this.tileSize = tileSize;
     }
     public int getTileSize(){ return this.tileSize; }

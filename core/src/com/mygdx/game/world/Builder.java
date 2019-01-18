@@ -13,32 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Builder {
-    public DeadPool deadPool;
-    private Builder builder;
-    private CoreTileData coreTileData;
     private boolean isBuilding;
     private boolean isDestroying;
     private boolean canBuild;
     private boolean canDestroy;
+
     private Something ghostBuild;
     private Something ghostDestroy;
+    private final Vector2 nullVector = new Vector2(-1000,-1000);
+
+    private List<Something> somethingsOnDuty;
+
+    private WorldPositionManager posManager;
+    private Group worldGroup;
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
-    private Group worldGroup;
-    private WorldPositionManager posManager;
-    private final Vector2 nullVector = new Vector2(-1000,-1000);
-    private List<Something> somethingsOnDuty; //todo make private
     private AllData allData;
+    public DeadPool deadPool;
     private Collider collider;
-    // for debug only
+    private CoreTileData coreTileData;
+
+    // for debug only, posManager sets, Gdx.app.debug gets
     private int x;
     private int y;
     public Builder(Group worldGroup,
                    WorldResTexRegManager texRegManager,
                    WorldResAnimManager animManager,
                    AllData allData,
-                   Collider collider,
                    DeadPool deadPool,
+                   Collider collider,
                    CoreTileData coreTileData,
                    int tileSize,
                    int mapWidth,
@@ -47,9 +50,9 @@ public class Builder {
         this.texRegManager = texRegManager;
         this.animManager = animManager;
         this.allData = allData;
-        this.coreTileData = coreTileData;
-        this.collider = collider;
         this.deadPool = deadPool;
+        this.collider = collider;
+        this.coreTileData = coreTileData;
         // position helpers , actual to tile[i][j] and tile corner
         posManager = new WorldPositionManager(tileSize);
         // active entities goes onDuty

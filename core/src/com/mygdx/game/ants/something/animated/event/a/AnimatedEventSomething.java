@@ -37,6 +37,6 @@ public class AnimatedEventSomething extends Something {
     @Override
     public void destroy(){ // Call from DeadPool
         super.destroy();
-        //todo add Anim
+        //todo add Anim for garbage collection
     }
 }

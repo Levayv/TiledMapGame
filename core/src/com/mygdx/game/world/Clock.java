@@ -56,22 +56,20 @@ public class Clock {
     public void shedule(Job job){ //todo mek multi , min hrs day
         jobs = new ArrayList<Job>();
         jobs.add(job);
-//        System.out.println("jobs.size()");
     }
     private void minUpdate(int min){
         if (jobs.size()>0){
-//            System.out.println("!!! " + "minUpdate");
 
         }
     }
     private void hourUpdate(int hrs){
         if (jobs.size()>0){
-            System.out.println("!!! " + "hourUpdate");
-            lastJob = jobs.get(jobs.size()-1);
-            if (!lastJob.endless){
-                jobs.remove(jobs.size()-1);
-            }
-            lastJob.start();
+//            System.out.println("!!! " + "hourUpdate");
+//            lastJob = jobs.get(jobs.size()-1);
+//            if (!lastJob.endless){
+//                jobs.remove(jobs.size()-1);
+//            }
+//            lastJob.start();
             dispatcher.dispatchMessage(FactoryEvents.AAA.getID());
         }
     }

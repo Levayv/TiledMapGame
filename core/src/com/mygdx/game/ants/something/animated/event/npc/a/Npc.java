@@ -29,13 +29,13 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     private float lastX;
     private float lastY;
     private float time = 0;
-    private Job job;
-    public void setJob(Clock clock){
-        job = new Job();
-        job.hrs = 1;
-        job.task = "Peasent: Job Done";
-        clock.shedule(job);
-    }
+//    private Job job;
+//    public void setJob(Clock clock){
+//        job = new Job();
+//        job.hrs = 1;
+//        job.task = "Peasent: Job Done";
+//        clock.shedule(job);
+//    }
     public void go(){
         go = true;
     }
@@ -85,7 +85,6 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                     time = 0;
                 }
             }
-
 
         }
 

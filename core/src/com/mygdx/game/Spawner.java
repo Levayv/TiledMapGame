@@ -103,21 +103,23 @@ public class Spawner{
                 // Object property init
                 pumpkin.set01EntityTex(EntityTex.Temp);
                 pumpkin.set02EntityAnim(entityAnim);
+                pumpkin.set09Data(allData.getSomethingDataByID(pumpkin.getEntityID()));
                 pumpkin.set11TexReg(texRegManager);
                 pumpkin.set12Anim(animManager);
                 pumpkin.set21Bounds();
                 pumpkin.set22Borders();
+                pumpkin.set22Borders(0,0);
                 pumpkin.set23Range();
                 pumpkin.set31World(worldGroup);
                 pumpkin.setVisible(true);
                 pumpkin.setPosition(posManager.getPosX(), posManager.getPosY());
                 pumpkin.setName("Tavern: "+entityAnim.name());
-                pumpkin.set09Data(allData.getSomethingDataByID(pumpkin.getEntityID()));
                 // inform coreTileData about data update
 //                coreTileData.buildingHere(posManager.getTileX(), posManager.getTileY());
                 // add collider
 //                if (tavern.getData().isCollider)
 //                    collider.add(tavern.getBorder());
+
                 return pumpkin;
             }
         }

@@ -23,6 +23,7 @@ public class Clock {
     private int day;
     private Date date;
     Clock(Factory factory){
+        jobs = new ArrayList<Job>();
         date = new Date();
         date.setTime(946684800000L-14400000);
         dispatcher.addListener(factory , FactoryEvents.AAA.getID());
@@ -54,7 +55,6 @@ public class Clock {
         return " Day=" + day + " Time= " + hrs + ":" + min + " ";
     }
     public void shedule(Job job){ //todo mek multi , min hrs day
-        jobs = new ArrayList<Job>();
         jobs.add(job);
     }
     private void minUpdate(int min){

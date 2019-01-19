@@ -43,9 +43,9 @@ public class WorldManager {
 //    public Something tree1;
 //    public Something tree2;
 //    public Something tree3;
-    public Something tower1;
-    public Something tower2;
-    public Something tower3;
+//    public Something tower1;
+//    public Something tower2;
+//    public Something tower3;
 //    public Something lever;
     public Npc pumpkin1;
     public Door door1;
@@ -179,11 +179,25 @@ public class WorldManager {
         factory.builder.buildOnEvent(EntityTex.Stone, pos.set( 3*tileSize , 6*tileSize ));
         factory.builder.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         factory.builder.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
-        factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(2*tileSize , 2*tileSize ));
-        factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,0 *tileSize));
-        factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,5 *tileSize));
-        factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,10 *tileSize));
+//        factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(2*tileSize , 2*tileSize ));
+        Npc t1 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,0 *tileSize));
+        Npc t2 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,5 *tileSize));
+        Npc t3 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,10 *tileSize));
+        pumpkin1 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+//        pumpkin1.set22Borders(0,0);
 
+        MyPathFinder pathFinder;
+        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
+//        pathFinder.calculate(pumpkin1, new Vector1(10,8));
+        pathFinder.calculate(pumpkin1, new Vector1(3,4));
+        pumpkin1.moveToPosition(pathFinder.getPath5());
+
+        t1.getRange().radius += 20;
+        t2.getRange().radius += 20;
+        t2.getRange().radius += 20;
+        t3.getRange().radius += 20;
+        t3.getRange().radius += 20;
+        t3.getRange().radius += 20;
 
 
 
@@ -200,18 +214,19 @@ public class WorldManager {
         //todo 4. integrate listeners ()
         //todo 5.
 
-        pumpkin1 = new Npc();
-        pumpkin1.setJob(clock);
-        pumpkin1.set01EntityTex(EntityTex.Temp);
-        pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
-        pumpkin1.set11TexReg(texRegManager);
-        pumpkin1.set12Anim(animManager);
-        pumpkin1.set21Bounds();
-//        pumpkin1.set22Borders(50,2);
-        pumpkin1.set22Borders(0,0);
-        pumpkin1.set23Range();
-        pumpkin1.set31World(world);
-        pumpkin1.set32Position(4*32,4*32);
+//        pumpkin1 = new Npc();
+//        pumpkin1.setJob(clock);
+//        pumpkin1.set01EntityTex(EntityTex.Temp);
+//        pumpkin1.set02EntityAnim(EntityAnimation.PUMPKIN);
+//        pumpkin1.set11TexReg(texRegManager);
+//        pumpkin1.set12Anim(animManager);
+//        pumpkin1.set21Bounds();
+////        pumpkin1.set22Borders(50,2);
+//        pumpkin1.set22Borders(0,0);
+//        pumpkin1.set23Range();
+//        pumpkin1.set31World(world);
+//        pumpkin1.set32Position(4*32,4*32);
+
 //        pumpkin1.getRange().radius += 100;
 //        MyPathFinder pathFinder;
 //        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
@@ -219,7 +234,6 @@ public class WorldManager {
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
 //        pathFinder.calculate(pumpkin1, new Vector1(3,4));
 
-        //todo ASAP
 //        Spawner spawner = new Spawner(texRegManager,animManager,world);
 //        spawner.set01EntityTex(EntityTex.Spawner);
 //        spawner.set11TexReg(texRegManager);
@@ -232,63 +246,19 @@ public class WorldManager {
 //        spawner.set34Path(pathFinder,pumpkin1);
 //        spawner.setJob(clock);
 
-
-
-
-
 //        factory.collider.add(pumpkin1.getBorder());
-
-        MyPathFinder pathFinder;
-        pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
-        pumpkin1.set32Position(3*tileSize,10*tileSize);
-//        pathFinder.calculate(pumpkin1, new Vector1(10,8));
-        pathFinder.calculate(pumpkin1, new Vector1(3,4));
 
 
 
 //        System.out.println("!!! pumpkin1="+pumpkin1.getEntityName());
 
+//        Vector2[] vvv = pathFinder.getPath5();
 
-        isRoad = pathFinder.getVisited();
-
-
-        System.out.println("!!!+"+TimeUtils.nanoTime());
-        for (int i = 31; i >= 0; i--) {
-            for (int j = 0; j < 32; j++) {
-//                if (isRoad[j][i]){
-//                    System.out.print("+");
-//                }else {
-//                    System.out.print("-");
-//                }
-                System.out.print(pathFinder.distance[j][i]+",");
-            }
-            System.out.println();
-        }
-        for (int i = 31; i >= 0; i--) {
-            for (int j = 0; j < 32; j++) {
-                if (pathFinder.processed[j][i]){
-                    System.out.print("+");
-                }else {
-                    System.out.print("-");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println("!!!+"+TimeUtils.nanoTime());
-        Vector2[] vvv = pathFinder.getPath5();
-        for (int i = 0; i < vvv.length; i++) {
-            System.out.println("!!! vvv + " +vvv[i].x+"/"+vvv[i].y);
-//            factory.buildOnEvent(EntityTex.Temp,  pos.set(
-//                    vvv[i].x, vvv[i].y)
-//            );
-            Vector2[] v5 = pathFinder.getPath5();
-        }
-
-        pumpkin1.moveToPosition(pathFinder.getPath5());
-        System.out.println("!!! aaa "+pumpkin1.texReg.getRegionHeight());
-        System.out.println("!!! aaa "+pumpkin1.texReg.getRegionWidth());
-        System.out.println("!!! aaa "+pumpkin1.getBorderW());
-        System.out.println("!!! aaa "+pumpkin1.getBorderH());
+//        Vector2[] v5 = pathFinder.getPath5();
+//        System.out.println("!!! aaa "+pumpkin1.texReg.getRegionHeight());
+//        System.out.println("!!! aaa "+pumpkin1.texReg.getRegionWidth());
+//        System.out.println("!!! aaa "+pumpkin1.getBorderW());
+//        System.out.println("!!! aaa "+pumpkin1.getBorderH());
 
 //        if (isRoad[0][0]) System.out.println("!!! 1/3");
 //        if (isRoad[1][0]) System.out.println("!!! 2/3");
@@ -316,26 +286,23 @@ public class WorldManager {
 //        spawner.setPosition(objX[0],objY[0]);
 //        spawner.create(factory,pos.set(12*tileSize , 3*tileSize ));
 
-        System.out.println("!!!");
-        System.out.println("!!!");
-        System.out.println("!!!");
-        //test
-        Vector1 v1 = new Vector1(1,1);
-        Vector1 v2 = new Vector1();
-        Vector1 v3 = new Vector1();
-        v1.x++;
-        v3 = v1.newOne();
-        v1.x++;
-        v3.x--;
-        System.out.println("v1="+ v1.x + "/" + v1.y);
-        System.out.println("v2="+ v2.x + "/" + v2.y);
-        System.out.println("v3="+ v3.x + "/" + v3.y);
-
-
-
-
+//        System.out.println("!!!");
+//        System.out.println("!!!");
+//        System.out.println("!!!");
+//        //test
+//        Vector1 v1 = new Vector1(1,1);
+//        Vector1 v2 = new Vector1();
+//        Vector1 v3 = new Vector1();
+//        v1.x++;
+//        v3 = v1.newOne();
+//        v1.x++;
+//        v3.x--;
+//        System.out.println("v1="+ v1.x + "/" + v1.y);
+//        System.out.println("v2="+ v2.x + "/" + v2.y);
+//        System.out.println("v3="+ v3.x + "/" + v3.y);
 
         door1  = new Door();
+        // doors and slimes
         door1.set01EntityTex(EntityTex.Temp);
         door1.set02EntityAnim(EntityAnimation.DOOR_OPEN);
 //        door1.tempCHANGEANIM(animManager.getAnimationByID(EntityAnimation.DOOR_OPEN));
@@ -345,35 +312,35 @@ public class WorldManager {
         slime2 = new Npc[mobCount];
         slime3 = new Npc[mobCount];
         doorss = new Door[mobCount];
-        tower1 = new Something();
-        tower2 = new Something();
-        tower3 = new Something();
-        tower1.set01EntityTex(EntityTex.Tower);
-        tower2.set01EntityTex(EntityTex.Tower);
-        tower3.set01EntityTex(EntityTex.Tower);
-        tower1.set11TexReg(texRegManager);
-        tower2.set11TexReg(texRegManager);
-        tower3.set11TexReg(texRegManager);
-        tower1.set21Bounds();
-        tower2.set21Bounds();
-        tower3.set21Bounds();
+//        tower1 = new Something();
+//        tower2 = new Something();
+//        tower3 = new Something();
+//        tower1.set01EntityTex(EntityTex.Tower);
+//        tower2.set01EntityTex(EntityTex.Tower);
+//        tower3.set01EntityTex(EntityTex.Tower);
+//        tower1.set11TexReg(texRegManager);
+//        tower2.set11TexReg(texRegManager);
+//        tower3.set11TexReg(texRegManager);
+//        tower1.set21Bounds();
+//        tower2.set21Bounds();
+//        tower3.set21Bounds();
 
         door1.set11TexReg(texRegManager);
         door1.set12Anim(animManager);
         door1.set21Bounds();
 //        boomE.set11TexReg(texRegManager);
 
-        tower1.set31World(world);
-        tower2.set31World(world);
-        tower3.set31World(world);
+//        tower1.set31World(world);
+//        tower2.set31World(world);
+//        tower3.set31World(world);
         door1.set31World(world);
 //        boomE.set31World(world);
 
         door1.set22Borders();
 //        boomE.set22Borders();
-        tower1.set22Borders();
-        tower2.set22Borders();
-        tower3.set22Borders();
+//        tower1.set22Borders();
+//        tower2.set22Borders();
+//        tower3.set22Borders();
 //        factory.collider.add(tower1.getBorder());
 //        factory.collider.add(tower1.getBorder());
 //        factory.collider.add(tower1.getBorder());
@@ -430,9 +397,9 @@ public class WorldManager {
 
         door1.set32Position(12*tileSize,12*tileSize);
 //        boomE.setPosition(15*tileSize,12*tileSize);
-        tower1.set32Position(18 *tileSize,0 *tileSize);
-        tower2.set32Position(18 *tileSize,5 *tileSize);
-        tower3.set32Position(18 *tileSize,10 *tileSize);
+//        tower1.set32Position(18 *tileSize,0 *tileSize);
+//        tower2.set32Position(18 *tileSize,5 *tileSize);
+//        tower3.set32Position(18 *tileSize,10 *tileSize);
 
 //        boomE.setLoop(false);
 

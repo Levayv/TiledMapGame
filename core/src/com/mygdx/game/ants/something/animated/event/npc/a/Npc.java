@@ -150,7 +150,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     }
     //-------------------------------------------------------------------------------------------//
     public MyPath myPath = new MyPath();
-    List<Vector2> path25 = new ArrayList<Vector2>();
+//    List<Vector2> path25 = new ArrayList<Vector2>();
     Vector2[] path5;
     public void moveToPosition(Vector2[] vectorArg){
         int x = 100;

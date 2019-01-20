@@ -4335,7 +4335,7 @@
  </tileset>
  <layer id="1" name="Tile Layer 1" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt1z0KACAMg9Eczovl5u7i4E8lCN8QKEL76FYtyeG0UPDx8fHx8fHxb2ac3DRV/srba99DjY//i1/xf0ntP5uFn/V3e5LpQ448Yg==
+   eJztzSEBAAAIA7CHoxjNacHNxPQ2yZZNid/v9/v9fr/f7/f7/Z9/0wFYmS2c
   </data>
  </layer>
  <layer id="3" name="Tile Layer 2" width="32" height="32">

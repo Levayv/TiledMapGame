@@ -12,11 +12,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MyPathFinder {
+public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cell or 0 cell
     private int objWidth;
     private int objHeight;
     private int objBorderXdelta;
     private int objBorderYdelta;
+
     private int tileSize;
     private boolean[][] road;
     private Vector2[] path5;
@@ -27,7 +28,7 @@ public class MyPathFinder {
     private boolean reachable;
     public boolean[][] processed;
     public int[][] distance;
-    private boolean go;
+    private boolean go; // loop controller
     private WorldPositionManager positionManager;
     MyPathFinder(int mapWidth, int mapHeight,
                  WorldPositionManager positionManager,
@@ -105,25 +106,69 @@ public class MyPathFinder {
 //        return buffer1 < buffer2 ? buffer1 : buffer2;
 //    }
     public boolean calculate(Something who, Vector1 where){
+        //nullify previous data
+        reachable = false;
         for (int i = 0; i < 32; i++) {
             for (int j = 0; j < 32; j++) {
                 processed[i][j] = false;
                 distance[i][j] = 0;
             }
         }
-        return calc(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
-                where, who
-                );
-    }
-    private boolean calc(Vector1 from, Vector1 to, Something who){
         this.objWidth         = (int) who.getBorderW();
         this.objHeight        = (int) who.getBorderH();
         this.objBorderXdelta  = who.borderXdelta;
         this.objBorderYdelta  = who.borderYdelta;
-        reachable = false;
-        //who = null; //todo research object casting
 
+        return calc3(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
+                where, who
+                );
+    }
+    private boolean calc3(Vector1 from, Vector1 to, Something who){
+
+        if ((from.x == to.x) || (from.y == to.y)) {
+            if ((from.x == to.x) && (from.y == to.y)) { // case 1: from == to
+                reachable = false;
+                Gdx.app.log("MyPathFinder", "Destination is the same tile");
+                return false;
+            }else {
+                if ((from.x == to.x)){
+                    if ((from.y - to.y) == 1) {
+                        Gdx.app.debug("MyPathFinder",
+                                "Destination is nearest bottom cell");
+                    }else {
+                        if ((from.y - to.y) == -1) {
+                            Gdx.app.debug("MyPathFinder",
+                                    "Destination is nearest upper cell");
+                        }
+                    }
+                }
+                if ((from.y == to.y)){
+                    if ((from.x - to.x) == 1) {
+                        Gdx.app.debug("MyPathFinder",
+                                "Destination is nearest left cell");
+                    }else {
+                        if ((from.x - to.x) == -1) {
+                            Gdx.app.debug("MyPathFinder",
+                                    "Destination is nearest right cell");
+                        }
+                    }
+                }
+                path5 = new Vector2[4];
+                path5[0] = new Vector2(tileXYCorrector(from.x , from.y));
+                path5[1] = new Vector2(tileXYCorrector(from.x , from.y));
+                path5[2] = new Vector2(tileXYCorrector(to.x , to.y));
+                path5[3] = new Vector2(tileXYCorrector(to.x , to.y));
+
+//                path25.add((pos.x,pos.y));
+                return true;
+            }
+        }
+        System.out.println("next");
+        //who = null; //todo research object casting
         // check x<0 x>width etc... , also from != to
+        //todo case 2: from != to , distance = 1;
+        //todo case 3: from != to , distance = 2..999
+
         start = from;
         destination = to;
 

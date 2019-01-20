@@ -25,6 +25,8 @@ import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.jsonDataLoaderForEntities;
 
+import java.util.Random;
+
 public class WorldManager {
     // WorldManager's knowledge about grid
     private boolean debugging = false; // todo fix debugging boolean in all classes
@@ -191,17 +193,23 @@ public class WorldManager {
         MyPathFinder pathFinder;
         pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
-        pumpkin1.set32Position(3*tileSize,10*tileSize);
-        pathFinder.calculate(pumpkin1, new Vector1(3,4));
-        pumpkin1.moveToPosition(pathFinder.getPath5());
 
-        pumpkin2.set32Position(4*tileSize,10*tileSize);
-        pathFinder.calculate(pumpkin2, new Vector1(14,7));
-        pumpkin2.moveToPosition(pathFinder.getPath5());
+        Random rrr = new Random();
+        for (int i = 0; i < 1000; i++) {
+            System.out.println("!!!!! + " + (rrr.nextInt(31)+1));
+        }
 
-        pumpkin3.set32Position(5*tileSize,10*tileSize);
-        pathFinder.calculate(pumpkin3, new Vector1(8,13));
-        pumpkin3.moveToPosition(pathFinder.getPath5());
+        pumpkin1.set32Position(3 * tileSize, 10 * tileSize);
+        if (pathFinder.calculate(pumpkin1, new Vector1(1, 10)))
+            pumpkin1.moveToPosition(pathFinder.getPath5());
+
+        pumpkin2.set32Position(4 * tileSize, 10 * tileSize);
+        if (pathFinder.calculate(pumpkin2, new Vector1(14, 7)))
+            pumpkin2.moveToPosition(pathFinder.getPath5());
+
+        pumpkin3.set32Position(5 * tileSize, 10 * tileSize);
+        if (pathFinder.calculate(pumpkin3, new Vector1(8, 13)))
+            pumpkin3.moveToPosition(pathFinder.getPath5());
 
         t1.set23Range(20);
         t2.set23Range(40);

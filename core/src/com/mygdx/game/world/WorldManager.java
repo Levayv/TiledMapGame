@@ -47,7 +47,7 @@ public class WorldManager {
 //    public Something tower2;
 //    public Something tower3;
 //    public Something lever;
-    public Npc pumpkin1;
+//    public Npc pumpkin1;
     public Door door1;
 //    public AnimatedSomething boomE;
 
@@ -183,14 +183,25 @@ public class WorldManager {
         Npc t1 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,0 *tileSize));
         Npc t2 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,5 *tileSize));
         Npc t3 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,10 *tileSize));
-        pumpkin1 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+        Npc pumpkin1 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+        Npc pumpkin2 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+        Npc pumpkin3 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
 //        pumpkin1.set22Borders(0,0);
 
         MyPathFinder pathFinder;
         pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
+        pumpkin1.set32Position(3*tileSize,10*tileSize);
         pathFinder.calculate(pumpkin1, new Vector1(3,4));
         pumpkin1.moveToPosition(pathFinder.getPath5());
+
+        pumpkin2.set32Position(4*tileSize,10*tileSize);
+        pathFinder.calculate(pumpkin2, new Vector1(14,7));
+        pumpkin2.moveToPosition(pathFinder.getPath5());
+
+        pumpkin3.set32Position(5*tileSize,10*tileSize);
+        pathFinder.calculate(pumpkin3, new Vector1(8,13));
+        pumpkin3.moveToPosition(pathFinder.getPath5());
 
         t1.set23Range(20);
         t2.set23Range(40);

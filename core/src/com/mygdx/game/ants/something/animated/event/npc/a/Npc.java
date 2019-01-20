@@ -179,6 +179,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         lastY = this.getBorderY();
 
         path5 = vectorArg;
+
 //        this.set32Position(path5[0].x , path5[0].y);
 //        path5[0] = new Vector2(lastX,lastY);
 //        path5 = new Vector2[path25.size()];

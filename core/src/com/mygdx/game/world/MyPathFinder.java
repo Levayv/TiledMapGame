@@ -41,16 +41,19 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
         distance = new int[mapWidth][mapHeight];
     }
     private void getNext(List<Vector1> stack,Vector1 posC){ // posC Current
-        Vector1[] posDir = new Vector1[4];
+        Vector1[] posDir = new Vector1[4]; //todo check bounds
         posDir[0] = new Vector1(posC) ;
         posDir[1] = new Vector1(posC) ;
         posDir[2] = new Vector1(posC) ;
         posDir[3] = new Vector1(posC) ;
-        posDir[0].x++;
-        posDir[1].x--;
-        posDir[2].y++;
-        posDir[3].y--;
-
+//        if (posDir[0].x+1<tileSize)
+            posDir[0].x++;
+//        if (posDir[1].x-1>0)
+            posDir[1].x--;
+//        if (posDir[2].y+1<tileSize)
+            posDir[2].y++;
+//        if (posDir[3].y-1>0)
+            posDir[3].y--;
         for (int i = 0; i < posDir.length; i++) {
             if (road[posDir[i].x][posDir[i].y] && !processed[posDir[i].x][posDir[i].y]){
                 distance[posDir[i].x][posDir[i].y] = distance[posC.x][posC.y]+1;

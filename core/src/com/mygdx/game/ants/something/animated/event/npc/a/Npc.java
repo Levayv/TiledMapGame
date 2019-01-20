@@ -95,6 +95,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                 lastX = myPath.getNextX();
                 lastY = myPath.getNextY();
                 extraInfo.center = new Vector1(getCenter().x,getCenter().y);
+                extraInfo.outerBorder = new Vector1((int)getBorderW(),(int)getBorderH());
                 dispatcher.dispatchMessage(BasicEvents.NPC_MOVED.getID(), extraInfo);
                 set32Position(lastX , lastY);
                 time += delta;
@@ -116,12 +117,20 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     protected void drawDebugBounds (ShapeRenderer shapes) {
         super.drawDebugBounds(shapes);
         if (distance.center!=null && distance.targetCenter!=null){
-            shapes.setColor(Color.BLACK);
+            shapes.setColor(Color.ORANGE);
             shapes.line(
                     distance.center.x,distance.center.y,
                     distance.targetCenter.x,distance.targetCenter.y
                     );
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!");
+        }
+        if (path5 != null){
+            if (path5.length>1){
+                shapes.setColor(Color.BLACK);
+                for (int i = 1; i < path5.length; i++) {
+                    shapes.line(path5[i-1].x,path5[i-1].y,
+                            path5[i].x,path5[i].y);
+                }
+            }
         }
     }
     @Override
@@ -133,16 +142,17 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
         if (msg.message == BasicEvents.NPC_MOVED.getID()){
             NpcTalk extraInfoBuffer;
             extraInfoBuffer = (NpcTalk) msg.extraInfo ;
-            System.out.println("!!! this="+this.entityAnim.name()+","+this.getName());
-            System.out.println("!!! msg ="+msg.message);
-            System.out.println("!!! msg ="+BasicEvents.values()[msg.message]);
-            System.out.println("!!! exI f="+extraInfoBuffer.faction.id);
-            System.out.println("!!! exI x="+extraInfoBuffer.center.x);
-            System.out.println("!!! exI y="+extraInfoBuffer.center.y);
+            //Gdx.app.debug("Npc", "hndleMsg msg = "+this.entityAnim.name()+","+this.getName());
+            //Gdx.app.debug("Npc", "hndleMsg msg = "+msg.message);
+            //Gdx.app.debug("Npc", "hndleMsg msg = "+BasicEvents.values()[msg.message]);
+            //Gdx.app.debug("Npc", "hndleMsg msg = "+extraInfoBuffer.faction.id);
+            //Gdx.app.debug("Npc", "hndleMsg msg = "+extraInfoBuffer.center.x);
+            //Gdx.app.debug("Npc", "hndleMsg msg = "+extraInfoBuffer.center.y);
             if (extraInfoBuffer.faction.id != this.extraInfo.faction.id){
-                System.out.println("!!! exI is Enemy");
-                if (this.distance.inRange(extraInfoBuffer.center))
-                    System.out.println("!!! exI is in range");
+                Gdx.app.debug("Npc", "hndleMsg exI is Enemy");
+                if (this.distance.inRange(extraInfoBuffer.center, extraInfoBuffer.outerBorder)){
+                    Gdx.app.debug("Npc", "hndleMsg exI is in range");
+                }
             }
         }
 

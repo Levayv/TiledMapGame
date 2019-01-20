@@ -182,38 +182,51 @@ public class WorldManager {
         factory.builder.buildOnEvent(EntityTex.Ore,   pos.set( 6*tileSize , 6*tileSize ));
         factory.builder.buildOnEvent(EntityTex.Temp,  pos.set(12*tileSize , 9*tileSize ));
 //        factory.spawner.spawnOnEvent(EntityAnimation.EXPLOSION,  pos.set(2*tileSize , 2*tileSize ));
-        Npc t1 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,0 *tileSize));
-        Npc t2 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,5 *tileSize));
-        Npc t3 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,10 *tileSize));
-        Npc pumpkin1 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
-        Npc pumpkin2 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
-        Npc pumpkin3 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+//        Npc t1 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,0 *tileSize));
+//        Npc t2 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,5 *tileSize));
+//        Npc t3 = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,  pos.set(18 *tileSize,10 *tileSize));
+//        Npc pumpkin1 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+//        Npc pumpkin2 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
+//        Npc pumpkin3 = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,  pos.set(3*tileSize,10*tileSize));
 //        pumpkin1.set22Borders(0,0);
 
         MyPathFinder pathFinder;
         pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
 
+        int pp = 100;
         Random rrr = new Random();
-        for (int i = 0; i < 1000; i++) {
-            System.out.println("!!!!! + " + (rrr.nextInt(31)+1));
+        Npc[] towers = new Npc[pp/10];
+        Npc[] pumpkins = new Npc[pp];
+        for (int i = 0; i < pp / 10; i++) {
+            towers[i] = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,
+                    pos.set((rrr.nextInt(30)+1) *tileSize,(rrr.nextInt(30)+1) *tileSize));
         }
+        for (int i = 0; i < pp; i++) {
+            pumpkins[i] = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,
+                    pos.set((rrr.nextInt(30)+1) *tileSize,(rrr.nextInt(30)+1) *tileSize));
+            if (pathFinder.calculate(pumpkins[i], new Vector1((rrr.nextInt(30)+1), (rrr.nextInt(30)+1))))
+                pumpkins[i].moveToPosition(pathFinder.getPath5());
 
-        pumpkin1.set32Position(3 * tileSize, 10 * tileSize);
-        if (pathFinder.calculate(pumpkin1, new Vector1(1, 10)))
-            pumpkin1.moveToPosition(pathFinder.getPath5());
-
-        pumpkin2.set32Position(4 * tileSize, 10 * tileSize);
-        if (pathFinder.calculate(pumpkin2, new Vector1(14, 7)))
-            pumpkin2.moveToPosition(pathFinder.getPath5());
-
-        pumpkin3.set32Position(5 * tileSize, 10 * tileSize);
-        if (pathFinder.calculate(pumpkin3, new Vector1(8, 13)))
-            pumpkin3.moveToPosition(pathFinder.getPath5());
-
-        t1.set23Range(20);
-        t2.set23Range(40);
-        t3.set23Range(60);
+        }
+//
+//
+//
+//        pumpkin1.set32Position(3 * tileSize, 10 * tileSize);
+//        if (pathFinder.calculate(pumpkin1, new Vector1(1, 10)))
+//            pumpkin1.moveToPosition(pathFinder.getPath5());
+//
+//        pumpkin2.set32Position(4 * tileSize, 10 * tileSize);
+//        if (pathFinder.calculate(pumpkin2, new Vector1(14, 7)))
+//            pumpkin2.moveToPosition(pathFinder.getPath5());
+//
+//        pumpkin3.set32Position(5 * tileSize, 10 * tileSize);
+//        if (pathFinder.calculate(pumpkin3, new Vector1(8, 13)))
+//            pumpkin3.moveToPosition(pathFinder.getPath5());
+//
+//        t1.set23Range(20);
+//        t2.set23Range(40);
+//        t3.set23Range(60);
 
 
 

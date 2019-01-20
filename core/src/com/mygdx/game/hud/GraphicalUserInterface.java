@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import com.mygdx.game.enums.Events.BasicDoorEvents;
+import com.mygdx.game.enums.Events.BasicEvents;
 import com.mygdx.game.world.WorldManager;
 
 public class GraphicalUserInterface {
@@ -90,12 +90,12 @@ public class GraphicalUserInterface {
         tableRoot.add(label1).bottom();
         tableRoot.add(rightPanelButtons).expand().top().right();
         //FIXME listeners
-        dispatcher.addListener(worldManager.door1     , BasicDoorEvents.OPEN.getID());
-        dispatcher.addListener(worldManager.door1     , BasicDoorEvents.CLOSE.getID());
+        dispatcher.addListener(worldManager.door1     , BasicEvents.DOOR_OPEN.getID());
+        dispatcher.addListener(worldManager.door1     , BasicEvents.DOOR_CLOSE.getID());
 
         for (int i = 0; i < worldManager.mobCount; i++) {
-            dispatcher.addListener(worldManager.doorss[i] , BasicDoorEvents.OPEN.getID());
-            dispatcher.addListener(worldManager.doorss[i] , BasicDoorEvents.CLOSE.getID());
+            dispatcher.addListener(worldManager.doorss[i] , BasicEvents.DOOR_OPEN.getID());
+            dispatcher.addListener(worldManager.doorss[i] , BasicEvents.DOOR_CLOSE.getID());
         }
         for (int i = 2; i < size; i++) {
             buttons[i].addListener(new InputListener() {
@@ -137,7 +137,7 @@ public class GraphicalUserInterface {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("GUI",event.getListenerActor().getName()+"  pressed");
-                dispatcher.dispatchMessage(BasicDoorEvents.CLOSE.getID());
+                dispatcher.dispatchMessage(BasicEvents.DOOR_CLOSE.getID());
                 return true;
             }
         });
@@ -145,7 +145,7 @@ public class GraphicalUserInterface {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.log("GUI",event.getListenerActor().getName()+"  pressed");
-                dispatcher.dispatchMessage(BasicDoorEvents.OPEN.getID());
+                dispatcher.dispatchMessage(BasicEvents.DOOR_OPEN.getID());
                 return true;
             }
         });

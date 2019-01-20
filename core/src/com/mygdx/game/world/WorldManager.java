@@ -192,12 +192,9 @@ public class WorldManager {
         pathFinder.calculate(pumpkin1, new Vector1(3,4));
         pumpkin1.moveToPosition(pathFinder.getPath5());
 
-        t1.getRange().radius += 20;
-        t2.getRange().radius += 20;
-        t2.getRange().radius += 20;
-        t3.getRange().radius += 20;
-        t3.getRange().radius += 20;
-        t3.getRange().radius += 20;
+        t1.set23Range(20);
+        t2.set23Range(40);
+        t3.set23Range(60);
 
 
 

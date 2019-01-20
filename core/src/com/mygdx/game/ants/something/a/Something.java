@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.a.coreActor;
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
@@ -17,7 +18,8 @@ public class Something extends coreActor{
     private boolean customRange;
     private Circle range;
     private Vector2 buffVect2;
-        public int borderXdelta;
+    private Vector1 center;
+    public int borderXdelta;
     public int borderYdelta;
     private SomethingData data;
     private final Vector2 nullVector = new Vector2(-1000,-1000);
@@ -26,6 +28,7 @@ public class Something extends coreActor{
         border = new Rectangle();
         range = new Circle();
         buffVect2 = new Vector2();
+        center = new Vector1();
     }
     public void set09Data(SomethingData data) {
         this.data = data;
@@ -38,6 +41,7 @@ public class Something extends coreActor{
 //        border.x = this.getX() + 0;
 //        border.y = this.getY() + 0;
 //        range.set(border.getCenter(new Vector2()),new Vector2(border.x*2,border.y*2)  );
+        setCenter();
     }
     public void set22Borders(int borderXdelta, int borderYdelta , int borderWdelta, int borderHdelta  ){
         this.borderXdelta = borderXdelta;
@@ -47,6 +51,7 @@ public class Something extends coreActor{
         border.width  = texReg.getRegionWidth()  - borderWdelta*2;
         border.height = texReg.getRegionHeight() - borderHdelta*2;
         customBorder = true;
+        setCenter();
     }
     public void set22Borders(int borderXdelta, int borderYdelta){
         this.borderXdelta = borderXdelta;
@@ -63,11 +68,21 @@ public class Something extends coreActor{
             if (border.height > border.width)
                 border.height = border.width;
         }
+        setCenter();
+    }
+    private void setCenter(){ // must be called from public setBorders x3 & posChanged
+        center.x = (int) (border.width/2 + border.x);
+        center.y = (int) (border.height/2 + border.y);
     }
     public void set23Range(){
         customRange = true;
         range.setPosition(border.getCenter(new Vector2()));
         range.setRadius(border.width*2);
+    }
+    public void set23Range(int diff){
+        customRange = true;
+        range.setPosition(border.getCenter(new Vector2()));
+        range.setRadius(border.width*2+diff);
     }
     //-------------------------------------------------------------------------------------------//
     public SomethingData getData(){
@@ -79,6 +94,7 @@ public class Something extends coreActor{
     public float getBorderY(){ return border.y;}
     public float getBorderW(){ return border.width;}
     public float getBorderH(){ return border.height;}
+    public Vector1 getCenter(){ return center;}
     //-------------------------------------------------------------------------------------------//
     @Override
     protected void positionChanged(){ //todo optimise ! Something pos rarely changes
@@ -87,6 +103,9 @@ public class Something extends coreActor{
             border.x = this.getX() + this.borderXdelta;
             border.y = this.getY() + this.borderYdelta;
             range.setPosition(border.getCenter(buffVect2));
+        }
+        if (border != null){
+            setCenter();
         }
     }
     @Override

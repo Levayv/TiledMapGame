@@ -3,8 +3,7 @@ package com.mygdx.game.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.enums.Events.BasicDoorEvents;
-import com.mygdx.game.enums.Events.FactoryEvents;
+import com.mygdx.game.enums.Events.BasicEvents;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -26,7 +25,7 @@ public class Clock {
         jobs = new ArrayList<Job>();
         date = new Date();
         date.setTime(946684800000L-14400000);
-        dispatcher.addListener(factory , FactoryEvents.AAA.getID());
+        dispatcher.addListener(factory , BasicEvents.FACTORY_AAA.getID());
     }
     public void update(float deltaFloat){
         long diff;
@@ -70,7 +69,7 @@ public class Clock {
 //                jobs.remove(jobs.size()-1);
 //            }
 //            lastJob.start();
-            dispatcher.dispatchMessage(FactoryEvents.AAA.getID());
+            dispatcher.dispatchMessage(BasicEvents.FACTORY_AAA.getID());
         }
     }
     private void dayUpdate(int day){

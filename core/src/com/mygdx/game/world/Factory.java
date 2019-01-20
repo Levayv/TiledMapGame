@@ -10,7 +10,7 @@ import com.mygdx.game.Collider;
 import com.mygdx.game.Spawner;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.Events.FactoryEvents;
+import com.mygdx.game.enums.Events.BasicEvents;
 import com.mygdx.game.enums.entity.EntityTex;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class Factory implements Telegraph {
     }
     @Override
     public boolean handleMessage(Telegram msg) {
-        System.out.println("!!! "+ "Factory new event:"+FactoryEvents.values()[msg.message]);
+        System.out.println("!!! "+ "Factory new event:"+BasicEvents.values()[msg.message]);
         return false;
     }
 }

@@ -3,28 +3,22 @@ package com.mygdx.game.ants.something.animated.event.npc.a;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.fsm.DefaultStateMachine;
 import com.badlogic.gdx.ai.fsm.StateMachine;
+import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.CatmullRomSpline;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
-import com.mygdx.game.enums.entity.EntityClass;
-import com.mygdx.game.enums.entity.EntityTex;
-import com.mygdx.game.enums.entity.EntityAnimation;
-import com.mygdx.game.world.Clock;
-import com.mygdx.game.world.Job;
+import com.mygdx.game.enums.Events.NpcEvents;
 import com.mygdx.game.world.WorldResAnimManager;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Npc extends AnimatedEventSomething implements Telegraph {
     StateMachine<Npc, NpcState> stateMachine;
+    public MessageDispatcher dispatcher = new MessageDispatcher();
     private boolean go;
     private float lastX;
     private float lastY;
@@ -78,9 +72,10 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
             }else {
                 lastX = myPath.getNextX();
                 lastY = myPath.getNextY();
+                dispatcher.dispatchMessage(NpcEvents.iMoved.getID());
                 set32Position(lastX , lastY);
                 time += delta;
-                if (time > 300) { //stop after 3 sec
+                if (time > 3) { //stop after 3 sec
                     go = false;
                     time = 0;
                 }
@@ -100,6 +95,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                 "EntityID:"+this.getEntityName()+
                         " state:"+this.stateMachine.getCurrentState().name()+
                         " handleMessage: "+msg.message);
+
         return stateMachine.getCurrentState().onMessage(this, msg);
     }
     //-------------------------------------------------------------------------------------------//

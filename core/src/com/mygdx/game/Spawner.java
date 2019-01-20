@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
 import com.mygdx.game.ants.something.animated.event.npc.a.MyPath;
@@ -15,6 +16,7 @@ import com.mygdx.game.world.DeadPool;
 import com.mygdx.game.world.Factory;
 import com.mygdx.game.world.Job;
 import com.mygdx.game.world.MyPathFinder;
+import com.mygdx.game.world.Router;
 import com.mygdx.game.world.WorldManager;
 import com.mygdx.game.world.WorldPositionManager;
 import com.mygdx.game.world.WorldResAnimManager;
@@ -33,6 +35,8 @@ public class Spawner{
     private final Vector2 nullVector = new Vector2(-1000,-1000);
 
     private List<Npc> npcsOnDuty;
+
+    private Router router = new Router();
 
     private Job job;
     private Vector1 destination;
@@ -114,6 +118,7 @@ public class Spawner{
                 pumpkin.setVisible(true);
                 pumpkin.setPosition(posManager.getPosX(), posManager.getPosY());
                 pumpkin.setName("Tavern: "+entityAnim.name());
+                router.add(pumpkin);
                 // inform coreTileData about data update
 //                coreTileData.buildingHere(posManager.getTileX(), posManager.getTileY());
                 // add collider
@@ -138,6 +143,7 @@ public class Spawner{
 //                if (npcsOnDuty.get(indexID).getData().isCollider)
 //                    collider.del(npcsOnDuty.get(indexID).getBorder());
                 // tear off ... from ...onDuty , and store in DeadPool (which wipes internal state)
+                router.remove(npcsOnDuty.get(indexID));
                 deadPool.buryNpc(npcsOnDuty.remove(indexID));
                 // iterate threw ...onDuty , to fix shifted ID's
                 for (int i = indexID; i < npcsOnDuty.size() ; i++) { // -1 ?

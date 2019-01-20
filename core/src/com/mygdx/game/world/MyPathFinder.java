@@ -105,6 +105,12 @@ public class MyPathFinder {
 //        return buffer1 < buffer2 ? buffer1 : buffer2;
 //    }
     public boolean calculate(Something who, Vector1 where){
+        for (int i = 0; i < 32; i++) {
+            for (int j = 0; j < 32; j++) {
+                processed[i][j] = false;
+                distance[i][j] = 0;
+            }
+        }
         return calc(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
                 where, who
                 );

@@ -40,6 +40,7 @@ import java.util.Random;
 
 public class GameScreen implements Screen {
     final MyGdxGame game;
+    private int idc = 0;
 
     private boolean debugging = false;
     private boolean profiling = false;
@@ -405,6 +406,8 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
 
+            worldManager.pumpkins[idc].go();
+            idc++;
 //            worldManager.pumpkin1.go();
 
 

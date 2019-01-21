@@ -42,7 +42,9 @@ public class WorldManager {
     private AllData allData;
     public Group world;
     public Clock clock;
-//    public Something tree1;
+    public Npc[] pumpkins;
+
+    //    public Something tree1;
 //    public Something tree2;
 //    public Something tree3;
 //    public Something tower1;
@@ -194,10 +196,10 @@ public class WorldManager {
         pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
 
-        int pp = 100;
+        int pp = 20;
         Random rrr = new Random();
         Npc[] towers = new Npc[pp/10];
-        Npc[] pumpkins = new Npc[pp];
+        pumpkins = new Npc[pp];
         for (int i = 0; i < pp / 10; i++) {
             towers[i] = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,
                     pos.set((rrr.nextInt(30)+1) *tileSize,(rrr.nextInt(30)+1) *tileSize));
@@ -209,6 +211,7 @@ public class WorldManager {
                 pumpkins[i].moveToPosition(pathFinder.getPath5());
 
         }
+//        System.out.println("!!!"+factory.builder.);
 //
 //
 //

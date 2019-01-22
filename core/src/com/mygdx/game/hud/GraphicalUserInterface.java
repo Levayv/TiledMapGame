@@ -21,9 +21,9 @@ public class GraphicalUserInterface {
     public GraphicalUserInterface(Stage stage, final WorldManager worldManager){
 
         //skin init
-//        String fileLoc = "skins/1/neon.json"; // skin location
-        String fileLoc = "skins/2/sgx-ui.json"; // ?
-//        String fileLoc = "skins/3/glassy-ui.json"; // skin location
+//        String fileLoc = "root/skins/1/neon.json"; // skin location
+        String fileLoc = "root/skins/2/sgx-ui.json"; // todo fix file
+//        String fileLoc = "root/skins/3/glassy-ui.json"; // skin location
         if (debuging){
             if  (new FileHandle(fileLoc).exists())
                 System.out.println("GUI: skin file OK");

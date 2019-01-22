@@ -147,7 +147,7 @@ public class WorldManager {
         stage.addActor(world);
 
         // load map , get props
-        map = new TmxMapLoader().load("maps/32/level0.tmx");
+        map = new TmxMapLoader().load("root/maps/32/level0.tmx"); //todo fix file
         MapProperties prop = map.getProperties();
         mapWidth = prop.get("width", Integer.class);
         mapHeight = prop.get("height", Integer.class);

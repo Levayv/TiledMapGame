@@ -103,29 +103,29 @@ public class GameScreen implements Screen {
 //        System.out.println(locRoot);
 
         // loading images with atlas
-        atlas = new TextureAtlas(Gdx.files.internal("packed/assets.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("root/packed/assets.atlas"));
         TextureRegion texRegPlayer = atlas.createSprite("bucket");
         TextureRegion texRegDrop = atlas.createSprite("droplet");
 //      // loading (temp) images with Texture
-        TextureRegion texRegTree    = new TextureRegion(new Texture(Gdx.files.internal("tree.png")));
-        TextureRegion texRegStone   = new TextureRegion(new Texture(Gdx.files.internal("stone.png")));
-        TextureRegion texRegOre     = new TextureRegion(new Texture(Gdx.files.internal("ore.png")));
-        TextureRegion texRegTower   = new TextureRegion(new Texture(Gdx.files.internal("tower.png")));
-        TextureRegion texRegLever   = new TextureRegion(new Texture(Gdx.files.internal("lever.png")));
-        TextureRegion texRegTemp32  = new TextureRegion(new Texture(Gdx.files.internal("Temp32.png")));
-        TextureRegion texRegGhost1  = new TextureRegion(new Texture(Gdx.files.internal("ghost1.png")));
-        TextureRegion texRegGhost2  = new TextureRegion(new Texture(Gdx.files.internal("ghost2.png")));
-        TextureRegion texRegSpawner  = new TextureRegion(new Texture(Gdx.files.internal("spawner.png")));
+        TextureRegion texRegTree    = new TextureRegion(new Texture(Gdx.files.internal("root/temp/tree.png")));
+        TextureRegion texRegStone   = new TextureRegion(new Texture(Gdx.files.internal("root/temp/stone.png")));
+        TextureRegion texRegOre     = new TextureRegion(new Texture(Gdx.files.internal("root/temp/ore.png")));
+        TextureRegion texRegTower   = new TextureRegion(new Texture(Gdx.files.internal("root/temp/tower.png")));
+        TextureRegion texRegLever   = new TextureRegion(new Texture(Gdx.files.internal("root/temp/lever.png")));
+        TextureRegion texRegTemp32  = new TextureRegion(new Texture(Gdx.files.internal("root/temp/Temp32.png")));
+        TextureRegion texRegGhost1  = new TextureRegion(new Texture(Gdx.files.internal("root/temp/ghost1.png")));
+        TextureRegion texRegGhost2  = new TextureRegion(new Texture(Gdx.files.internal("root/temp/ghost2.png")));
+        TextureRegion texRegSpawner  = new TextureRegion(new Texture(Gdx.files.internal("root/temp/spawner.png")));
 //        TextureRegion texRegDoor0  = new TextureRegion(new Texture(Gdx.files.internal("door0.png")));
 //        TextureRegion texRegDoor1  = new TextureRegion(new Texture(Gdx.files.internal("door1.png")));
-        Texture texAnimPumpkin      = new Texture(Gdx.files.internal("animation/pumpkin.png"));
-        Texture texAnimDoor2        = new Texture(Gdx.files.internal("animation/door2.png"));
-        Texture texAnimExplosion    = new Texture(Gdx.files.internal("animation/Explosion.png"));
-        Texture texAnimTowerT    = new Texture(Gdx.files.internal("animation/tower.png"));
-        Texture texAnimSlime1       = new Texture(Gdx.files.internal("animation/slime-blue.png"));
-        Texture texAnimSlime2       = new Texture(Gdx.files.internal("animation/slime-green.png"));
-        Texture texAnimSlime3       = new Texture(Gdx.files.internal("animation/slime-orange.png"));
-        Texture texAnimWarning       = new Texture(Gdx.files.internal("animation/Warning.png"));
+        Texture texAnimPumpkin      = new Texture(Gdx.files.internal("root/animation/pumpkin.png"));
+        Texture texAnimDoor2        = new Texture(Gdx.files.internal("root/animation/door2.png"));
+        Texture texAnimExplosion    = new Texture(Gdx.files.internal("root/animation/Explosion.png"));
+        Texture texAnimTowerT    = new Texture(Gdx.files.internal   ("root/animation/tower.png"));
+        Texture texAnimSlime1       = new Texture(Gdx.files.internal("root/animation/slime-blue.png"));
+        Texture texAnimSlime2       = new Texture(Gdx.files.internal("root/animation/slime-green.png"));
+        Texture texAnimSlime3       = new Texture(Gdx.files.internal("root/animation/slime-orange.png"));
+        Texture texAnimWarning      = new Texture(Gdx.files.internal("root/animation/Warning.png"));
 //        Texture texAnimSlime1       = new Texture(Gdx.files.internal("animation/knightRun1.png"));
         // WorldResTexRegManager init
         WorldResTexRegManager buffer1 = new WorldResTexRegManager(100);
@@ -151,8 +151,8 @@ public class GameScreen implements Screen {
         buffer2.addAnimationFromFile(EntityAnimation.TOWER,texAnimTowerT,     1  );
 
         // load sound & music
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("droplet.wav"));
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("root/temp/droplet.wav"));
+        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("root/temp/rain.mp3"));
         rainMusic.setLooping(true);
 
         //temp

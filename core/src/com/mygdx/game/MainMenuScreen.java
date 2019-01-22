@@ -9,11 +9,11 @@ import com.mygdx.game.GameScreen;
 
 public class MainMenuScreen implements Screen {
 
-    final com.mygdx.game.MyGdxGame game;
+    final MyGdxGame game;
 
     OrthographicCamera camera;
 
-    public MainMenuScreen(final com.mygdx.game.MyGdxGame game) {
+    public MainMenuScreen(final MyGdxGame  game) {
         this.game = game;
 
         camera = new OrthographicCamera();

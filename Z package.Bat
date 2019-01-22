@@ -1,2 +1,0 @@
-gradlew android:assembleDebug
-pause

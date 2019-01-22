@@ -169,7 +169,7 @@ public class Player extends PlayableCharacter { // todo future refactor to main 
         waitFrame = new TextureRegion[4];
 //----------------------------------------------------------------------------------
         int FRAME_COLS = 8, FRAME_ROWS = 4;
-        Texture walkSheet = new Texture(Gdx.files.internal("animation/male_sprite_model.png"));
+        Texture walkSheet = new Texture(Gdx.files.internal("root/animation/male_sprite_model.png")); //todo fix file
         TextureRegion[][] tmp = TextureRegion.split(walkSheet,
                 walkSheet.getWidth() / FRAME_COLS,
                 walkSheet.getHeight() / FRAME_ROWS);

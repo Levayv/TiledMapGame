@@ -13,8 +13,8 @@ public class jsonDataLoaderForEntities {
     }
     public AllData getAllData(){
         Gdx.app.debug("jsonDataLoaderForEntities", "Loading files");
-        FileHandle fileExample = Gdx.files.local("data/prop/example.json");
-        FileHandle file = Gdx.files.local("data/prop/data.json");
+        FileHandle fileExample = Gdx.files.local("root/data/prop/example.json"); //todo fix file
+        FileHandle file = Gdx.files.local("root/data/prop/data.json"); //todo fix file
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
         json.setUsePrototypes(false);

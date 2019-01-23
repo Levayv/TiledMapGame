@@ -199,7 +199,7 @@ public class WorldManager {
         int pp = 20;
         Random rrr = new Random();
         Npc[] towers = new Npc[pp/10];
-        pumpkins = new Npc[pp];
+        pumpkins = new Npc[pp+1];
         for (int i = 0; i < pp / 10; i++) {
             towers[i] = factory.spawner.spawnOnEvent(EntityAnimation.TOWER,
                     pos.set((rrr.nextInt(30)+1) *tileSize,(rrr.nextInt(30)+1) *tileSize));
@@ -211,6 +211,12 @@ public class WorldManager {
                 pumpkins[i].moveToPosition(pathFinder.getPath5());
 
         }
+        pumpkins[pp] = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,
+                pos.set(10*tileSize,30 *tileSize));
+        if (pathFinder.calculate(pumpkins[pp], new Vector1((10), (1))))
+            pumpkins[pp].moveToPosition(pathFinder.getPath5());
+        this.pumpkins[pp].go();
+
 //        System.out.println("!!!"+factory.builder.);
 //
 //

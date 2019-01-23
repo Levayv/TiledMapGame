@@ -94,7 +94,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
             }else {
                 lastX = myPath.getNextX();
                 lastY = myPath.getNextY();
-                extraInfo.center = new Vector1(getCenter().x,getCenter().y);
+//                extraInfo.center = new Vector1(getCenter().x,getCenter().y);
+                extraInfo.setCenter(this.getCenter());
                 extraInfo.outerBorder = new Vector1((int)getBorderW(),(int)getBorderH());
                 dispatcher.dispatchMessage(BasicEvents.NPC_MOVED.getID(), extraInfo);
                 set32Position(lastX , lastY);
@@ -150,7 +151,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
             //Gdx.app.debug("Npc", "hndleMsg msg = "+extraInfoBuffer.center.y);
             if (extraInfoBuffer.faction.id != this.extraInfo.faction.id){
                 Gdx.app.debug("Npc", "hndleMsg exI is Enemy");
-                if (this.distance.inRange(extraInfoBuffer.center, extraInfoBuffer.outerBorder)){
+                if (this.distance.inRange(extraInfoBuffer.getCenter(), extraInfoBuffer.outerBorder)){
                     Gdx.app.debug("Npc", "hndleMsg exI is in range");
                 }
             }
@@ -195,7 +196,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //        path5 = new Vector2[path25.size()];
 //        path5 = path25.toArray(path5);
 
-        myPath.speed *= 20.25 / (path5.length);
+        myPath.speed *= 20.25 / (path5.length-1);
         myPath.findSpline(path5,path5.length * 10 );
 //        go = true;
     }

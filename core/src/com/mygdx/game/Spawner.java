@@ -112,7 +112,8 @@ public class Spawner{
                 pumpkin.set12Anim(animManager);
                 pumpkin.set21Bounds();
                 pumpkin.set22Borders();
-                pumpkin.set22Borders(0,0);
+                pumpkin.set22Borders(0,0); //todo add border delta to json data
+//                pumpkin.set22Borders(50,2);
                 pumpkin.set23Range();
                 pumpkin.set31World(worldGroup);
                 pumpkin.setVisible(true);

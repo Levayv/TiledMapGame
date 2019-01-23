@@ -108,6 +108,7 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
 //            buffer2 = arr[2];
 //        return buffer1 < buffer2 ? buffer1 : buffer2;
 //    }
+    /** Calculate and store  **/ //todo polish
     public boolean calculate(Something who, Vector1 where){
         //nullify previous data
         reachable = false;
@@ -122,56 +123,104 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
         this.objBorderXdelta  = who.borderXdelta;
         this.objBorderYdelta  = who.borderYdelta;
 
-        return calc3(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
+        return calc333(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
                 where, who
                 );
     }
-    private boolean calc3(Vector1 from, Vector1 to, Something who){
-
-        if ((from.x == to.x) || (from.y == to.y)) {
-            if ((from.x == to.x) && (from.y == to.y)) { // case 1: from == to
-                reachable = false;
-                Gdx.app.log("MyPathFinder", "Destination is the same tile");
-                return false;
-            }else {
-                if ((from.x == to.x)){
-                    if ((from.y - to.y) == 1) {
-                        Gdx.app.debug("MyPathFinder",
-                                "Destination is nearest bottom cell");
-                    }else {
-                        if ((from.y - to.y) == -1) {
-                            Gdx.app.debug("MyPathFinder",
-                                    "Destination is nearest upper cell");
-                        }
-                    }
-                }
-                if ((from.y == to.y)){
-                    if ((from.x - to.x) == 1) {
-                        Gdx.app.debug("MyPathFinder",
-                                "Destination is nearest left cell");
-                    }else {
-                        if ((from.x - to.x) == -1) {
-                            Gdx.app.debug("MyPathFinder",
-                                    "Destination is nearest right cell");
-                        }
-                    }
-                }
-                path5 = new Vector2[4];
-                path5[0] = new Vector2(tileXYCorrector(from.x , from.y));
-                path5[1] = new Vector2(tileXYCorrector(from.x , from.y));
-                path5[2] = new Vector2(tileXYCorrector(to.x , to.y));
-                path5[3] = new Vector2(tileXYCorrector(to.x , to.y));
-
-//                path25.add((pos.x,pos.y));
-                return true;
+    //todo optimise calc333
+    private boolean calc333(Vector1 from, Vector1 to, Something who){ // returns this.reachable
+        // case 1: from == to
+        if ((from.x == to.x) && (from.y == to.y)) {
+            reachable = false;
+            Gdx.app.log("MyPathFinder", "Destination is the same tile");
+            return reachable;
+        }
+        //case 2: from != to , distance = 1;
+        boolean isNeighbor = false;
+        if ((from.y - to.y) == 1) {
+            if ((from.x == to.x)) {
+                isNeighbor = true;
+                Gdx.app.debug("MyPathFinder",
+                        "Destination is nearest bottom cell");
             }
         }
-        System.out.println("next");
+        if ((from.y - to.y) == -1) {
+            if ((from.x == to.x)) {
+                isNeighbor = true;
+                Gdx.app.debug("MyPathFinder",
+                        "Destination is nearest upper cell");
+            }
+        }
+        if ((from.x - to.x) == 1) {
+            if ((from.y == to.y)) {
+                isNeighbor = true;
+                Gdx.app.debug("MyPathFinder",
+                        "Destination is nearest left cell");
+            }
+        }
+        if ((from.x - to.x) == -1) {
+            if ((from.y == to.y)) {
+                isNeighbor = true;
+                Gdx.app.debug("MyPathFinder",
+                        "Destination is nearest right cell");
+            }
+        }
+        if (isNeighbor){
+            path5 = new Vector2[4];
+            path5[0] = new Vector2(tileXYCorrector(from.x, from.y));
+            path5[1] = new Vector2(tileXYCorrector(from.x, from.y));
+            path5[2] = new Vector2(tileXYCorrector(to.x, to.y));
+            path5[3] = new Vector2(tileXYCorrector(to.x, to.y));
+            return true;
+        }
+
+//        if ((from.x == to.x) || (from.y == to.y)) { //todo fix
+//            if ((from.x == to.x) && (from.y == to.y)) { // case 1: from == to
+//                reachable = false;
+//                Gdx.app.log("MyPathFinder", "Destination is the same tile");
+//                return reachable;
+//            } else {
+//                if ((from.y - to.y) == 1) {
+//                    if ((from.x == to.x)) {
+//                        Gdx.app.debug("MyPathFinder",
+//                                "Destination is nearest bottom cell");
+//                    }
+//                }
+//                if ((from.y - to.y) == -1) {
+//                    if ((from.x == to.x)) {
+//                        Gdx.app.debug("MyPathFinder",
+//                                "Destination is nearest upper cell");
+//                    }
+//                }
+//                if ((from.x - to.x) == 1) {
+//                    if ((from.y == to.y)) {
+//                        Gdx.app.debug("MyPathFinder",
+//                                "Destination is nearest left cell");
+//                    }
+//                }
+//                if ((from.x - to.x) == -1) {
+//                    if ((from.y == to.y)) {
+//                        Gdx.app.debug("MyPathFinder",
+//                                "Destination is nearest right cell");
+//                    }
+//                }
+//                path5 = new Vector2[4];
+//                path5[0] = new Vector2(tileXYCorrector(from.x, from.y));
+//                path5[1] = new Vector2(tileXYCorrector(from.x, from.y));
+//                path5[2] = new Vector2(tileXYCorrector(to.x, to.y));
+//                path5[3] = new Vector2(tileXYCorrector(to.x, to.y));
+//
+////                path25.add((pos.x,pos.y));
+//                reachable = true;
+//                return reachable;
+//            }
+//        }
+
         //who = null; //todo research object casting
         // check x<0 x>width etc... , also from != to
-        //todo case 2: from != to , distance = 1;
-        //todo case 3: from != to , distance = 2..999
+        System.out.println("next");
 
+        //case 3: from != to , distance = 2..999
         start = from;
         destination = to;
 

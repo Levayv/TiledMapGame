@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cell or 0 cell
+public class MyPathFinder {
     private int objWidth;
     private int objHeight;
     private int objBorderXdelta;
@@ -113,7 +113,7 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
      *
      * @param who   Something's border
      * @param where binary Position
-     **/ //todo polish
+     **/
     public boolean calculate(Something who, Vector1 where) {
         //nullify previous data
         reachable = false;
@@ -190,7 +190,7 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
         List<Vector1> stack = new ArrayList<Vector1>(); // one-way binary path buffer
 
         pos = new Vector1(start);
-        distance[pos.x][pos.y] = 0; //todo research -1 or 0
+        distance[pos.x][pos.y] = 0;
         stack.add(new Vector1(pos));
         processed[pos.x][pos.y] = true;
         getNext(stack, pos);

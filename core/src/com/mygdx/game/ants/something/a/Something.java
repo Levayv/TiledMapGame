@@ -64,8 +64,10 @@ public class Something extends coreActor{
         // change rectangle to square, by smallest side
         if (border.width!=border.height){
             if (border.width > border.height)
+                //noinspection SuspiciousNameCombination
                 border.width = border.height;
             if (border.height > border.width)
+                //noinspection SuspiciousNameCombination
                 border.height = border.width;
         }
         setCenter();

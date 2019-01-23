@@ -5,11 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.something.a.Something;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cell or 0 cell
@@ -26,40 +24,38 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
     private Vector1 pos;
 
     private boolean reachable;
-    public boolean[][] processed;
-    public int[][] distance;
+    private boolean[][] processed;
+    private int[][] distance;
     private boolean go; // loop controller
     private WorldPositionManager positionManager;
+
     MyPathFinder(int mapWidth, int mapHeight,
                  WorldPositionManager positionManager,
                  boolean[][] road
-                 ){
+    ) {
         this.positionManager = positionManager;
         this.tileSize = positionManager.getTileSize();
         this.road = road;
         processed = new boolean[mapWidth][mapHeight];
         distance = new int[mapWidth][mapHeight];
     }
-    private void getNext(List<Vector1> stack,Vector1 posC){ // posC Current
+
+    private void getNext(List<Vector1> stack, Vector1 posC) { // posC Current
         Vector1[] posDir = new Vector1[4]; //todo check bounds
-        posDir[0] = new Vector1(posC) ;
-        posDir[1] = new Vector1(posC) ;
-        posDir[2] = new Vector1(posC) ;
-        posDir[3] = new Vector1(posC) ;
-//        if (posDir[0].x+1<tileSize)
-            posDir[0].x++;
-//        if (posDir[1].x-1>0)
-            posDir[1].x--;
-//        if (posDir[2].y+1<tileSize)
-            posDir[2].y++;
-//        if (posDir[3].y-1>0)
-            posDir[3].y--;
+        posDir[0] = new Vector1(posC);
+        posDir[1] = new Vector1(posC);
+        posDir[2] = new Vector1(posC);
+        posDir[3] = new Vector1(posC);
+        posDir[0].x++;
+        posDir[1].x--;
+        posDir[2].y++;
+        posDir[3].y--;
         for (int i = 0; i < posDir.length; i++) {
-            if (road[posDir[i].x][posDir[i].y] && !processed[posDir[i].x][posDir[i].y]){
-                distance[posDir[i].x][posDir[i].y] = distance[posC.x][posC.y]+1;
-                stack.add(new Vector1(posDir[i].x,posDir[i].y));
+            if (road[posDir[i].x][posDir[i].y] && !processed[posDir[i].x][posDir[i].y]) {
+                distance[posDir[i].x][posDir[i].y] = distance[posC.x][posC.y] + 1;
+                stack.add(new Vector1(posDir[i].x, posDir[i].y));
                 processed[posDir[i].x][posDir[i].y] = true;
-                if (posDir[i].x == destination.x && posDir[i].y == destination.y){
+                if (posDir[i].x == destination.x && posDir[i].y == destination.y) {
                     reachable = true;
                     go = false;
                     Gdx.app.log("MyPathFinder", "Destination is Reachable");
@@ -67,13 +63,14 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
             }
         }
     }
-    private Vector1 getPrev(Vector1 posC){
-        Gdx.app.debug("MyPathFinder", "posC="+posC.x+"/"+posC.y);
+
+    private Vector1 getPrev(Vector1 posC) {
+        Gdx.app.debug("MyPathFinder", "posC=" + posC.x + "/" + posC.y);
         Vector1[] posDir = new Vector1[4];
-        posDir[0] = new Vector1(posC) ;
-        posDir[1] = new Vector1(posC) ;
-        posDir[2] = new Vector1(posC) ;
-        posDir[3] = new Vector1(posC) ;
+        posDir[0] = new Vector1(posC);
+        posDir[1] = new Vector1(posC);
+        posDir[2] = new Vector1(posC);
+        posDir[3] = new Vector1(posC);
         posDir[0].x++;
         posDir[1].x--;
         posDir[2].y++;
@@ -82,34 +79,42 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
         int buffer = 0;
         Vector1 posBuffer = new Vector1();
         for (int i = 0; i < 4; i++) {
-            Gdx.app.debug("MyPathFinder", "posC="+posC.x+"/"+posC.y);
-            if (road[posDir[i].x][posDir[i].y] && processed[posDir[i].x][posDir[i].y]){
+            Gdx.app.debug("MyPathFinder", "posC=" + posC.x + "/" + posC.y);
+            if (road[posDir[i].x][posDir[i].y] && processed[posDir[i].x][posDir[i].y]) {
                 buffer = distance[posDir[i].x][posDir[i].y];
-                if (buffer<minBuffer){
+                if (buffer < minBuffer) {
                     minBuffer = buffer;
                     posBuffer = posDir[i];
                 }
             }
-            Gdx.app.debug("MyPathFinder.getPrev()", "buffer="+buffer);
-            Gdx.app.debug("MyPathFinder.getPrev()", "minBuffer="+minBuffer);
-            Gdx.app.debug("MyPathFinder.getPrev()", "posDir["+i+"]="+posDir[i].x+"/"+posDir[i].y);
-            Gdx.app.debug("MyPathFinder.getPrev()", "posBuffer="+posBuffer.x+"/"+posBuffer.y);
-            Gdx.app.debug("MyPathFinder.getPrev()", "posDirDISTANCE="+distance[posDir[i].x][posDir[i].y]);
+            Gdx.app.debug(
+                    "MyPathFinder.getPrev()",
+                    "buffer=" + buffer);
+            Gdx.app.debug(
+                    "MyPathFinder.getPrev()",
+                    "minBuffer=" + minBuffer);
+            Gdx.app.debug(
+                    "MyPathFinder.getPrev()",
+                    "posDir[" + i + "]=" + posDir[i].x + "/" + posDir[i].y);
+            Gdx.app.debug(
+                    "MyPathFinder.getPrev()",
+                    "posBuffer=" + posBuffer.x + "/" + posBuffer.y);
+            Gdx.app.debug(
+                    "MyPathFinder.getPrev()",
+                    "posDirDISTANCE=" + distance[posDir[i].x][posDir[i].y]);
         }
 
         return new Vector1(posBuffer);
     }
-//    public int getMin(int[] arr){
-//        int buffer1 = 0;
-//        int buffer2 = 0;
-//        if (arr[0]<arr[1])
-//            buffer1 = arr[0];
-//        if (arr[2]<arr[3])
-//            buffer2 = arr[2];
-//        return buffer1 < buffer2 ? buffer1 : buffer2;
-//    }
-    /** Calculate and store  **/ //todo polish
-    public boolean calculate(Something who, Vector1 where){
+
+    /**
+     * Calculate and store path
+     * using simplified Dijkstra's algorithm
+     *
+     * @param who   Something's border
+     * @param where binary Position
+     **/ //todo polish
+    public boolean calculate(Something who, Vector1 where) {
         //nullify previous data
         reachable = false;
         for (int i = 0; i < 32; i++) {
@@ -118,17 +123,22 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
                 distance[i][j] = 0;
             }
         }
-        this.objWidth         = (int) who.getBorderW();
-        this.objHeight        = (int) who.getBorderH();
-        this.objBorderXdelta  = who.borderXdelta;
-        this.objBorderYdelta  = who.borderYdelta;
+        this.objWidth = (int) who.getBorderW();
+        this.objHeight = (int) who.getBorderH();
+        this.objBorderXdelta = who.borderXdelta;
+        this.objBorderYdelta = who.borderYdelta;
 
-        return calc333(positionManager.getTileVector1((int)who.getBorderX(),(int)who.getBorderY()),
-                where, who
-                );
+        return calc333(positionManager.getTileVector1((int) who.getBorderX(), (int) who.getBorderY()),
+                where
+        );
     }
-    //todo optimise calc333
-    private boolean calc333(Vector1 from, Vector1 to, Something who){ // returns this.reachable
+
+    /**
+     * @param from binary Position
+     * @param to   binary Position
+     * @return reachable
+     **/
+    private boolean calc333(Vector1 from, Vector1 to) { // returns this.reachable
         // case 1: from == to
         if ((from.x == to.x) && (from.y == to.y)) {
             reachable = false;
@@ -136,117 +146,68 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
             return reachable;
         }
         //case 2: from != to , distance = 1;
-        boolean isNeighbor = false;
         if ((from.y - to.y) == 1) {
             if ((from.x == to.x)) {
-                isNeighbor = true;
+                reachable = true;
                 Gdx.app.debug("MyPathFinder",
                         "Destination is nearest bottom cell");
             }
         }
         if ((from.y - to.y) == -1) {
             if ((from.x == to.x)) {
-                isNeighbor = true;
+                reachable = true;
                 Gdx.app.debug("MyPathFinder",
                         "Destination is nearest upper cell");
             }
         }
         if ((from.x - to.x) == 1) {
             if ((from.y == to.y)) {
-                isNeighbor = true;
+                reachable = true;
                 Gdx.app.debug("MyPathFinder",
                         "Destination is nearest left cell");
             }
         }
         if ((from.x - to.x) == -1) {
             if ((from.y == to.y)) {
-                isNeighbor = true;
+                reachable = true;
                 Gdx.app.debug("MyPathFinder",
                         "Destination is nearest right cell");
             }
         }
-        if (isNeighbor){
+        if (reachable) {
             path5 = new Vector2[4];
-            path5[0] = new Vector2(tileXYCorrector(from.x, from.y));
-            path5[1] = new Vector2(tileXYCorrector(from.x, from.y));
-            path5[2] = new Vector2(tileXYCorrector(to.x, to.y));
-            path5[3] = new Vector2(tileXYCorrector(to.x, to.y));
+            path5[0] = tileXYCorrector(from.x, from.y);
+            path5[1] = tileXYCorrector(from.x, from.y);
+            path5[2] = tileXYCorrector(to.x, to.y);
+            path5[3] = tileXYCorrector(to.x, to.y);
             return true;
         }
-
-//        if ((from.x == to.x) || (from.y == to.y)) { //todo fix
-//            if ((from.x == to.x) && (from.y == to.y)) { // case 1: from == to
-//                reachable = false;
-//                Gdx.app.log("MyPathFinder", "Destination is the same tile");
-//                return reachable;
-//            } else {
-//                if ((from.y - to.y) == 1) {
-//                    if ((from.x == to.x)) {
-//                        Gdx.app.debug("MyPathFinder",
-//                                "Destination is nearest bottom cell");
-//                    }
-//                }
-//                if ((from.y - to.y) == -1) {
-//                    if ((from.x == to.x)) {
-//                        Gdx.app.debug("MyPathFinder",
-//                                "Destination is nearest upper cell");
-//                    }
-//                }
-//                if ((from.x - to.x) == 1) {
-//                    if ((from.y == to.y)) {
-//                        Gdx.app.debug("MyPathFinder",
-//                                "Destination is nearest left cell");
-//                    }
-//                }
-//                if ((from.x - to.x) == -1) {
-//                    if ((from.y == to.y)) {
-//                        Gdx.app.debug("MyPathFinder",
-//                                "Destination is nearest right cell");
-//                    }
-//                }
-//                path5 = new Vector2[4];
-//                path5[0] = new Vector2(tileXYCorrector(from.x, from.y));
-//                path5[1] = new Vector2(tileXYCorrector(from.x, from.y));
-//                path5[2] = new Vector2(tileXYCorrector(to.x, to.y));
-//                path5[3] = new Vector2(tileXYCorrector(to.x, to.y));
-//
-////                path25.add((pos.x,pos.y));
-//                reachable = true;
-//                return reachable;
-//            }
-//        }
-
-        //who = null; //todo research object casting
-        // check x<0 x>width etc... , also from != to
-        System.out.println("next");
-
         //case 3: from != to , distance = 2..999
         start = from;
         destination = to;
 
-        List<Vector2> path25 = new ArrayList<Vector2>();
-        List<Vector1> stack = new ArrayList<Vector1>();
-
+        List<Vector2> path25 = new ArrayList<Vector2>(); // non binary path buffer
+        List<Vector1> stack = new ArrayList<Vector1>(); // one-way binary path buffer
 
         pos = new Vector1(start);
         distance[pos.x][pos.y] = 0; //todo research -1 or 0
         stack.add(new Vector1(pos));
         processed[pos.x][pos.y] = true;
-        getNext(stack,pos);
+        getNext(stack, pos);
 
         int watchdog;
         watchdog = 0;
         go = true;
-        while (go){
-            if (stack.isEmpty()){
+        while (go) {
+            if (stack.isEmpty()) {
                 Gdx.app.log("MyPathFinder", "Destination is not Reachable");
                 go = false;
                 return reachable;
-            }else {
+            } else {
                 getNext(stack, stack.remove(0));
             }
             watchdog++;
-            if (watchdog>tileSize*tileSize){
+            if (watchdog > 10000) {
                 go = false;
                 Gdx.app.log("MyPathFinder", "WatchDog Bug");
             }
@@ -255,27 +216,27 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
         pos.x = destination.x;
         pos.y = destination.y;
 
-        path25.add(tileXYCorrector(pos.x,pos.y));
-        path25.add(tileXYCorrector(pos.x,pos.y));
+        path25.add(tileXYCorrector(pos.x, pos.y));
+        path25.add(tileXYCorrector(pos.x, pos.y));
 
         watchdog = 0;
         go = true;
-        while (go){
-            Gdx.app.debug("MyPathFinder while2 step="+watchdog, 
-                    "pos="+pos.x+"/"+pos.y);
-            Gdx.app.debug("MyPathFinder while2 step="+watchdog,
-                    "des="+destination.x+"/"+destination.y);
-            Gdx.app.debug("MyPathFinder while2 step="+watchdog,
-                    "des="+destination.x+"/"+destination.y);
+        while (go) {
+            Gdx.app.debug("MyPathFinder while2 step=" + watchdog,
+                    "pos=" + pos.x + "/" + pos.y);
+            Gdx.app.debug("MyPathFinder while2 step=" + watchdog,
+                    "des=" + destination.x + "/" + destination.y);
+            Gdx.app.debug("MyPathFinder while2 step=" + watchdog,
+                    "des=" + destination.x + "/" + destination.y);
             pos = getPrev(pos);
-            path25.add(tileXYCorrector(pos.x,pos.y));
-            if (pos.x == start.x && pos.y == start.y){
+            path25.add(tileXYCorrector(pos.x, pos.y));
+            if (pos.x == start.x && pos.y == start.y) {
                 go = false;
                 Gdx.app.debug("MyPathFinder", "Destination reconnected to Start");
-                path25.add(tileXYCorrector(pos.x,pos.y));
+                path25.add(tileXYCorrector(pos.x, pos.y));
             }
             watchdog++;
-            if (watchdog>tileSize*tileSize){
+            if (watchdog > 10000) {
                 go = false;
                 Gdx.app.log("MyPathFinder", "WatchDog Bug");
             }
@@ -284,23 +245,23 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
         path5 = path25.toArray(path5);
         Collections.reverse(Arrays.asList(path5));
         //debug info
-        if (Gdx.app.getLogLevel() > 0){
-            Gdx.app.debug("Pathfinder", "calc() method *START* ------------"+
+        if (Gdx.app.getLogLevel() > 0) {
+            Gdx.app.debug("Pathfinder", "calc() method *START* ------------" +
                     " ------------ ------------ ------------ ------------ ------------");
             String bufferString = "";
-            for (int i = tileSize-1; i >= 0; i--) {
-                for (int j = 0; j < tileSize; j++) {
-                    bufferString = bufferString.concat(distance[j][i]+",");
+            for (int i = processed.length - 1; i >= 0; i--) {
+                for (int j = 0; j < processed.length; j++) {
+                    bufferString = bufferString.concat(distance[j][i] + ",");
                 }
                 Gdx.app.debug("MyPathFinder", bufferString);
                 bufferString = "";
             }
             bufferString = "";
-            for (int i = tileSize-1; i >= 0; i--) {
-                for (int j = 0; j < tileSize; j++) {
-                    if (processed[j][i]){
+            for (int i = processed.length - 1; i >= 0; i--) {
+                for (int j = 0; j < processed.length; j++) {
+                    if (processed[j][i]) {
                         bufferString = bufferString.concat("+");
-                    }else {
+                    } else {
                         bufferString = bufferString.concat("-");
                     }
                 }
@@ -309,27 +270,31 @@ public class MyPathFinder { //todo fix bug: path5 fucked up if distance is 1 cel
             }
             for (int i = 0; i < path5.length; i++) {
                 Gdx.app.debug("MyPathFinder",
-                        "path5["+i+"]="+path5[i].x+"/"+path5[i].y);
+                        "path5[" + i + "]=" + path5[i].x + "/" + path5[i].y);
             }
-            Gdx.app.debug("Pathfinder", "calc() method * END * ------------"+
+            Gdx.app.debug("Pathfinder", "calc() method * END * ------------" +
                     " ------------ ------------ ------------ ------------ ------------");
         }
         return reachable;
     }
-    public Vector2 tileXYCorrector(int x, int y){
+
+    private Vector2 tileXYCorrector(int x, int y) {
         Vector2 rv = new Vector2();
-        // aligning object border center to tile center
+        // aligning object border (NOT BOUNDS) center to tile center
         rv.set(
-                x*tileSize+tileSize/2-objBorderXdelta-objWidth /2 ,
-                y*tileSize+tileSize/2-objBorderYdelta-objHeight/2 );
-        Gdx.app.debug("MyPathFinder.tileXYCorrector", rv.x+"/"+rv.y);
+                x * tileSize + tileSize / 2 - objBorderXdelta - objWidth / 2,
+                y * tileSize + tileSize / 2 - objBorderYdelta - objHeight / 2);
+        Gdx.app.debug("MyPathFinder.tileXYCorrector", rv.x + "/" + rv.y);
         return rv;
     }
-    public Vector2[] getPath5(){
+
+    public Vector2[] getPath5() {
         return path5;
     }
-    public boolean[][] getVisited(){
-        return processed;
-    }
+
+
+    //    public boolean[][] getVisited(){
+//        return processed;
+//    }
 
 }

@@ -196,7 +196,7 @@ public class WorldManager {
         pathFinder = new MyPathFinder(mapWidth,mapHeight,posManager,isRoad);
 //        pathFinder.calculate(pumpkin1, new Vector1(10,8));
 
-        int pp = 20;
+        int pp = 30;
         Random rrr = new Random();
         Npc[] towers = new Npc[pp/10];
         pumpkins = new Npc[pp+1];

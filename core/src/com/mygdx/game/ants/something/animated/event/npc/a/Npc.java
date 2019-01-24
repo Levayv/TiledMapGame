@@ -117,8 +117,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     @Override
     protected void drawDebugBounds (ShapeRenderer shapes) {
         super.drawDebugBounds(shapes);
-        if (distance.center!=null && distance.targetCenter!=null){
-            shapes.setColor(Color.ORANGE);
+        if (distance.inRangeB){
+            shapes.setColor(Color.CYAN);
             shapes.line(
                     distance.center.x,distance.center.y,
                     distance.targetCenter.x,distance.targetCenter.y
@@ -161,40 +161,15 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     }
     //-------------------------------------------------------------------------------------------//
     public MyPath myPath = new MyPath();
-//    List<Vector2> path25 = new ArrayList<Vector2>();
     Vector2[] path5;
     public void moveToPosition(Vector2[] vectorArg){
         int x = 100;
         int y = 100;
-//        Random r = new Random();
-//        for (int i = 0; i < 200; i++) {
-//            path25.add(new Vector2(x+r.nextInt(500),     y+r.nextInt(300)));
-//        }
-        //or
-//        path25.add(new Vector2(x+0,     y-0));
-//        path25.add(new Vector2(x+100,   y-0));
-//        path25.add(new Vector2(x+100,   y-0));
-//        path25.add(new Vector2(x+300,   y-0));
-//        path25.add(new Vector2(x+400,   y-0));
-//        path25.add(new Vector2(x+500,   y-0));
-//        path25.add(new Vector2(x+600,   y-0));
-//        path25.add(new Vector2(x+700,   y-0));
-//        path25.add(new Vector2(x+600,   y-100));
-//        path25.add(new Vector2(x+500,   y-200));
-//        path25.add(new Vector2(x+400,   y-300));
-//        path25.add(new Vector2(x+300,   y-400));
-//        path25.add(new Vector2(x+200,   y-500));
-//        path25.add(new Vector2(x+100,   y-600));
-//        path25.add(new Vector2(x+900,   y-0));
+
         lastX = this.getBorderX();
         lastY = this.getBorderY();
 
         path5 = vectorArg;
-
-//        this.set32Position(path5[0].x , path5[0].y);
-//        path5[0] = new Vector2(lastX,lastY);
-//        path5 = new Vector2[path25.size()];
-//        path5 = path25.toArray(path5);
 
         myPath.speed *= 20.25 / (path5.length-1);
         myPath.findSpline(path5,path5.length * 10 );

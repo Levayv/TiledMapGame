@@ -23,6 +23,9 @@ public class AnimatedEventSomething extends Something {
     public void set12Anim(WorldResAnimManager animManager){
         animation = new MyAnimation(true);
         animation.setCoreAnimation(animManager.getAnimationByID(this.entityAnim));
+        if (this.entityAnim == EntityAnimation.PUMPKIN){
+            animation.setExtraAnimation(animManager.getAnimationByID(EntityAnimation.PUMPKIN_MOVING));
+        }
         animation.setToFirstFrame(); //todo check , otherwise texReg will be null ?
         texReg = animation.getTEMPPP();
 //        coreFrameDur = 0.015f; // 60 fps !
@@ -30,8 +33,8 @@ public class AnimatedEventSomething extends Something {
     //-------------------------------------------------------------------------------------------//
     @Override
     public void act(float delta) {
-        if (animation!=null)
-            texReg = animation.updateFrame(delta);
+//        if (animation!=null)
+            texReg = animation.updateFrame(delta,0);
     }
     //-------------------------------------------------------------------------------------------//
     @Override

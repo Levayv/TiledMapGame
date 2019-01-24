@@ -25,6 +25,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     public MessageDispatcher dispatcher = new MessageDispatcher();
     private NpcTalk extraInfo = new NpcTalk();
     private NpcDistance distance = new NpcDistance();
+    public float lastDelta;
     private boolean go;
     private float lastX;
     private float lastY;
@@ -68,7 +69,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     }
     @Override
     public void act(float delta){
-        super.act(delta);
+//        super.act(delta); // todo , just changing in logic
+        this.lastDelta = delta;
         stateMachine.update();
 //        if (go){ //todo fix move testing
 //            float updateX = 1;
@@ -82,7 +84,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //            }
 //        }
         if (go) { //todo fix move testing
-
+            stateMachine.changeState(NpcState.MOVING);
 //            int ppp = (int) current * k;
 //            current += delta * speed / points[ppp].len() *1000;
 //            current += 1000* (delta * speed / myCatmull.spanCount) / points[ppp].len();
@@ -90,6 +92,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 
             if (myPath.nextDot(delta)){
                 go = false;
+                stateMachine.changeState(NpcState.IDLE);
 
             }else {
                 lastX = myPath.getNextX();
@@ -101,6 +104,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                 set32Position(lastX , lastY);
                 time += delta;
                 if (time > 30) { //stop after 3 sec
+                    stateMachine.changeState(NpcState.IDLE);
                     go = false;
                     time = 0;
                 }

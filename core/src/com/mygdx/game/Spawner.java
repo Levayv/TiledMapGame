@@ -5,7 +5,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 import com.mygdx.game.ants.something.a.AllData;
-import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
 import com.mygdx.game.ants.something.animated.event.npc.a.MyPath;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
 import com.mygdx.game.enums.entity.EntityAnimation;

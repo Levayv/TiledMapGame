@@ -11,7 +11,8 @@ public enum NpcState implements State<Npc> { //todo Animation will blow if FSM f
         }
         @Override
         public void update(Npc entity) {
-
+//            if (entity.animation!=null)
+                entity.texReg = entity.animation.updateFrame(entity.lastDelta,0);
         }
         @Override
         public void exit(Npc entity) {
@@ -22,13 +23,14 @@ public enum NpcState implements State<Npc> { //todo Animation will blow if FSM f
             return false;
         }
     },
-    MOVEING(){
+    MOVING(){
         @Override
         public void enter(Npc entity) {
 
         }
         @Override
         public void update(Npc entity) {
+            entity.texReg = entity.animation.updateFrame(entity.lastDelta,1);
 
         }
         @Override

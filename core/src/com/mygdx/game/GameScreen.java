@@ -118,7 +118,8 @@ public class GameScreen implements Screen {
         TextureRegion texRegSpawner  = new TextureRegion(new Texture(Gdx.files.internal("root/temp/spawner.png")));
 //        TextureRegion texRegDoor0  = new TextureRegion(new Texture(Gdx.files.internal("door0.png")));
 //        TextureRegion texRegDoor1  = new TextureRegion(new Texture(Gdx.files.internal("door1.png")));
-        Texture texAnimPumpkin      = new Texture(Gdx.files.internal("root/animation/pumpkin.png"));
+        Texture texAnimPumpkin_idle      = new Texture(Gdx.files.internal("root/animation/pumpkin_idle.png"));
+        Texture texAnimPumpkin_move      = new Texture(Gdx.files.internal("root/animation/pumpkin_move.png"));
         Texture texAnimDoor2        = new Texture(Gdx.files.internal("root/animation/door2.png"));
         Texture texAnimExplosion    = new Texture(Gdx.files.internal("root/animation/Explosion.png"));
         Texture texAnimTowerT    = new Texture(Gdx.files.internal   ("root/animation/tower.png"));
@@ -142,7 +143,8 @@ public class GameScreen implements Screen {
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,       44 );
-        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin,    8  );
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin_idle,    4  );
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN_MOVING,texAnimPumpkin_move,    8  );
         buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimDoor2,    21 );
         buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimExplosion,0 );
         buffer2.addAnimationFromFile(EntityAnimation.SLIME_1,texAnimSlime1,     4  );

@@ -4,10 +4,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class MyAnimation {
-    private Animation<TextureRegion> coreAnimation;
     private TextureRegion frame;
+    private Animation<TextureRegion> coreAnimation;
     private float coreFrameDur;
     private int coreFrames;
+    private Animation<TextureRegion> extraAnimation;
+    private float extraFrameDur;
+    private int extraFrames;
     private boolean loopingEndless;
     private boolean startAnimCycle = false;
     private float animationTime = 0f;
@@ -20,26 +23,53 @@ public class MyAnimation {
         coreFrames = coreAnimation.getKeyFrames().length;
         coreFrameDur = (0.025f / coreFrames)*20; // 3fps ?
     }
-    public TextureRegion updateFrame(float delta){ // inside Actor's Act method
-        if (startAnimCycle){
-
-            if (coreFrameDur * coreFrames < animationTime){ // todo checking if not looping
-                startAnimCycle = false;
-                animationTime = 0;
+    public void setExtraAnimation(Animation<TextureRegion> extraAnimation){
+        this.extraAnimation = extraAnimation;
+        extraFrames = extraAnimation.getKeyFrames().length;
+        extraFrameDur = (0.025f / extraFrames)*20; // 3fps ?
+    }
+    public TextureRegion updateFrame(float delta,int state){ // inside Actor's Act method
+        if (state==0){
+            if (startAnimCycle){
+                if (coreFrameDur * coreFrames < animationTime){ // todo checking if not looping
+                    startAnimCycle = false;
+                    animationTime = 0;
 //                System.out.println("stop" + animationTime);
-            }else {
+                }else {
 //                System.out.println("start" + animationTime);
-                frame = coreAnimation.getKeyFrame(animationTime,true);
-                animationTime += delta;
-            }
-        }else {
-            if (loopingEndless){
-                frame = coreAnimation.getKeyFrame(animationTime,loopingEndless);
-                animationTime += delta;
+                    frame = coreAnimation.getKeyFrame(animationTime,true);
+                    animationTime += delta;
+                }
+            }else {
+                if (loopingEndless){
+                    frame = coreAnimation.getKeyFrame(animationTime,loopingEndless);
+                    animationTime += delta;
 //                System.out.println(this.getName() + " at="+ animationTime);
 //                System.out.println(this.getName() + " FD="+ coreFrameDur*coreFrames*10);
+                }
             }
         }
+        if (state == 1){
+            if (startAnimCycle){
+                if (extraFrameDur * extraFrames < animationTime){ // todo checking if not looping
+                    startAnimCycle = false;
+                    animationTime = 0;
+//                System.out.println("stop" + animationTime);
+                }else {
+//                System.out.println("start" + animationTime);
+                    frame = extraAnimation.getKeyFrame(animationTime,true);
+                    animationTime += delta;
+                }
+            }else {
+                if (loopingEndless){
+                    frame = extraAnimation.getKeyFrame(animationTime,loopingEndless);
+                    animationTime += delta;
+//                System.out.println(this.getName() + " at="+ animationTime);
+//                System.out.println(this.getName() + " FD="+ coreFrameDur*coreFrames*10);
+                }
+            }
+        }
+
 //        frame = coreAnimation.getKeyFrame(animationTime,loopingEndless);
         return frame;
     }

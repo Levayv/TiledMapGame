@@ -251,6 +251,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        // todo split , research Threads
         crappyControls(delta);
         crappyMechanics(delta);
         crappyRenderer(delta);
@@ -276,7 +277,7 @@ public class GameScreen implements Screen {
         //todo clock optimisation
         worldManager.clock.update(delta);
     }
-    void crappyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
+    void crappyControls(float delta){ //todo wtf i did, change all IF's to SWITCH (Researh for better solution , event based ?)
         if (Gdx.input.justTouched()) {
 //            Vector2 screenPos1 = new Vector2(); // todo vector init each click wrong
 //            Vector2 screenPos2 = new Vector2(); // todo vector init each click wrong

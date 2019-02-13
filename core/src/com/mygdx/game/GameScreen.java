@@ -143,7 +143,7 @@ public class GameScreen implements Screen {
         WorldResAnimManager buffer2 = new WorldResAnimManager(100);
 //        buffer2.addAnimationFromFile(Entity.Temp , texAnimTemp1,8,1);
         buffer2.addAnimationFromFile(EntityAnimation.TEMP,texAnimWarning,       44 );
-        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin_idle,    4  );
+        buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN,texAnimPumpkin_idle,    8  );
         buffer2.addAnimationFromFile(EntityAnimation.PUMPKIN_MOVING,texAnimPumpkin_move,    8  );
         buffer2.addAnimationFromFile(EntityAnimation.DOOR_OPEN,texAnimDoor2,    21 );
         buffer2.addAnimationFromFile(EntityAnimation.EXPLOSION,texAnimExplosion,0 );
@@ -251,11 +251,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        shittyControls(delta);
-        shittyMechanics(delta);
-        shittyRenderer(delta);
+        // todo split , research Threads
+        crappyControls(delta);
+        crappyMechanics(delta);
+        crappyRenderer(delta);
     }
-    void shittyMechanics(float delta) {
+    void crappyMechanics(float delta) {
 //        worldManager.door1.update();
 //        for (int i = 0; i < worldManager.mobCount; i++) {
 //            worldManager.doorss[i].update();
@@ -276,7 +277,7 @@ public class GameScreen implements Screen {
         //todo clock optimisation
         worldManager.clock.update(delta);
     }
-    void shittyControls(float delta){ //todo wtf i did, change all IF's to SWITCH
+    void crappyControls(float delta){ //todo wtf i did, change all IF's to SWITCH (Researh for better solution , event based ?)
         if (Gdx.input.justTouched()) {
 //            Vector2 screenPos1 = new Vector2(); // todo vector init each click wrong
 //            Vector2 screenPos2 = new Vector2(); // todo vector init each click wrong
@@ -408,7 +409,7 @@ public class GameScreen implements Screen {
         }
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
 
-            worldManager.pumpkins[idc].go();
+            worldManager.pumpkins[idc].setGo();
             idc++;
 //            worldManager.pumpkin1.go();
 
@@ -518,7 +519,7 @@ public class GameScreen implements Screen {
         // framerate to console
 //        if (debugging) System.out.println(Gdx.graphics.getFramesPerSecond());
     }
-    void shittyRenderer(float delta){
+    void crappyRenderer(float delta){
         // clear the screen with a dark blue color.
 //        worldManager.group.setCullingArea(new Rectangle(
 //                stage.getCamera().position.x - stage.getCamera().viewportWidth /2 ,

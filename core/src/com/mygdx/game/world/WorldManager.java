@@ -212,11 +212,12 @@ public class WorldManager {
 
         }
         pumpkins[pp] = factory.spawner.spawnOnEvent(EntityAnimation.PUMPKIN,
-                pos.set(10*tileSize,30 *tileSize));
-        if (pathFinder.calculate(pumpkins[pp], new Vector1((10), (1))))
+                pos.set(10*tileSize,10 *tileSize));
+        if (pathFinder.calculate(pumpkins[pp], new Vector1((10), (5))))
             pumpkins[pp].moveToPosition(pathFinder.getPath5());
-        this.pumpkins[pp].go();
+        this.pumpkins[pp].setGo();
 
+        if (this.pumpkins[pp].getGo()) System.out.println("!!! GO GO GO");
 //        System.out.println("!!!"+factory.builder.);
 //
 //

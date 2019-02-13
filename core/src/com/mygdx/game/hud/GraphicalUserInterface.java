@@ -37,7 +37,7 @@ public class GraphicalUserInterface {
         tableRoot = new Table();
         int tablePadX = 20; // for padding , screen vs tableRoot
         int tablePadY = 10; // for padding , screen vs tableRoot
-        tableRoot.setName("table shit");
+        tableRoot.setName("table crap");
         tableRoot.setDebug(debuging);
         int rootX = stage.getViewport().getScreenX();
         int rootY = stage.getViewport().getScreenY();

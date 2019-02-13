@@ -25,6 +25,7 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     public MessageDispatcher dispatcher = new MessageDispatcher();
     private NpcTalk extraInfo = new NpcTalk();
     private NpcDistance distance = new NpcDistance();
+    public float lastDelta;
     private boolean go;
     private float lastX;
     private float lastY;
@@ -36,8 +37,11 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //        job.task = "Peasent: Job Done";
 //        clock.shedule(job);
 //    }
-    public void go(){
+    public void setGo(){
         go = true;
+    }
+    public boolean getGo(){
+        return go;
     }
     public Npc() { //todo redactor this sh*
         super();
@@ -68,7 +72,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
     }
     @Override
     public void act(float delta){
-        super.act(delta);
+//        super.act(delta); // todo , just changing in logic
+        this.lastDelta = delta;
         stateMachine.update();
 //        if (go){ //todo fix move testing
 //            float updateX = 1;
@@ -82,7 +87,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 //            }
 //        }
         if (go) { //todo fix move testing
-
+//            if  (stateMachine.getCurrentState().equals(NpcState.IDLE))
+//                stateMachine.changeState(NpcState.MOVING_BEGIN);
 //            int ppp = (int) current * k;
 //            current += delta * speed / points[ppp].len() *1000;
 //            current += 1000* (delta * speed / myCatmull.spanCount) / points[ppp].len();
@@ -90,6 +96,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
 
             if (myPath.nextDot(delta)){
                 go = false;
+//                if  (stateMachine.getCurrentState().equals(NpcState.MOVING))
+//                    stateMachine.changeState(NpcState.MOVING_END);
 
             }else {
                 lastX = myPath.getNextX();
@@ -101,6 +109,8 @@ public class Npc extends AnimatedEventSomething implements Telegraph {
                 set32Position(lastX , lastY);
                 time += delta;
                 if (time > 30) { //stop after 3 sec
+//                    if  (stateMachine.getCurrentState().equals(NpcState.MOVING))
+//                        stateMachine.changeState(NpcState.MOVING_END);
                     go = false;
                     time = 0;
                 }

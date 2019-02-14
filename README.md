@@ -6,6 +6,9 @@ Any material copyright or trademark was ignored.
 Short description.
 https://docs.google.com/document/d/1DXjIJ1i1VLg8V8BtIQRvqlCTvYGndlUhkUMHK1tuswA/edit#
 
+Build version. 
+https://drive.google.com/file/d/113q3Q_xp3akzNtIH4gVBrUEFOQza4p1u/view?usp=sharing
+
 -----
 
 [logo]: https://www.pscpower.com/wp-content/uploads/2018/03/Under-Construction.jpg "Under Constuctionn sign"

@@ -4,6 +4,7 @@ import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.a.SomethingData;
 
 public enum EntityTex {
+    //todo use ENUM.ordinal() !!!
     None(0),
     Player(1),
     NPC(2),

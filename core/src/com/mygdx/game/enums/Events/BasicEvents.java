@@ -1,6 +1,7 @@
-package com.mygdx.game.enums.Events;
+package com.mygdx.game.enums.events;
 
 public enum BasicEvents {
+    //todo use ENUM.ordinal() !!!
     NONE(0),
     DOOR_OPEN(1),
     DOOR_CLOSE(2),

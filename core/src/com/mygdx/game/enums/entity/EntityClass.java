@@ -1,6 +1,7 @@
 package com.mygdx.game.enums.entity;
 
 public enum EntityClass { //todo implement ordinal
+    //todo use ENUM.ordinal() !!!
     None                    (0),
     Something               (1),
     AnimatedSomething       (2),

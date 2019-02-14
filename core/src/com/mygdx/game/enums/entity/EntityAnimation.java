@@ -1,6 +1,7 @@
 package com.mygdx.game.enums.entity;
 
 public enum EntityAnimation {
+    //todo use ENUM.ordinal() !!!
     NONE(0),
     DOOR_OPEN(1),
     DOOR_CLOSE_NOT_USED(2),

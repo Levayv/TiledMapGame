@@ -3,9 +3,8 @@ package com.mygdx.game.world;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
-import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
-import com.mygdx.game.enums.Events.BasicEvents;
+import com.mygdx.game.enums.events.BasicEvents;
 
 public class Router implements Telegraph {
     private MessageDispatcher dispatcher = new MessageDispatcher();

@@ -11,7 +11,7 @@ import com.mygdx.game.ants.a.coreActor;
 import com.mygdx.game.enums.entity.EntityClass;
 import com.mygdx.game.enums.entity.EntityTex;
 
-public class Something extends coreActor{
+public class Something extends coreActor{ // todo change to abstract
 //    Sprite sprite;
     private Rectangle border; // todo Change to dynamic object ?
     private boolean customBorder;

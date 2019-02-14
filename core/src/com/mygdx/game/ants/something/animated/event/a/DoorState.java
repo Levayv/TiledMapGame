@@ -2,7 +2,7 @@ package com.mygdx.game.ants.something.animated.event.a;
 
 import com.badlogic.gdx.ai.fsm.State;
 import com.badlogic.gdx.ai.msg.Telegram;
-import com.mygdx.game.enums.Events.BasicEvents;
+import com.mygdx.game.enums.events.BasicEvents;
 
 public enum DoorState implements State<Door> { //todo polish commented prints
     OPEN(){

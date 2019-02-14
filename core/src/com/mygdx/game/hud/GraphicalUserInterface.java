@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-import com.mygdx.game.enums.Events.BasicEvents;
+import com.mygdx.game.enums.events.BasicEvents;
 import com.mygdx.game.world.WorldManager;
 
 public class GraphicalUserInterface {
@@ -19,7 +19,7 @@ public class GraphicalUserInterface {
     public Table tableRoot;
     private MessageDispatcher dispatcher = new MessageDispatcher();
     public GraphicalUserInterface(Stage stage, final WorldManager worldManager){
-
+        //todo research , remove final make WorldManager singleton
         //skin init
 //        String fileLoc = "root/skins/1/neon.json"; // skin location
         String fileLoc = "root/skins/2/sgx-ui.json"; // todo fix file
@@ -56,8 +56,8 @@ public class GraphicalUserInterface {
         TextButton button2 = new TextButton("OPEN ", skin, "default");
         int buttonW = 200;
         int buttonH = 20;
-        button1.setName("button1 sh*t");
-        button2.setName("button2 sh*t");
+        button1.setName("button1 crap");
+        button2.setName("button2 crap");
         button1.setWidth(buttonW);
         button2.setWidth(buttonW);
         button1.setHeight(buttonH);

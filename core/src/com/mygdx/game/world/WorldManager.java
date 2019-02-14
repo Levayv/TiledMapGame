@@ -1,8 +1,6 @@
 package com.mygdx.game.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
@@ -13,13 +11,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.Collider;
-import com.mygdx.game.Grid;
 import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.animated.event.npc.a.Npc;
-import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.a.Door;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.enums.entity.EntityTex;
@@ -29,12 +23,16 @@ import java.util.Random;
 
 public class WorldManager {
     // WorldManager's knowledge about grid
-    private boolean debugging = false; // todo fix debugging boolean in all classes
+    private boolean debugging = false;
+    // todo fix debugging boolean in all classes , use Gdx.debug/log
     private int tileSize;
     private TiledMap map;
     private  int mapWidth;
     private  int mapHeight;
-    private Grid grid;
+    // private Grid grid;
+    // todo future
+    // todo * for dynamic map loading
+    // todo * absolute for static maps
     private WorldResTexRegManager texRegManager;
     private WorldResAnimManager animManager;
     public WorldPositionManager posManager;
@@ -157,8 +155,9 @@ public class WorldManager {
         animManager   = buffer2;
         posManager = new WorldPositionManager(tileSize);
         collider = buffer3;
+
         // Grid init
-        grid = new Grid(mapWidth , mapHeight);
+        // grid = new Grid(mapWidth , mapHeight);
 
         //read tmx
         getMapData();

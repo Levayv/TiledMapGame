@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.mygdx.game.Collider;
 import com.mygdx.game.ants.something.a.AllData;
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.enums.entity.EntityTex;

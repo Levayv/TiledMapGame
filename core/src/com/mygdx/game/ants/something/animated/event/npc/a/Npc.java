@@ -13,12 +13,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.mygdx.game.Vector1;
 import com.mygdx.game.ants.something.animated.event.a.AnimatedEventSomething;
-import com.mygdx.game.enums.Events.BasicEvents;
+import com.mygdx.game.enums.events.BasicEvents;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.world.WorldResAnimManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Npc extends AnimatedEventSomething implements Telegraph {
     StateMachine<Npc, NpcState> stateMachine;

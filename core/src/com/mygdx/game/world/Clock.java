@@ -1,12 +1,8 @@
 package com.mygdx.game.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
-import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.enums.Events.BasicEvents;
+import com.mygdx.game.enums.events.BasicEvents;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

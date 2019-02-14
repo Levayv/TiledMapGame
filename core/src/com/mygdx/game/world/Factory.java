@@ -1,20 +1,11 @@
 package com.mygdx.game.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.Telegram;
 import com.badlogic.gdx.ai.msg.Telegraph;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.mygdx.game.Collider;
-import com.mygdx.game.Spawner;
 import com.mygdx.game.ants.something.a.AllData;
-import com.mygdx.game.ants.something.a.Something;
-import com.mygdx.game.enums.Events.BasicEvents;
-import com.mygdx.game.enums.entity.EntityTex;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.mygdx.game.enums.events.BasicEvents;
 
 public class Factory implements Telegraph {
     public DeadPool deadPool;

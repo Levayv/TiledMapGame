@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.mygdx.game.ants.something.a.Something;
 import com.mygdx.game.ants.something.animated.event.pc.a.Player;
+import com.mygdx.game.craps.Chunk;
 import com.mygdx.game.debug.tools.PerfCounter;
 import com.mygdx.game.debug.tools.ProfilerID;
 import com.mygdx.game.enums.DirConst4;
@@ -32,11 +33,10 @@ import com.mygdx.game.enums.DirParser;
 import com.mygdx.game.enums.entity.EntityTex;
 import com.mygdx.game.enums.entity.EntityAnimation;
 import com.mygdx.game.hud.GraphicalUserInterface;
+import com.mygdx.game.world.Collider;
 import com.mygdx.game.world.WorldManager;
 import com.mygdx.game.world.WorldResAnimManager;
 import com.mygdx.game.world.WorldResTexRegManager;
-
-import java.util.Random;
 
 public class GameScreen implements Screen {
     final MyGdxGame game;
@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
 
     TextureAtlas atlas;
 
-    Collider colCheck;
+    com.mygdx.game.world.Collider colCheck;
 
     WorldManager worldManager;
     Stage stage;

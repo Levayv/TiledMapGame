@@ -51,6 +51,5 @@ https://drive.google.com/file/d/113q3Q_xp3akzNtIH4gVBrUEFOQza4p1u/view?usp=shari
 - path start end for pathfinder must be stored in map XML or level json
 - integrate game clock with job scheduling  
 - create new json for level/map additional config
-## Luxury tasks to do 
-- get string literals from singlton helper (future localisation support)
+- get string literals from singleton helper (future localization support)
   - create DB for them , maybe JDBC  
